@@ -1,4 +1,4 @@
-/* Page-level layout only. Colors, radii and fonts come from genz-theme.css tokens. */
+/* Page-level layout only. Colors, radii and fonts come from theme.css tokens. */
 .cl-skip { position: absolute; left: -999px; top: 0; background: var(--lemon); color: var(--ink); padding: .6rem 1rem; z-index: 100; border: var(--border); }
 .cl-skip:focus { left: 1rem; top: 1rem; }
 .cl-header { border-bottom: var(--border); background: var(--paper); position: sticky; top: 0; z-index: 50; }

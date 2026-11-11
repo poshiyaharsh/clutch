@@ -1,9 +1,9 @@
-# DESIGN_SYSTEM — Clutch (Gen Z direction)
+# DESIGN_SYSTEM — Clutch
 
 ## Concept
 A sticker-pack scoreboard. The site feels like a hackathon wall: chunky outlines, hard offset shadows, bright sticker badges, loud type. The ONE memorable thing is the **live leaderboard**: ranks are tilted stickers, scores tick up when judges save, top 3 get colored medals. Everything else stays calm so that moment lands.
 
-## Tokens (see design/genz-theme.css)
+## Tokens (see design/theme.css)
 | Name | Hex | Use |
 |---|---|---|
 | Paper | #F2EDFF | Page background (lavender white) |

@@ -78,3 +78,13 @@ scratch/
 # Docker Local Overrides
 # ===================================================================
 docker-compose.override.yml
+
+# ===================================================================
+# Internal Scaffolding, Phase & Agent Meta Files
+# ===================================================================
+.agent/
+AGENTS.md
+PROJECT_LOG.md
+ROADMAP.md
+docs/PROMPTS.md
+

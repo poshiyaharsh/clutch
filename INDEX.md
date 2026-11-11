@@ -5,10 +5,11 @@
 ## Root
 | Path | Purpose |
 |---|---|
-| AGENTS.md | Master instructions for the AI agent |
+| Clutch.sln | Visual Studio / .NET solution containing Web and Tests |
+| AGENTS.md | Master instructions for the AI agent (local) |
 | INDEX.md | This file map |
-| PROJECT_LOG.md | Chronological work log |
-| ROADMAP.md | Phases and task checklist |
+| PROJECT_LOG.md | Chronological work log (local) |
+| ROADMAP.md | Phases and task checklist (local) |
 | README.md | Human-facing project intro and setup |
 | .env.example | Required environment variables (no secrets) |
 | .gitignore | Git ignore rules for build artifacts, secrets, and temp files |
@@ -20,7 +21,7 @@
 | docs/PRD.md | Product requirements, roles, user stories |
 | docs/ARCHITECTURE.md | Layers, folders, services, routes, SignalR hubs |
 | docs/DB_SCHEMA.md | Tables, columns, relations, indexes |
-| docs/DESIGN_SYSTEM.md | Gen Z design tokens, components, screen specs, copy rules |
+| docs/DESIGN_SYSTEM.md | Modern design tokens, components, screen specs, copy rules |
 | docs/TEST_PLAN.md | Test strategy, cases per feature |
 | docs/DEPLOYMENT.md | Deploy steps, env vars, rollback |
 | docs/PROMPTS.md | Ready-to-paste Antigravity prompts per phase |
@@ -30,7 +31,7 @@
 |---|---|
 | design/clutch-mark.svg, design/clutch-wordmark.svg | Logo mark (favicon) and wordmark |
 | docs/BRAND.md | Name meaning, mark, brand line, voice, usage rules |
-| design/genz-theme.css | Design tokens + base components (copy to wwwroot/css) |
+| design/theme.css | Design tokens + base components (copy to wwwroot/css) |
 
 ## .agent/
 | Path | Purpose |
@@ -55,8 +56,14 @@
 | src/Clutch.Web/Views/Shared/_EmptyState.cshtml | Reusable empty state |
 | src/Clutch.Web/Views/Shared/_StatusSticker.cshtml | Status sticker badge |
 | src/Clutch.Web/Views/Home/*.cshtml | Mock pages: Index, Event, Leaderboard, Team, Judge, Organizer |
-| src/Clutch.Web/wwwroot/css/genz-theme.css | Design tokens + components |
+| src/Clutch.Web/wwwroot/css/theme.css | Design tokens + components |
 | src/Clutch.Web/wwwroot/css/site.css | Page-level layout |
 | src/Clutch.Web/wwwroot/js/site.js | Toast, leaderboard re-rank animation, judge total preview |
+
+## tests/
+| Path | Purpose |
+|---|---|
+| tests/Clutch.Tests/Clutch.Tests.csproj | Unit and integration test project (xUnit, FluentAssertions) |
+| tests/Clutch.Tests/SetupTests.cs | Verification test suite for setup and mock data |
 
 _Antigravity: add rows here as the solution grows._

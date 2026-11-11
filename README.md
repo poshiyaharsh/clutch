@@ -1,7 +1,7 @@
 # Clutch
 
 Hackathon portal for events, teams, submissions, judging and a live leaderboard.
-Rebuild of the CodeMind AI Hackathon mini portal, with Identity auth, rubric scoring, live updates and a Gen Z design.
+Rebuild of the CodeMind AI Hackathon mini portal, with Identity auth, rubric scoring, live updates and a modern vibrant design.
 
 ## Run locally
 1. Install .NET 8 SDK and Docker.
@@ -11,4 +11,4 @@ Rebuild of the CodeMind AI Hackathon mini portal, with Identity auth, rubric sco
 5. `dotnet run --project src/Clutch.Web`
 
 ## Docs
-Start with AGENTS.md, ROADMAP.md and docs/PRD.md.
+Start with docs/PRD.md and docs/ARCHITECTURE.md.

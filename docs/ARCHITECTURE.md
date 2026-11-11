@@ -13,7 +13,7 @@ src/
     Models/           ViewModels, DTOs
     Authorization/    Policies, Requirements, Handlers
     Views/            Razor views per controller + Shared/
-    wwwroot/          css (genz-theme.css), js, fonts
+    wwwroot/          css (theme.css), js, fonts
 tests/
   Clutch.Tests/     Unit + integration tests
 ```
