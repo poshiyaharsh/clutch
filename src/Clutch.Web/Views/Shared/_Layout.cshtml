@@ -20,6 +20,10 @@
         {
           <a class="cl-navlink d-none d-sm-inline" asp-controller="Hackathons" asp-action="Create">Host</a>
         }
+        @if (User.IsInRole("Admin") || User.IsInRole("Judge"))
+        {
+          <a class="cl-navlink d-none d-sm-inline" asp-controller="Judging" asp-action="Index">Judging</a>
+        }
         @if (User.IsInRole("Admin"))
         {
           <a class="cl-navlink d-none d-md-inline" asp-controller="Home" asp-action="Admin">Admin</a>

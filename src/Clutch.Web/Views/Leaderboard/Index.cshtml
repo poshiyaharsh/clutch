@@ -1,0 +1,63 @@
+@model Clutch.Web.Models.LeaderboardViewModel
+@{
+    ViewData["Title"] = $"Leaderboard — {Model.HackathonTitle}";
+}
+
+<div class="mb-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-2">
+    <div class="d-flex align-items-center gap-2">
+      <span class="cl-sticker @(Model.IsLocked ? "cl-sticker--open" : "cl-sticker--judging")">
+        @(Model.IsLocked ? "Final results" : "Live scoring")
+      </span>
+      <a class="text-muted small fw-bold text-decoration-none" asp-controller="Hackathons" asp-action="Detail" asp-route-slug="@Model.HackathonSlug">
+        ← @Model.HackathonTitle
+      </a>
+    </div>
+
+    @if (!Model.IsLocked)
+    {
+      <span class="cl-live">Live ranking active</span>
+    }
+  </div>
+
+  <h1 class="display mb-1">Scoreboard</h1>
+  <p class="text-muted">Weighted rubric score calculated across assigned judges. Ties broken by primary criterion score and submission timestamp.</p>
+</div>
+
+@if (!Model.Rows.Any())
+{
+  <div class="cl-empty my-5">
+    <span class="cl-sticker mb-3">No scores</span>
+    <h2 class="h3 mb-2">No ranked squads yet</h2>
+    <p class="text-muted mb-4">Evaluations will appear on this scoreboard once judges begin submitting rubric scores.</p>
+    <a class="cl-btn cl-btn--secondary" asp-controller="Hackathons" asp-action="Detail" asp-route-slug="@Model.HackathonSlug">Back to event</a>
+  </div>
+}
+else
+{
+  <ol class="cl-board">
+    @foreach (var row in Model.Rows)
+    {
+      <li class="cl-row">
+        <div class="cl-rank">@row.Rank</div>
+        <div>
+          <h2 class="h4 mb-1">@row.TeamName</h2>
+          <div class="d-flex flex-wrap align-items-center gap-2 small text-muted">
+            @if (!string.IsNullOrEmpty(row.TrackName))
+            {
+              <span class="badge bg-light text-dark border">@row.TrackName</span>
+            }
+            @if (row.SubmittedAt.HasValue)
+            {
+              <span>Submitted @row.SubmittedAt.Value.ToString("MMM d, HH:mm") UTC</span>
+            }
+          </div>
+        </div>
+        <div class="text-end">
+          <div class="cl-score">@row.TotalScore.ToString("F1")</div>
+          <span class="small text-muted">pts / 100</span>
+        </div>
+      </li>
+    }
+  </ol>
+}

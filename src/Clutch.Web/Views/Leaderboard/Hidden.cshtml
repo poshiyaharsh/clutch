@@ -1,0 +1,11 @@
+@model Clutch.Web.Models.LeaderboardViewModel
+@{
+    ViewData["Title"] = $"Leaderboard — {Model.HackathonTitle}";
+}
+
+<div class="cl-empty my-5">
+  <span class="cl-sticker cl-sticker--draft mb-3">Locked</span>
+  <h1 class="h2 mb-2">Scores are concealed</h1>
+  <p class="text-muted mb-4">The organizer has hidden the scoreboard until judging is finalized. Final ranks will be revealed at the closing ceremony.</p>
+  <a class="cl-btn cl-btn--secondary" asp-controller="Hackathons" asp-action="Detail" asp-route-slug="@Model.HackathonSlug">Back to event</a>
+</div>

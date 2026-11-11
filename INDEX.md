@@ -65,10 +65,13 @@
 | src/Clutch.Web/Controllers/HackathonsController.cs | Hackathon CRUD, status transitions, and announcements controller |
 | src/Clutch.Web/Controllers/TeamsController.cs | Squad creation, join code membership, and squad management controller |
 | src/Clutch.Web/Controllers/SubmissionsController.cs | Project submission and track selection controller |
+| src/Clutch.Web/Controllers/JudgingController.cs | Judge assignments, squad evaluations, and rubric scoring controller |
+| src/Clutch.Web/Controllers/LeaderboardController.cs | Real-time calculated scoreboard and results reveal controller |
 | src/Clutch.Web/Models/AccountViewModels.cs | ViewModels for user authentication |
 | src/Clutch.Web/Models/HackathonViewModels.cs | ViewModels for hackathon listing, details, and creation |
 | src/Clutch.Web/Models/TeamViewModels.cs | ViewModels for squad creation, join codes, and roster |
 | src/Clutch.Web/Models/SubmissionViewModels.cs | ViewModels for project code and demo submissions |
+| src/Clutch.Web/Models/JudgingViewModels.cs | ViewModels for rubric scoring, judge assignments, and scoreboard rows |
 | src/Clutch.Web/Models/ErrorViewModel.cs | Model for global error page |
 | src/Clutch.Web/Models/MockData.cs | Fake data for design phase |
 | src/Clutch.Web/Views/Shared/_Layout.cshtml | Site shell: header, nav, footer, toast |
@@ -81,6 +84,8 @@
 | src/Clutch.Web/Views/Hackathons/*.cshtml | Hackathon views: Index, Create, Detail |
 | src/Clutch.Web/Views/Teams/*.cshtml | Squad management views: Create, Join, Detail |
 | src/Clutch.Web/Views/Submissions/*.cshtml | Project submission editing view |
+| src/Clutch.Web/Views/Judging/*.cshtml | Judging views: Index, HackathonTeams, ScoreTeam |
+| src/Clutch.Web/Views/Leaderboard/*.cshtml | Scoreboard views: Index, Hidden |
 | src/Clutch.Web/Views/Home/*.cshtml | Mock pages: Index, Event, Leaderboard, Team, Judge, Organizer, Admin |
 | src/Clutch.Web/wwwroot/css/theme.css | Design tokens + components |
 | src/Clutch.Web/wwwroot/css/site.css | Page-level layout |
@@ -93,5 +98,6 @@
 | tests/Clutch.Tests/SetupTests.cs | Verification test suite for setup, mock data, and preview routes |
 | tests/Clutch.Tests/FoundationTests.cs | Domain service logic, weighted scoring math, and policy tests |
 | tests/Clutch.Tests/CoreFeatureTests.cs | Core feature tests for teams, submissions, deadlines, and hackathons |
+| tests/Clutch.Tests/JudgingTests.cs | Rubric evaluation, lock immutability, conflict prevention, and scoring tests |
 
 _Antigravity: add rows here as the solution grows._

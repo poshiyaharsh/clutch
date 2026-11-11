@@ -1,0 +1,45 @@
+@model IEnumerable<Clutch.Web.Models.JudgeHackathonListItemViewModel>
+@{
+    ViewData["Title"] = "Judge portal";
+}
+
+<div class="mb-4">
+  <span class="cl-sticker cl-sticker--judging mb-2">Evaluation panel</span>
+  <h1 class="display mb-1">Judge assignments</h1>
+  <p class="text-muted">Hackathons where you are assigned as a technical or product judge.</p>
+</div>
+
+@if (!Model.Any())
+{
+  <div class="cl-empty my-5">
+    <span class="cl-sticker mb-3">No assignments</span>
+    <h2 class="h3 mb-2">No assigned hackathons found</h2>
+    <p class="text-muted mb-4">When hackathon organizers add your email to their judging committee, events will appear here.</p>
+    <a class="cl-btn cl-btn--secondary" asp-controller="Hackathons" asp-action="Index">Browse public events</a>
+  </div>
+}
+else
+{
+  <div class="row g-4">
+    @foreach (var h in Model)
+    {
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="cl-card h-100 d-flex flex-column justify-content-between">
+          <div>
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <span class="cl-sticker @(h.IsLocked ? "cl-sticker--closed" : "cl-sticker--judging")">
+                @(h.IsLocked ? "Locked" : "Active judging")
+              </span>
+              <span class="small text-muted">Ends @h.EndsAt.ToString("MMM d")</span>
+            </div>
+            <h2 class="h4 mb-2">@h.Title</h2>
+            <p class="small text-muted mb-3">@h.TeamsCount squads competing</p>
+          </div>
+          <div>
+            <a class="cl-btn cl-btn--primary w-100" asp-action="HackathonTeams" asp-route-id="@h.Id">Evaluate squads</a>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+}

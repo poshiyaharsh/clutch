@@ -1,0 +1,107 @@
+@model Clutch.Web.Models.RubricScoreFormViewModel
+@{
+    ViewData["Title"] = $"Score Squad — {Model.TeamName}";
+}
+
+<div class="mb-4">
+  <div class="d-flex align-items-center gap-2 mb-2">
+    <span class="cl-sticker cl-sticker--judging">Rubric scoring</span>
+    <a class="text-muted small fw-bold text-decoration-none" asp-action="HackathonTeams" asp-route-id="@Model.HackathonId">
+      ← Back to squad list
+    </a>
+  </div>
+  <h1 class="display mb-1">Evaluating @Model.TeamName</h1>
+  <p class="text-muted">@Model.HackathonTitle @(string.IsNullOrEmpty(Model.TrackName) ? "" : $"• Track: {Model.TrackName}")</p>
+</div>
+
+<div class="row g-4 mb-5">
+  <div class="col-12 col-lg-5">
+    <!-- Project Submission Preview -->
+    <div class="cl-card cl-sticky mb-4">
+      <h2 class="h4 mb-3">Project submission</h2>
+      <h3 class="h5 mb-2">@(Model.ProjectTitle ?? "Untitled project")</h3>
+      <p class="text-muted small mb-3" style="white-space: pre-line;">
+        @(Model.ProjectDescription ?? "No description provided.")
+      </p>
+
+      <div class="d-grid gap-2 mb-3">
+        @if (!string.IsNullOrEmpty(Model.RepoUrl))
+        {
+          <a class="cl-btn cl-btn--secondary" href="@Model.RepoUrl" target="_blank" rel="noopener">
+            Inspect source repository ↗
+          </a>
+        }
+        @if (!string.IsNullOrEmpty(Model.DemoUrl))
+        {
+          <a class="cl-btn cl-btn--secondary" href="@Model.DemoUrl" target="_blank" rel="noopener">
+            View live demo ↗
+          </a>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-7">
+    <!-- Rubric Scoring Form -->
+    <div class="cl-card">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h4 mb-0">Rubric criteria</h2>
+        <span class="small fw-bold">Weights total 100%</span>
+      </div>
+
+      <form asp-action="ScoreTeam" asp-route-hackathonId="@Model.HackathonId" asp-route-teamId="@Model.TeamId" method="post" novalidate>
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="HackathonId" />
+        <input type="hidden" asp-for="TeamId" />
+        <input type="hidden" asp-for="TeamName" />
+
+        <div asp-validation-summary="ModelOnly" class="cl-error mb-3"></div>
+
+        @for (int i = 0; i < Model.Criteria.Count; i++)
+        {
+          <input type="hidden" asp-for="Criteria[i].CriterionId" />
+          <input type="hidden" asp-for="Criteria[i].Name" />
+          <input type="hidden" asp-for="Criteria[i].MaxPoints" />
+          <input type="hidden" asp-for="Criteria[i].WeightPercent" />
+
+          <div class="p-3 border rounded mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <strong class="h5 mb-0">@Model.Criteria[i].Name</strong>
+              <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill">
+                Weight: @Model.Criteria[i].WeightPercent% (Max @Model.Criteria[i].MaxPoints pts)
+              </span>
+            </div>
+            @if (!string.IsNullOrEmpty(Model.Criteria[i].Description))
+            {
+              <p class="small text-muted mb-3">@Model.Criteria[i].Description</p>
+            }
+
+            <div class="row g-2 align-items-center mb-2">
+              <div class="col-12 col-sm-4">
+                <label class="cl-label small" asp-for="Criteria[i].Points">Score (0–@Model.Criteria[i].MaxPoints):</label>
+                <input class="cl-input py-1" type="number" asp-for="Criteria[i].Points" min="0" max="@Model.Criteria[i].MaxPoints" required />
+                <span class="cl-error" asp-validation-for="Criteria[i].Points"></span>
+              </div>
+              <div class="col-12 col-sm-8">
+                <label class="cl-label small" asp-for="Criteria[i].Comment">Feedback / notes (optional):</label>
+                <input class="cl-input py-1" type="text" asp-for="Criteria[i].Comment" placeholder="Constructive feedback for the team..." />
+              </div>
+            </div>
+          </div>
+        }
+
+        @if (!Model.Criteria.Any())
+        {
+          <p class="text-muted small">No criteria have been configured yet for this hackathon.</p>
+        }
+        else
+        {
+          <div class="d-flex justify-content-end gap-3 mt-4">
+            <a class="cl-btn cl-btn--secondary" asp-action="HackathonTeams" asp-route-id="@Model.HackathonId">Cancel</a>
+            <button class="cl-btn cl-btn--primary" type="submit">Submit evaluation</button>
+          </div>
+        }
+      </form>
+    </div>
+  </div>
+</div>
