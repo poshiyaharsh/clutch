@@ -47,16 +47,28 @@
 ## src/ (created during Phase 2+)
 | Path | Purpose |
 |---|---|
-| src/Clutch.Web/Clutch.Web.csproj, Program.cs | Minimal web project so the mock pages run (Phase 2 extends these) |
+| src/Clutch.Web/Clutch.Web.csproj, Program.cs | Web project definition and pipeline configuration |
 | src/Clutch.Web/appsettings.json | Base configuration (logging, connection strings) |
 | src/Clutch.Web/Properties/launchSettings.json | Local development launch profiles (ports 5240 / 7140) |
-| src/Clutch.Web/Controllers/HomeController.cs | Phase 3 preview controller (mock pages) |
+| src/Clutch.Web/Domain/Enums.cs | Hackathon status and user role definitions |
+| src/Clutch.Web/Domain/ApplicationUser.cs | Extended Identity user entity |
+| src/Clutch.Web/Domain/Entities.cs | Core domain entities (Hackathon, Team, Submission, Score, etc.) |
+| src/Clutch.Web/Data/AppDbContext.cs | EF Core DbContext with relational configurations and indexes |
+| src/Clutch.Web/Data/DbSeeder.cs | Seed initial roles and administrator |
+| src/Clutch.Web/Migrations/ | EF Core database migration files |
+| src/Clutch.Web/Services/IHackathonService.cs | Hackathon domain service interface and implementation |
+| src/Clutch.Web/Services/ITeamService.cs | Team management service interface and implementation |
+| src/Clutch.Web/Services/IScoringService.cs | Weighted scoring and leaderboard calculation service |
+| src/Clutch.Web/Services/INotificationService.cs | In-app notification service |
+| src/Clutch.Web/Controllers/HomeController.cs | Main preview and navigation controller |
+| src/Clutch.Web/Models/ErrorViewModel.cs | Model for global error page |
 | src/Clutch.Web/Models/MockData.cs | Fake data for design phase. Delete in Phase 5 |
 | src/Clutch.Web/Views/Shared/_Layout.cshtml | Site shell: header, nav, footer, toast |
 | src/Clutch.Web/Views/Shared/_NotificationBell.cshtml | Bell button + notifications drawer |
 | src/Clutch.Web/Views/Shared/_Toast.cshtml | Toast container |
 | src/Clutch.Web/Views/Shared/_EmptyState.cshtml | Reusable empty state |
 | src/Clutch.Web/Views/Shared/_StatusSticker.cshtml | Status sticker badge |
+| src/Clutch.Web/Views/Shared/Error.cshtml | Friendly global error view |
 | src/Clutch.Web/Views/Home/*.cshtml | Mock pages: Index, Event, Leaderboard, Team, Judge, Organizer, Admin |
 | src/Clutch.Web/wwwroot/css/theme.css | Design tokens + components |
 | src/Clutch.Web/wwwroot/css/site.css | Page-level layout |
@@ -66,6 +78,7 @@
 | Path | Purpose |
 |---|---|
 | tests/Clutch.Tests/Clutch.Tests.csproj | Unit and integration test project (xUnit, FluentAssertions) |
-| tests/Clutch.Tests/SetupTests.cs | Verification test suite for setup and mock data |
+| tests/Clutch.Tests/SetupTests.cs | Verification test suite for setup, mock data, and preview routes |
+| tests/Clutch.Tests/FoundationTests.cs | Domain service logic, weighted scoring math, and policy tests |
 
 _Antigravity: add rows here as the solution grows._
