@@ -21,16 +21,17 @@
 | docs/PRD.md | Product requirements, roles, user stories |
 | docs/ARCHITECTURE.md | Layers, folders, services, routes, SignalR hubs |
 | docs/DB_SCHEMA.md | Tables, columns, relations, indexes |
-| docs/DESIGN_SYSTEM.md | Modern design tokens, components, screen specs, copy rules |
+| docs/DESIGN_SYSTEM.md | Modern design tokens, dual-theme palettes, WCAG contrast table, Bootstrap mappings |
+| docs/BRAND.md | Brand identity guidelines: mark geometry, wordmark, clear space, asset inventory, and _Logo.cshtml |
+| docs/CONTRAST_REPORT.md | Automated WCAG 2.1 AA color contrast compliance report across light and dark tokens |
 | docs/TEST_PLAN.md | Test strategy, cases per feature |
 | docs/DEPLOYMENT.md | Deploy steps, env vars, rollback |
 | docs/PROMPTS.md | Ready-to-paste Antigravity prompts per phase |
 
-## design/
+## tools/
 | Path | Purpose |
 |---|---|
-| design/clutch-mark.svg, design/clutch-wordmark.svg | Logo mark (favicon) and wordmark |
-| docs/BRAND.md | Name meaning, mark, brand line, voice, usage rules |
+| tools/contrast-check/check_contrast.py | Automated WCAG 2.1 AA relative luminance and contrast ratio verification script |
 
 ## .agent/
 | Path | Purpose |
@@ -79,6 +80,7 @@
 | src/Clutch.Web/Models/ErrorViewModel.cs | Model for global error page |
 | src/Clutch.Web/Models/MockData.cs | Mock data for preview routes |
 | src/Clutch.Web/Views/Shared/_Layout.cshtml | Modern product shell: navbar, search, theme switcher, command menu |
+| src/Clutch.Web/Views/Shared/_Logo.cshtml | Scalable brand logo component with full wordmark and mark-only variants |
 | src/Clutch.Web/Views/Shared/_Badge.cshtml | Modern pill and status badge component |
 | src/Clutch.Web/Views/Shared/_NotificationBell.cshtml | Notification popover with Lucide bell icon |
 | src/Clutch.Web/Views/Shared/_ThemeToggle.cshtml | Light / Dark / System segmented theme switcher |
@@ -97,6 +99,7 @@
 | src/Clutch.Web/wwwroot/css/clutch-theme.css | Calm high-end product design tokens and components |
 | src/Clutch.Web/wwwroot/css/site.css | Page-level layout, slim navbar, command palette, dashboard shell |
 | src/Clutch.Web/wwwroot/img/icons.svg | Lucide vector icon SVG sprite (no emoji) |
+| src/Clutch.Web/wwwroot/img/brand/ | Brand assets: vector marks, wordmarks, icons, web manifest, and open graph image |
 | src/Clutch.Web/wwwroot/js/site.js | Theme persistence, command menu, live FLIP leaderboard, judge scoring |
 
 ## tests/

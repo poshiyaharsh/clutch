@@ -1,6 +1,6 @@
 @model IEnumerable<Clutch.Web.Models.JudgeTeamScoreCardViewModel>
 @{
-    ViewData["Title"] = $"Judge Squads — {ViewData["HackathonTitle"]}";
+    ViewData["Title"] = $"Judge Teams — {ViewData["HackathonTitle"]}";
     var isLocked = (bool)(ViewData["IsLocked"] ?? false);
     var hackathonId = (int)(ViewData["HackathonId"] ?? 0);
 }
@@ -10,7 +10,7 @@
     <div>
       <partial name="_Badge" model='(isLocked ? "Judging locked" : "Scoring active", isLocked ? "closed" : "judging")' />
       <h1 class="cl-title-page mb-1 mt-2">@ViewData["HackathonTitle"]</h1>
-      <p class="cl-text-muted mb-0" style="font-size: 14px;">Evaluate each squad's project submission against the rubric criteria.</p>
+      <p class="cl-text-muted cl-font-14 mb-0">Evaluate each team's project submission against the rubric criteria.</p>
     </div>
 
     @if (User.IsInRole("Admin") || User.IsInRole("Organizer"))
@@ -35,7 +35,7 @@
     <table class="cl-table">
       <thead>
         <tr>
-          <th>Squad</th>
+          <th>Team</th>
           <th>Track</th>
           <th>Project</th>
           <th>Your evaluation</th>
@@ -55,7 +55,7 @@
               }
               else
               {
-                <span class="text-muted" style="font-size: 13px;">No submission</span>
+                <span class="text-muted cl-font-13">No submission</span>
               }
             </td>
             <td>
@@ -71,12 +71,12 @@
             <td class="text-end">
               @if (isLocked)
               {
-                <span class="text-muted" style="font-size: 13px;">Locked</span>
+                <span class="text-muted cl-font-13">Locked</span>
               }
               else
               {
                 <a class="cl-btn cl-btn--secondary cl-btn--sm" asp-action="ScoreTeam" asp-route-hackathonId="@hackathonId" asp-route-teamId="@t.TeamId">
-                  @(t.HasJudgeScored ? "Edit evaluation" : "Score squad")
+                  @(t.HasJudgeScored ? "Edit evaluation" : "Score team")
                 </a>
               }
             </td>

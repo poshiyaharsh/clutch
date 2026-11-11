@@ -1,6 +1,6 @@
 @model Clutch.Web.Models.TeamCreateViewModel
 @{
-    ViewData["Title"] = "Create a Squad";
+    ViewData["Title"] = "Create Team";
 }
 
 <div class="row justify-content-center py-4">
@@ -8,8 +8,8 @@
     <div class="cl-card p-4 p-md-5">
       <div class="mb-4">
         <span class="cl-badge cl-badge--accent mb-2">@Model.HackathonTitle</span>
-        <h1 class="cl-title-section mb-1">Create your squad</h1>
-        <p class="cl-text-muted mb-0" style="font-size: 14px;">Pick a unique squad name. You will receive an 8-character invite code to share with teammates.</p>
+        <h1 class="cl-title-section mb-1">Create your team</h1>
+        <p class="cl-text-muted cl-font-14 mb-0">Pick a unique team name. You will receive an 8-character invite code to share with teammates.</p>
       </div>
 
       <form asp-action="Create" method="post" novalidate>
@@ -21,14 +21,14 @@
         <div asp-validation-summary="ModelOnly" class="cl-error mb-3"></div>
 
         <div class="cl-field">
-          <label class="cl-label" asp-for="Name">Squad name</label>
+          <label class="cl-label" asp-for="Name">Team name</label>
           <input class="cl-input" asp-for="Name" placeholder="e.g. Prompt Engineers" autocomplete="off" required />
           <span class="cl-error" asp-validation-for="Name"></span>
         </div>
 
         <div class="d-flex justify-content-between gap-3 mt-4">
           <a class="cl-btn cl-btn--secondary" asp-controller="Hackathons" asp-action="Detail" asp-route-slug="@Model.HackathonSlug">Cancel</a>
-          <button class="cl-btn cl-btn--primary" type="submit">Create squad</button>
+          <button class="cl-btn cl-btn--primary" type="submit">Create team</button>
         </div>
       </form>
     </div>

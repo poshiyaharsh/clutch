@@ -6,7 +6,7 @@
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
   <div>
     <h1 class="cl-title-page mb-1">Active Hackathons</h1>
-    <p class="cl-text-muted mb-0" style="font-size: 14px;">Browse published hackathons, form squads, and show up to compete.</p>
+    <p class="cl-text-muted cl-font-14 mb-0">Browse published hackathons, form teams, and show up to compete.</p>
   </div>
   @if (User.IsInRole("Admin") || User.IsInRole("Organizer"))
   {
@@ -31,17 +31,17 @@ else
           <div>
             <div class="d-flex justify-content-between align-items-center mb-2">
               <partial name="_Badge" model='(h.Status.ToString(), h.Status == Clutch.Web.Domain.HackathonStatus.Published ? "open" : "draft")' />
-              <span class="text-muted" style="font-size: 12px;">@h.StartsAt.ToString("MMM d") – @h.EndsAt.ToString("MMM d")</span>
+              <span class="text-muted cl-font-12">@h.StartsAt.ToString("MMM d") – @h.EndsAt.ToString("MMM d")</span>
             </div>
             <h2 class="cl-title-card mb-2">@h.Title</h2>
-            <p class="cl-text-muted mb-3" style="font-size: 13px; line-height: 1.5;">@h.Description</p>
+            <p class="cl-text-muted cl-font-13 cl-line-height-15 mb-3">@h.Description</p>
           </div>
           <div>
-            <div class="d-flex justify-content-between align-items-center mb-3 text-muted" style="font-size: 12px;">
+            <div class="d-flex justify-content-between align-items-center mb-3 text-muted cl-font-12">
               <span><strong>@h.TeamCount</strong> teams registered</span>
-              <span>Squad max: @h.MaxTeamSize</span>
+              <span>Team max: @h.MaxTeamSize</span>
             </div>
-            <a class="cl-btn cl-btn--secondary w-100" asp-action="Detail" asp-route-slug="@h.Slug">
+            <a class="cl-btn cl-btn--secondary cl-w-100" asp-action="Detail" asp-route-slug="@h.Slug">
               <span>View event</span>
               <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-chevron-right"></use></svg>
             </a>

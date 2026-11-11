@@ -1,8 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Clutch">
-  <g transform="rotate(-6 32 32)">
-    <rect x="9" y="9" width="46" height="46" rx="14" fill="#1A1033"/>
-    <rect x="6" y="6" width="46" height="46" rx="14" fill="#FFD83D" stroke="#1A1033" stroke-width="3.5"/>
-    <path d="M38 19 A13 13 0 1 0 38 39" transform="translate(-0.5 0)" fill="none" stroke="#1A1033" stroke-width="9" stroke-linecap="round"/>
-    <circle cx="41" cy="29" r="4.6" fill="#FF5CA8" stroke="#1A1033" stroke-width="2.5"/>
-  </g>
+  <defs>
+    <linearGradient id="clutch-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5B4CF5"/>
+      <stop offset="100%" stop-color="#7C6CFF"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#clutch-grad)"/>
+  <path d="M 40 21 A 14 14 0 1 0 40 43" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="41" cy="32" r="3.8" fill="#FFFFFF"/>
 </svg>

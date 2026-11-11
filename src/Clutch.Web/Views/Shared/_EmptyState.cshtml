@@ -1,10 +1,10 @@
 @model (string Title, string Body, string? Cta, string? Href)
 <div class="cl-card text-center py-5 px-4 my-4">
-  <div class="d-inline-flex align-items-center justify-content-center p-3 rounded-circle mb-3" style="background: var(--surface-2); color: var(--text-muted);">
+  <div class="d-inline-flex align-items-center justify-content-center p-3 rounded-circle mb-3 cl-card--soft text-muted">
     <svg class="cl-icon cl-icon-lg"><use href="/img/icons.svg#icon-layers"></use></svg>
   </div>
   <h3 class="cl-title-card mb-2">@Model.Title</h3>
-  <p class="cl-text-muted mx-auto mb-4" style="max-width: 48ch;">@Model.Body</p>
+  <p class="cl-text-muted cl-max-48ch mx-auto mb-4">@Model.Body</p>
   @if (!string.IsNullOrEmpty(Model.Cta) && !string.IsNullOrEmpty(Model.Href))
   {
     <div>

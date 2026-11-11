@@ -1,26 +1,26 @@
 @model List<Criterion>
 @{
-    ViewData["Title"] = "Judge Evaluation — Null Pointers";
+    ViewData["Title"] = "Judge evaluation — Null Pointers";
 }
 
 <!-- Split Layout -->
 <div class="row g-4 align-items-start">
   <!-- Left Side: Team Information & Links -->
   <div class="col-12 col-lg-5">
-    <div class="cl-card position-sticky" style="top: 88px;">
+    <div class="cl-card cl-sticky-sidebar">
       <div class="d-flex align-items-center gap-2 mb-2">
         <span class="cl-badge cl-badge--warning">In Evaluation</span>
-        <span class="text-muted" style="font-size: 13px;">CodeMind AI Hackathon</span>
+        <span class="cl-text-muted cl-font-13">CodeMind AI Hackathon</span>
       </div>
 
       <h1 class="cl-title-page mb-2">Null Pointers</h1>
-      <p class="cl-text-muted mb-4" style="font-size: 14px;">
+      <p class="cl-text-muted cl-font-14 mb-4">
         Track: <strong class="text-body">Healthcare & Biotech</strong>
       </p>
 
-      <div class="p-3 rounded-2 mb-4" style="background: var(--surface-2);">
-        <h2 class="cl-title-card mb-2" style="font-size: 15px;">CardioPulse AI</h2>
-        <p class="cl-text-muted mb-0" style="font-size: 13px; line-height: 1.5;">
+      <div class="p-3 rounded-2 mb-4 cl-card--soft">
+        <h2 class="cl-title-card cl-font-15 mb-2">CardioPulse AI</h2>
+        <p class="cl-text-muted cl-font-13 mb-0">
           Real-time ECG telemetry analysis for mobile triage in remote medical environments. Uses embedded edge inference to flag high-risk anomalies within 200 milliseconds.
         </p>
       </div>
@@ -44,12 +44,12 @@
       </div>
 
       <div class="pt-3 border-top">
-        <div class="d-flex justify-content-between align-items-center text-muted" style="font-size: 13px;">
+        <div class="d-flex justify-content-between align-items-center cl-text-muted cl-font-13">
           <span>Evaluation Progress</span>
           <span class="fw-semibold text-body">3 of 8 scored</span>
         </div>
-        <div class="progress mt-2" style="height: 6px; background: var(--surface-2);">
-          <div class="progress-bar" role="progressbar" style="width: 37.5%; background: var(--accent);" aria-valuenow="37.5" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="progress mt-2 cl-progress-track">
+          <div class="progress-bar cl-progress-bar-fill" role="progressbar" aria-valuenow="37.5" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
       </div>
     </div>
@@ -59,7 +59,7 @@
   <div class="col-12 col-lg-7">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h2 class="cl-title-section mb-0">Rubric Scoring</h2>
-      <span class="text-muted" style="font-size: 12px;">Weights sum to 100%</span>
+      <span class="cl-text-muted cl-font-12">Weights sum to 100%</span>
     </div>
 
     <form data-judge-form onsubmit="event.preventDefault(); clToast('Evaluation scores saved successfully');">
@@ -71,7 +71,7 @@
             <div class="d-flex justify-content-between align-items-start mb-2">
               <div>
                 <h3 class="cl-title-card mb-1">@c.Name</h3>
-                <p class="cl-text-muted mb-0" style="font-size: 13px;">@c.Hint</p>
+                <p class="cl-text-muted cl-font-13 mb-0">@c.Hint</p>
               </div>
               <span class="cl-badge cl-badge--accent">@c.Weight% weight</span>
             </div>
@@ -85,23 +85,22 @@
 
             <div class="cl-field mb-0">
               <label class="cl-label" for="crit-note-@i">Judge feedback (optional)</label>
-              <input id="crit-note-@i" class="cl-input" placeholder="Feedback on @c.Name.ToLowerInvariant()..." style="height: 36px; font-size: 13px;" />
+              <input id="crit-note-@i" class="cl-input cl-input-filter-sm cl-w-100" placeholder="Feedback on @c.Name.ToLowerInvariant()..." />
             </div>
           </div>
         }
       </div>
 
       <!-- Sticky Save Bar -->
-      <div class="cl-card position-sticky p-3 d-flex flex-wrap justify-content-between align-items-center gap-3 shadow-md"
-           style="bottom: 16px; z-index: 10; background: var(--surface); border: 1px solid var(--border);">
+      <div class="cl-card position-sticky p-3 d-flex flex-wrap justify-content-between align-items-center gap-3 shadow-md sticky-bottom mb-3">
         <div class="d-flex align-items-baseline gap-2">
-          <span class="text-muted" style="font-size: 13px;">Calculated Total:</span>
+          <span class="cl-text-muted cl-font-13">Calculated Total:</span>
           <span id="cl-total" class="cl-title-section text-primary tabular-nums mb-0">75.0</span>
-          <span class="text-muted" style="font-size: 13px;">/ 100 pts</span>
+          <span class="cl-text-muted cl-font-13">/ 100 pts</span>
         </div>
 
         <div class="d-flex align-items-center gap-2">
-          <span class="text-muted d-none d-sm-inline" style="font-size: 12px;">Press Enter to save</span>
+          <span class="cl-text-muted cl-font-12 d-none d-sm-inline">Press Enter to save</span>
           <button class="cl-btn cl-btn--primary" type="submit">
             <svg class="cl-icon"><use href="/img/icons.svg#icon-check"></use></svg>
             <span>Save scores</span>

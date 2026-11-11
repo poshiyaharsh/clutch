@@ -6,13 +6,13 @@
 <div class="mb-4">
   <div class="d-flex align-items-center gap-2 mb-2">
     <span class="cl-badge cl-badge--accent">Security log</span>
-    <a class="text-muted d-inline-flex align-items-center gap-1 text-decoration-none" asp-action="Index" style="font-size: 13px;">
+    <a class="text-muted d-inline-flex align-items-center gap-1 text-decoration-none cl-font-13" asp-action="Index">
       <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-chevron-left"></use></svg>
       <span>Admin overview</span>
     </a>
   </div>
   <h1 class="cl-title-page mb-1">System Audit Trail</h1>
-  <p class="cl-text-muted mb-0" style="font-size: 14px;">Immutable log of security-sensitive platform operations, state changes, and scoring locks.</p>
+  <p class="cl-text-muted cl-font-14 mb-0">Immutable log of security-sensitive platform operations, state changes, and scoring locks.</p>
 </div>
 
 <div class="cl-card p-0 overflow-hidden">
@@ -37,11 +37,11 @@
           @foreach (var log in Model)
           {
             <tr>
-              <td class="text-muted tabular-nums" style="font-size: 12px;">@log.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</td>
+              <td class="text-muted tabular-nums cl-font-12">@log.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</td>
               <td><strong>@(log.Actor?.DisplayName ?? log.ActorId ?? "System")</strong></td>
               <td><span class="cl-badge">@log.Action</span></td>
               <td>@log.EntityType #@log.EntityId</td>
-              <td class="text-muted" style="font-size: 12px; font-family: monospace;">@(log.Details ?? "—")</td>
+              <td class="text-muted cl-font-12 cl-font-mono">@(log.Details ?? "—")</td>
             </tr>
           }
         </tbody>

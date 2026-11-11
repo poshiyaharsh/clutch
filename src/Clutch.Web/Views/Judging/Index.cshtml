@@ -6,7 +6,7 @@
 <div class="mb-4">
   <span class="cl-badge cl-badge--warning mb-2">Evaluation panel</span>
   <h1 class="cl-title-page mb-1">Judge Assignments</h1>
-  <p class="cl-text-muted mb-0" style="font-size: 14px;">Hackathons where you are assigned as a technical or product judge.</p>
+  <p class="cl-text-muted cl-font-14 mb-0">Hackathons where you are assigned as a technical or product judge.</p>
 </div>
 
 @if (!Model.Any())
@@ -23,13 +23,13 @@ else
           <div>
             <div class="d-flex justify-content-between align-items-center mb-2">
               <partial name="_Badge" model='(h.IsLocked ? "Locked" : "Active judging", h.IsLocked ? "closed" : "judging")' />
-              <span class="text-muted" style="font-size: 12px;">Ends @h.EndsAt.ToString("MMM d")</span>
+              <span class="text-muted cl-font-12">Ends @h.EndsAt.ToString("MMM d")</span>
             </div>
             <h2 class="cl-title-card mb-2">@h.Title</h2>
-            <p class="cl-text-muted mb-3" style="font-size: 13px;">@h.TeamsCount squads competing</p>
+            <p class="cl-text-muted cl-font-13 mb-3">@h.TeamsCount teams competing</p>
           </div>
           <div>
-            <a class="cl-btn cl-btn--primary w-100" asp-action="HackathonTeams" asp-route-id="@h.Id">Evaluate squads</a>
+            <a class="cl-btn cl-btn--primary cl-w-100" asp-action="HackathonTeams" asp-route-id="@h.Id">Evaluate teams</a>
           </div>
         </article>
       </div>

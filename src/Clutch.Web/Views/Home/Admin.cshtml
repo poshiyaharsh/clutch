@@ -1,9 +1,12 @@
-@{ ViewData["Title"] = "Admin Control Panel"; }
+@{ ViewData["Title"] = "Admin control panel"; }
 
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
-  <div>
-    <h1 class="cl-title-page mb-1">Platform administration</h1>
-    <p class="cl-text-muted mb-0" style="font-size: 14px;">Manage system roles, oversee all hackathons, and inspect audit activity.</p>
+  <div class="d-flex align-items-center gap-3">
+    <partial name="_Logo" model='("md", "mark-only")' />
+    <div>
+      <h1 class="cl-title-page mb-1">Platform administration</h1>
+      <p class="cl-text-muted cl-font-14 mb-0">Manage system roles, oversee all hackathons, and inspect audit activity.</p>
+    </div>
   </div>
   <div class="d-flex gap-2">
     <button class="cl-btn cl-btn--secondary cl-btn--sm" type="button" onclick="clToast('System status: Healthy (0 errors in last 24h)')">
@@ -43,8 +46,8 @@
 <div class="row g-4 mb-5">
   <div class="col-12 col-lg-8">
     <div class="cl-card p-0 overflow-hidden">
-      <div class="p-3 border-bottom d-flex justify-content-between align-items-center" style="background: var(--surface);">
-        <h2 class="cl-title-card mb-0" style="font-size: 15px;">User Directory & Roles</h2>
+      <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
+        <h2 class="cl-title-card cl-font-15 mb-0">User Directory & Roles</h2>
         <span class="cl-badge">4 shown</span>
       </div>
       <div class="table-responsive">
@@ -60,25 +63,25 @@
           <tbody>
             <tr>
               <td><strong>Alex Rivera</strong></td>
-              <td class="text-muted">alex.rivera@clutch.local</td>
+              <td class="cl-text-muted">alex.rivera@clutch.local</td>
               <td><span class="cl-badge cl-badge--danger">Admin</span></td>
               <td class="text-end"><button class="cl-btn cl-btn--ghost cl-btn--sm" type="button" onclick="clToast('Role permissions opened')">Edit</button></td>
             </tr>
             <tr>
               <td><strong>Sarah Chen</strong></td>
-              <td class="text-muted">sarah.chen@univ.edu</td>
+              <td class="cl-text-muted">sarah.chen@univ.edu</td>
               <td><span class="cl-badge cl-badge--success">Organizer</span></td>
               <td class="text-end"><button class="cl-btn cl-btn--ghost cl-btn--sm" type="button" onclick="clToast('Role permissions opened')">Edit</button></td>
             </tr>
             <tr>
               <td><strong>David Kim</strong></td>
-              <td class="text-muted">dkim@ai-labs.io</td>
+              <td class="cl-text-muted">dkim@ai-labs.io</td>
               <td><span class="cl-badge cl-badge--warning">Judge</span></td>
               <td class="text-end"><button class="cl-btn cl-btn--ghost cl-btn--sm" type="button" onclick="clToast('Role permissions opened')">Edit</button></td>
             </tr>
             <tr>
               <td><strong>Maya Patel</strong></td>
-              <td class="text-muted">maya.p@student.ac.in</td>
+              <td class="cl-text-muted">maya.p@student.ac.in</td>
               <td><span class="cl-badge">Participant</span></td>
               <td class="text-end"><button class="cl-btn cl-btn--ghost cl-btn--sm" type="button" onclick="clToast('Role permissions opened')">Edit</button></td>
             </tr>
@@ -92,19 +95,19 @@
     <div class="cl-card h-100">
       <h2 class="cl-title-card mb-3">Recent audit trail</h2>
       <div class="d-flex flex-column gap-3">
-        <div class="p-2 rounded-2" style="background: var(--surface-2);">
+        <div class="p-2 rounded-2 cl-card--soft">
           <div class="d-flex justify-content-between align-items-center mb-1">
             <span class="cl-badge cl-badge--accent">Event Published</span>
-            <span class="text-muted" style="font-size: 11px;">12m ago</span>
+            <span class="cl-text-muted cl-font-11">12m ago</span>
           </div>
-          <p class="mb-0 text-muted" style="font-size: 12px;">Admin published CodeMind AI Jam.</p>
+          <p class="mb-0 cl-text-muted cl-font-12">Admin published CodeMind AI Jam.</p>
         </div>
-        <div class="p-2 rounded-2" style="background: var(--surface-2);">
+        <div class="p-2 rounded-2 cl-card--soft">
           <div class="d-flex justify-content-between align-items-center mb-1">
             <span class="cl-badge cl-badge--warning">Judge Assigned</span>
-            <span class="text-muted" style="font-size: 11px;">45m ago</span>
+            <span class="cl-text-muted cl-font-11">45m ago</span>
           </div>
-          <p class="mb-0 text-muted" style="font-size: 12px;">Added David Kim to Campus Climate Jam.</p>
+          <p class="mb-0 cl-text-muted cl-font-12">Added David Kim to Campus Climate Jam.</p>
         </div>
       </div>
     </div>

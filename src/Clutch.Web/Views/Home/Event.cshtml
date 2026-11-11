@@ -7,16 +7,16 @@
 <div class="mb-4">
   <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
     <partial name="_Badge" model="(Model.Status, Model.StatusClass)" />
-    <span class="text-muted" style="font-size: 13px;">Organized by Clutch Official</span>
+    <span class="cl-text-muted cl-font-13">Organized by Clutch Official</span>
   </div>
   <h1 class="cl-title-page mb-2">@Model.Title</h1>
-  <p class="cl-text-muted fs-5 mb-4" style="max-width: 70ch;">@Model.Blurb</p>
+  <p class="cl-text-muted fs-5 cl-max-70ch mb-4">@Model.Blurb</p>
 
   <!-- Key Facts Strip -->
   <div class="row g-3 mb-4">
     <div class="col-6 col-md-3">
       <div class="cl-card p-3">
-        <div class="d-flex align-items-center gap-2 text-muted mb-1" style="font-size: 12px;">
+        <div class="d-flex align-items-center gap-2 cl-text-muted cl-font-12 mb-1">
           <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-calendar"></use></svg>
           <span>Duration</span>
         </div>
@@ -25,7 +25,7 @@
     </div>
     <div class="col-6 col-md-3">
       <div class="cl-card p-3">
-        <div class="d-flex align-items-center gap-2 text-muted mb-1" style="font-size: 12px;">
+        <div class="d-flex align-items-center gap-2 cl-text-muted cl-font-12 mb-1">
           <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-users"></use></svg>
           <span>Team Size</span>
         </div>
@@ -34,7 +34,7 @@
     </div>
     <div class="col-6 col-md-3">
       <div class="cl-card p-3">
-        <div class="d-flex align-items-center gap-2 text-muted mb-1" style="font-size: 12px;">
+        <div class="d-flex align-items-center gap-2 cl-text-muted cl-font-12 mb-1">
           <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-trophy"></use></svg>
           <span>Prize Pool</span>
         </div>
@@ -43,7 +43,7 @@
     </div>
     <div class="col-6 col-md-3">
       <div class="cl-card p-3">
-        <div class="d-flex align-items-center gap-2 text-muted mb-1" style="font-size: 12px;">
+        <div class="d-flex align-items-center gap-2 cl-text-muted cl-font-12 mb-1">
           <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-map-pin"></use></svg>
           <span>Location</span>
         </div>
@@ -99,7 +99,7 @@
 
         <div class="cl-card">
           <h3 class="cl-title-card mb-3">Rules and guidelines</h3>
-          <ul class="d-flex flex-column gap-2 cl-text-muted mb-0 ps-3" style="font-size: 14px;">
+          <ul class="d-flex flex-column gap-2 cl-text-muted cl-font-14 mb-0 ps-3">
             <li>Fresh code only: All project code must be authored during the hackathon period.</li>
             <li>Open source libraries and APIs are allowed and encouraged.</li>
             <li>Teams must adhere to the community code of conduct and treat peers with respect.</li>
@@ -116,7 +116,7 @@
               <h3 class="cl-title-card mb-0">Healthcare & Biotech</h3>
               <span class="cl-badge cl-badge--accent">Track 1</span>
             </div>
-            <p class="cl-text-muted mb-0" style="font-size: 14px;">
+            <p class="cl-text-muted cl-font-14 mb-0">
               Build intelligent diagnostic helpers, patient triage tools, and preventative wellness services using modern APIs.
             </p>
           </div>
@@ -126,7 +126,7 @@
               <h3 class="cl-title-card mb-0">Education & Accessibility</h3>
               <span class="cl-badge cl-badge--accent">Track 2</span>
             </div>
-            <p class="cl-text-muted mb-0" style="font-size: 14px;">
+            <p class="cl-text-muted cl-font-14 mb-0">
               Empower underserved students and learners worldwide with tailored tutoring, adaptive interfaces, and interactive learning tools.
             </p>
           </div>
@@ -136,7 +136,7 @@
               <h3 class="cl-title-card mb-0">Open Innovation</h3>
               <span class="cl-badge cl-badge--accent">Track 3</span>
             </div>
-            <p class="cl-text-muted mb-0" style="font-size: 14px;">
+            <p class="cl-text-muted cl-font-14 mb-0">
               Have an idea that does not fit conventional tracks? Explore bleeding-edge AI models, developer tooling, or decentralized protocols.
             </p>
           </div>
@@ -151,9 +151,9 @@
             <div class="cl-card d-flex justify-content-between align-items-start gap-3">
               <div>
                 <h3 class="cl-title-card mb-1">@c.Name</h3>
-                <p class="cl-text-muted mb-0" style="font-size: 14px;">@c.Hint</p>
+                <p class="cl-text-muted cl-font-14 mb-0">@c.Hint</p>
               </div>
-              <span class="cl-badge cl-badge--accent" style="font-size: 13px;">@c.Weight% weight</span>
+              <span class="cl-badge cl-badge--accent cl-font-13">@c.Weight% weight</span>
             </div>
           }
         </div>
@@ -164,31 +164,31 @@
         <div class="cl-card">
           <div class="d-flex flex-column gap-4">
             <div class="d-flex gap-3">
-              <div class="fw-bold text-primary" style="min-width: 90px; font-size: 13px;">Dec 5, 09:00</div>
+              <div class="fw-bold text-primary cl-font-13 min-w-90">Dec 5, 09:00</div>
               <div>
                 <div class="fw-semibold text-body">Opening Ceremony & Hacking Begins</div>
-                <div class="text-muted" style="font-size: 13px;">Live broadcast on YouTube and keynotes from sponsors.</div>
+                <div class="cl-text-muted cl-font-13">Live broadcast on YouTube and keynotes from sponsors.</div>
               </div>
             </div>
             <div class="d-flex gap-3">
-              <div class="fw-bold text-primary" style="min-width: 90px; font-size: 13px;">Dec 5, 14:00</div>
+              <div class="fw-bold text-primary cl-font-13 min-w-90">Dec 5, 14:00</div>
               <div>
                 <div class="fw-semibold text-body">Mentor Office Hours</div>
-                <div class="text-muted" style="font-size: 13px;">One-on-one architecture and product reviews with judges.</div>
+                <div class="cl-text-muted cl-font-13">One-on-one architecture and product reviews with judges.</div>
               </div>
             </div>
             <div class="d-flex gap-3">
-              <div class="fw-bold text-primary" style="min-width: 90px; font-size: 13px;">Dec 6, 12:00</div>
+              <div class="fw-bold text-primary cl-font-13 min-w-90">Dec 6, 12:00</div>
               <div>
                 <div class="fw-semibold text-body">Project Submission Deadline</div>
-                <div class="text-muted" style="font-size: 13px;">Code repositories and demo videos locked for evaluation.</div>
+                <div class="cl-text-muted cl-font-13">Code repositories and demo videos locked for evaluation.</div>
               </div>
             </div>
             <div class="d-flex gap-3">
-              <div class="fw-bold text-primary" style="min-width: 90px; font-size: 13px;">Dec 6, 17:00</div>
+              <div class="fw-bold text-primary cl-font-13 min-w-90">Dec 6, 17:00</div>
               <div>
                 <div class="fw-semibold text-body">Closing & Scoreboard Reveal</div>
-                <div class="text-muted" style="font-size: 13px;">Live announcement of winners and prize distribution.</div>
+                <div class="cl-text-muted cl-font-13">Live announcement of winners and prize distribution.</div>
               </div>
             </div>
           </div>
@@ -200,10 +200,10 @@
         <div class="cl-card">
           <div class="d-flex align-items-center gap-2 mb-2">
             <span class="cl-badge cl-badge--accent">Official Broadcast</span>
-            <span class="text-muted" style="font-size: 12px;">Posted 2 hours ago</span>
+            <span class="cl-text-muted cl-font-12">Posted 2 hours ago</span>
           </div>
           <h3 class="cl-title-card mb-2">API Credits Distributed</h3>
-          <p class="cl-text-muted mb-0" style="font-size: 14px;">
+          <p class="cl-text-muted cl-font-14 mb-0">
             Sponsor API keys and $200 in cloud credits have been distributed to team leads via email. Check your spam inbox if you have not received them.
           </p>
         </div>
@@ -213,14 +213,14 @@
 
   <!-- Right Side: Sticky Action Card with Countdown -->
   <aside class="col-12 col-lg-4">
-    <div class="cl-card position-sticky" style="top: 88px;">
+    <div class="cl-card cl-sticky-sidebar">
       <div class="mb-4">
-        <div class="d-flex align-items-center gap-2 text-muted mb-1" style="font-size: 13px;">
+        <div class="d-flex align-items-center gap-2 cl-text-muted cl-font-13 mb-1">
           <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-clock"></use></svg>
           <span>Registration closes in</span>
         </div>
         <div class="cl-title-section text-body tabular-nums">2 days 14 hours</div>
-        <p class="cl-text-muted mt-1 mb-0" style="font-size: 13px;">Deadline: Dec 3, 23:59 UTC</p>
+        <p class="cl-text-muted cl-font-13 mt-1 mb-0">Deadline: Dec 3, 23:59 UTC</p>
       </div>
 
       <div class="d-grid gap-2 mb-4">
@@ -235,20 +235,20 @@
         </button>
 
         <div class="collapse" id="join-box">
-          <div class="p-3 bg-surface-2 rounded-2 mt-2 border" style="background: var(--surface-2);">
+          <div class="p-3 cl-card--soft rounded-2 mt-2 border">
             <div class="cl-field mb-2">
-              <label class="cl-label" for="join-code">Squad Join Code</label>
-              <input id="join-code" class="cl-input" placeholder="e.g. K7Q2M9XD" maxlength="8" style="text-transform: uppercase;" />
+              <label class="cl-label" for="join-code">Team Join Code</label>
+              <input id="join-code" class="cl-input text-uppercase" placeholder="e.g. K7Q2M9XD" maxlength="8" />
             </div>
-            <button class="cl-btn cl-btn--primary cl-btn--sm w-100" type="button" onclick="clToast('Joined team successfully')">
-              Join squad
+            <button class="cl-btn cl-btn--primary cl-btn--sm cl-w-100" type="button" onclick="clToast('Joined team successfully')">
+              Join team
             </button>
           </div>
         </div>
       </div>
 
       <div class="pt-3 border-top">
-        <a class="d-flex justify-content-between align-items-center text-muted" asp-action="Leaderboard" asp-route-id="@Model.Id" style="font-size: 13px;">
+        <a class="d-flex justify-content-between align-items-center cl-text-muted cl-font-13" asp-action="Leaderboard" asp-route-id="@Model.Id">
           <span>View live event leaderboard</span>
           <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-chevron-right"></use></svg>
         </a>

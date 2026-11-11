@@ -7,7 +7,7 @@
   <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-2">
     <div class="d-flex align-items-center gap-2">
       <partial name="_Badge" model='(Model.Status.ToString(), Model.Status == Clutch.Web.Domain.HackathonStatus.Published ? "open" : "draft")' />
-      <span class="text-muted" style="font-size: 13px;">Hosted by @Model.OrganizerName</span>
+      <span class="cl-text-muted cl-font-13">Hosted by @Model.OrganizerName</span>
     </div>
 
     @if (User.IsInRole("Admin") || (User.Identity?.IsAuthenticated == true && User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value == Model.OrganizerId))
@@ -16,7 +16,7 @@
         <button class="cl-btn cl-btn--secondary cl-btn--sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
           Manage status
         </button>
-        <ul class="dropdown-menu dropdown-menu-end shadow-sm" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);">
+        <ul class="dropdown-menu dropdown-menu-end shadow-sm">
           <li>
             <form asp-action="UpdateStatus" asp-route-id="@Model.Id" method="post" class="m-0">
               @Html.AntiForgeryToken()
@@ -44,31 +44,31 @@
   </div>
 
   <h1 class="cl-title-page mb-2">@Model.Title</h1>
-  <p class="cl-text-muted fs-5 mb-0" style="max-width: 65ch;">@Model.Description</p>
+  <p class="cl-text-muted fs-5 cl-max-65ch mb-0">@Model.Description</p>
 </div>
 
 <div class="row g-3 mb-4">
   <div class="col-6 col-md-3">
     <div class="cl-card p-3">
-      <div class="text-muted mb-1" style="font-size: 12px;">Duration</div>
+      <div class="cl-text-muted cl-font-12 mb-1">Duration</div>
       <div class="fw-semibold text-body">@Model.StartsAt.ToString("MMM d") – @Model.EndsAt.ToString("MMM d")</div>
     </div>
   </div>
   <div class="col-6 col-md-3">
     <div class="cl-card p-3">
-      <div class="text-muted mb-1" style="font-size: 12px;">Teams</div>
+      <div class="cl-text-muted cl-font-12 mb-1">Teams</div>
       <div class="fw-semibold text-body">@Model.Teams.Count registered</div>
     </div>
   </div>
   <div class="col-6 col-md-3">
     <div class="cl-card p-3">
-      <div class="text-muted mb-1" style="font-size: 12px;">Team Limit</div>
+      <div class="cl-text-muted cl-font-12 mb-1">Team Limit</div>
       <div class="fw-semibold text-body">Up to @Model.MaxTeamSize members</div>
     </div>
   </div>
   <div class="col-6 col-md-3">
     <div class="cl-card p-3">
-      <div class="text-muted mb-1" style="font-size: 12px;">Registration</div>
+      <div class="cl-text-muted cl-font-12 mb-1">Registration</div>
       <div class="fw-semibold text-body">@(Model.IsRegistrationOpen ? "Open" : "Closed")</div>
     </div>
   </div>
@@ -87,7 +87,7 @@
         <div class="d-flex flex-wrap gap-2">
           @foreach (var track in Model.Tracks)
           {
-            <span class="cl-badge cl-badge--accent" style="font-size: 13px; padding: 4px 12px;">@track.Name</span>
+            <span class="cl-badge cl-badge--accent cl-font-13 py-1 px-3">@track.Name</span>
           }
         </div>
       }
@@ -107,7 +107,7 @@
       </div>
 
       <div class="collapse mb-3" id="newAnnouncementForm">
-        <form asp-action="PostAnnouncement" asp-route-id="@Model.Id" method="post" class="p-3 rounded-2 border" style="background: var(--surface-2);">
+        <form asp-action="PostAnnouncement" asp-route-id="@Model.Id" method="post" class="p-3 rounded-2 border cl-card--soft">
           @Html.AntiForgeryToken()
           <div class="cl-field mb-2">
             <label class="cl-label">Announcement Title</label>
@@ -123,34 +123,34 @@
 
       @if (!Model.Announcements.Any())
       {
-        <p class="cl-text-muted mb-0" style="font-size: 14px;">No announcements posted yet.</p>
+        <p class="cl-text-muted cl-font-14 mb-0">No announcements posted yet.</p>
       }
       else
       {
         <div class="d-flex flex-column gap-3">
           @foreach (var a in Model.Announcements)
           {
-            <div class="p-3 rounded-2" style="background: var(--surface-2);">
+            <div class="p-3 rounded-2 cl-card--soft">
               <div class="d-flex justify-content-between align-items-center mb-1">
-                <strong class="text-body" style="font-size: 14px;">@a.Title</strong>
-                <span class="text-muted" style="font-size: 11px;">@a.CreatedAt.ToString("MMM d, HH:mm") UTC</span>
+                <strong class="text-body cl-font-14">@a.Title</strong>
+                <span class="cl-text-muted cl-font-11">@a.CreatedAt.ToString("MMM d, HH:mm") UTC</span>
               </div>
-              <p class="cl-text-muted mb-0" style="font-size: 13px; line-height: 1.5;">@a.Body</p>
+              <p class="cl-text-muted cl-font-13 mb-0">@a.Body</p>
             </div>
           }
         </div>
       }
     </div>
 
-    <!-- Registered Squads -->
+    <!-- Registered Teams -->
     <div class="cl-card">
       <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="cl-title-card mb-0">Registered squads (@Model.Teams.Count)</h2>
+        <h2 class="cl-title-card mb-0">Registered teams (@Model.Teams.Count)</h2>
       </div>
 
       @if (!Model.Teams.Any())
       {
-        <p class="cl-text-muted mb-0" style="font-size: 14px;">No squads registered yet.</p>
+        <p class="cl-text-muted cl-font-14 mb-0">No teams registered yet.</p>
       }
       else
       {
@@ -158,7 +158,7 @@
           <table class="cl-table">
             <thead>
               <tr>
-                <th>Squad</th>
+                <th>Team</th>
                 <th>Lead</th>
                 <th>Members</th>
                 <th>Status</th>
@@ -178,7 +178,7 @@
                     }
                     else
                     {
-                      <span class="text-muted" style="font-size: 13px;">Pending</span>
+                      <span class="cl-text-muted cl-font-13">Pending</span>
                     }
                   </td>
                 </tr>
@@ -191,17 +191,17 @@
   </div>
 
   <div class="col-12 col-lg-4">
-    <div class="cl-card position-sticky" style="top: 88px;">
+    <div class="cl-card cl-sticky-sidebar">
       <h2 class="cl-title-card mb-3">Compete in this event</h2>
 
       @if (Model.IsRegistrationOpen)
       {
-        <p class="cl-text-muted mb-3" style="font-size: 13px;">Registration is open. Form a squad or join an existing team with an invite code.</p>
+        <p class="cl-text-muted cl-font-13 mb-3">Registration is open. Form a team or join an existing team with an invite code.</p>
 
         @if (User.Identity?.IsAuthenticated == true)
         {
-          <a class="cl-btn cl-btn--primary w-100 mb-2" asp-controller="Teams" asp-action="Create" asp-route-hackathonId="@Model.Id">Create a team</a>
-          <a class="cl-btn cl-btn--secondary w-100 mb-3" asp-controller="Teams" asp-action="Join" asp-route-hackathonId="@Model.Id">Join with code</a>
+          <a class="cl-btn cl-btn--primary cl-w-100 mb-2" asp-controller="Teams" asp-action="Create" asp-route-hackathonId="@Model.Id">Create team</a>
+          <a class="cl-btn cl-btn--secondary cl-w-100 mb-3" asp-controller="Teams" asp-action="Join" asp-route-hackathonId="@Model.Id">Join with code</a>
         }
         else
         {
@@ -210,13 +210,13 @@
       }
       else
       {
-        <div class="p-3 rounded-2 mb-3" style="background: var(--warning-soft); color: var(--warning-fg); font-size: 13px;">
+        <div class="p-3 rounded-2 mb-3 cl-badge--warning cl-font-13">
           Registration is closed for this event.
         </div>
       }
 
       <div class="pt-3 border-top d-flex justify-content-between align-items-center">
-        <span class="fw-semibold text-body" style="font-size: 13px;">Live Scoreboard</span>
+        <span class="fw-semibold text-body cl-font-13">Live Scoreboard</span>
         <a class="cl-btn cl-btn--ghost cl-btn--sm" asp-controller="Leaderboard" asp-action="Index" asp-route-hackathonId="@Model.Id">
           <span>View ranks</span>
           <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-chevron-right"></use></svg>

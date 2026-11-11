@@ -1,22 +1,28 @@
 @model Clutch.Web.Models.ErrorViewModel
 @{
-    ViewData["Title"] = "Something Went Wrong";
+    ViewData["Title"] = "Something went wrong";
 }
 
 <div class="row justify-content-center py-5">
   <div class="col-12 col-md-8 col-lg-6">
+    <div class="text-center mb-4">
+      <a asp-controller="Home" asp-action="Index" aria-label="Clutch home" class="d-inline-block">
+        <partial name="_Logo" model='("md", "full")' />
+      </a>
+    </div>
+
     <div class="cl-card text-center p-5">
-      <div class="d-inline-flex align-items-center justify-content-center p-3 rounded-circle mb-3" style="background: var(--danger-soft); color: var(--danger-fg);">
+      <div class="d-inline-flex align-items-center justify-content-center p-3 rounded-circle mb-3 bg-danger-subtle text-danger">
         <svg class="cl-icon cl-icon-lg"><use href="/img/icons.svg#icon-alert-circle"></use></svg>
       </div>
       <h1 class="cl-title-section mb-2">Something went wrong</h1>
-      <p class="cl-text-muted mx-auto mb-4" style="max-width: 48ch;">
+      <p class="cl-text-muted cl-max-48ch mx-auto mb-4">
         An unexpected error occurred while processing your request. Our monitoring team has logged this occurrence.
       </p>
 
       @if (Model?.ShowRequestId == true)
       {
-        <div class="p-2 rounded-2 mb-4 d-inline-block text-muted" style="background: var(--surface-2); font-size: 12px;">
+        <div class="p-2 rounded-2 mb-4 d-inline-block cl-card--soft cl-font-12 text-muted">
           <span>Request ID:</span> <code class="text-body fw-semibold">@Model.RequestId</code>
         </div>
       }

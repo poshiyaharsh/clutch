@@ -1,6 +1,6 @@
 @model Clutch.Web.Models.TeamJoinViewModel
 @{
-    ViewData["Title"] = "Join Squad";
+    ViewData["Title"] = "Join Team";
 }
 
 <div class="row justify-content-center py-4">
@@ -8,8 +8,8 @@
     <div class="cl-card p-4 p-md-5">
       <div class="mb-4">
         <span class="cl-badge cl-badge--accent mb-2">@Model.HackathonTitle</span>
-        <h1 class="cl-title-section mb-1">Enter squad code</h1>
-        <p class="cl-text-muted mb-0" style="font-size: 14px;">Enter the 8-character invite code provided by your squad leader.</p>
+        <h1 class="cl-title-section mb-1">Enter team code</h1>
+        <p class="cl-text-muted cl-font-14 mb-0">Enter the 8-character invite code provided by your team leader.</p>
       </div>
 
       <form asp-action="Join" method="post" novalidate>
@@ -21,11 +21,11 @@
 
         <div class="cl-field">
           <label class="cl-label" asp-for="JoinCode">Join code</label>
-          <input class="cl-input text-uppercase fw-bold text-center" asp-for="JoinCode" placeholder="ABC12345" maxlength="16" required style="letter-spacing: 0.15em; font-size: 18px;" />
+          <input class="cl-input text-uppercase fw-bold text-center cl-letter-spacing-wider cl-font-18" asp-for="JoinCode" placeholder="ABC12345" maxlength="16" required />
           <span class="cl-error" asp-validation-for="JoinCode"></span>
         </div>
 
-        <button class="cl-btn cl-btn--primary w-100 mt-3" type="submit">Join squad</button>
+        <button class="cl-btn cl-btn--primary cl-w-100 mt-3" type="submit">Join team</button>
       </form>
     </div>
   </div>

@@ -1,17 +1,20 @@
 @model Clutch.Web.Models.RegisterViewModel
 @{
-    ViewData["Title"] = "Create Account";
+    ViewData["Title"] = "Create account";
 }
 
 <div class="row justify-content-center py-5">
   <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+    <div class="text-center mb-4">
+      <a asp-controller="Home" asp-action="Index" aria-label="Clutch home" class="d-inline-block">
+        <partial name="_Logo" model='("lg", "full")' />
+      </a>
+    </div>
+
     <div class="cl-card p-4 p-md-5">
       <div class="text-center mb-4">
-        <span class="cl-brand-logo bg-primary text-white mx-auto mb-3" style="width: 36px; height: 36px;">
-          <svg class="cl-icon" style="width: 20px; height: 20px; stroke: #fff;"><use href="/img/icons.svg#icon-sparkles"></use></svg>
-        </span>
-        <h1 class="cl-title-card mb-1" style="font-size: 22px;">Create your account</h1>
-        <p class="cl-text-muted mb-0" style="font-size: 14px;">Compete, collaborate, and build with Clutch</p>
+        <h1 class="cl-title-card cl-font-22 mb-1">Create your account</h1>
+        <p class="cl-text-muted cl-font-14 mb-0">Compete, collaborate, and build with Clutch</p>
       </div>
 
       <form asp-action="Register" method="post" novalidate>
@@ -40,7 +43,7 @@
         <div class="cl-field">
           <label class="cl-label" asp-for="DesiredRole">Account Role</label>
           <select class="cl-select" asp-for="DesiredRole">
-            <option value="Participant">Participant — Join squads and build projects</option>
+            <option value="Participant">Participant — Join teams and build projects</option>
             <option value="Organizer">Organizer — Create and manage hackathons</option>
           </select>
         </div>
@@ -50,7 +53,7 @@
             <div class="cl-field">
               <label class="cl-label" asp-for="Password">Password</label>
               <div class="position-relative">
-                <input id="reg-pwd" class="cl-input" asp-for="Password" type="password" placeholder="At least 6 chars" autocomplete="new-password" required style="padding-right: 40px;" />
+                <input id="reg-pwd" class="cl-input cl-input-pwd" asp-for="Password" type="password" placeholder="At least 6 chars" autocomplete="new-password" required />
                 <button type="button" class="btn btn-link position-absolute top-50 end-0 translate-middle-y text-muted pe-3 p-0" onclick="togglePasswordVisibility('reg-pwd', this)" aria-label="Toggle password visibility">
                   <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-eye"></use></svg>
                 </button>
@@ -63,7 +66,7 @@
             <div class="cl-field">
               <label class="cl-label" asp-for="ConfirmPassword">Confirm Password</label>
               <div class="position-relative">
-                <input id="reg-cpwd" class="cl-input" asp-for="ConfirmPassword" type="password" placeholder="Repeat password" autocomplete="new-password" required style="padding-right: 40px;" />
+                <input id="reg-cpwd" class="cl-input cl-input-pwd" asp-for="ConfirmPassword" type="password" placeholder="Repeat password" autocomplete="new-password" required />
                 <button type="button" class="btn btn-link position-absolute top-50 end-0 translate-middle-y text-muted pe-3 p-0" onclick="togglePasswordVisibility('reg-cpwd', this)" aria-label="Toggle confirm password visibility">
                   <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-eye"></use></svg>
                 </button>
@@ -77,7 +80,7 @@
           <span>Create account</span>
         </button>
 
-        <p class="text-center cl-text-muted mb-0" style="font-size: 13px;">
+        <p class="text-center cl-text-muted cl-font-13 mb-0">
           Already have an account? <a asp-action="Login" class="fw-semibold">Sign in</a>
         </p>
       </form>

@@ -1,13 +1,16 @@
 @model IReadOnlyList<Clutch.Web.Domain.AuditLog>
 @{
-    ViewData["Title"] = "Platform Administration";
+    ViewData["Title"] = "Platform administration";
     var users = ViewData["Users"] as List<Clutch.Web.Domain.ApplicationUser> ?? [];
 }
 
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
-  <div>
-    <h1 class="cl-title-page mb-1">Platform Administration</h1>
-    <p class="cl-text-muted mb-0" style="font-size: 14px;">System health, directory oversight, and platform audit logs.</p>
+  <div class="d-flex align-items-center gap-3">
+    <partial name="_Logo" model='("md", "mark-only")' />
+    <div>
+      <h1 class="cl-title-page mb-1">Platform administration</h1>
+      <p class="cl-text-muted cl-font-14 mb-0">System health, directory oversight, and platform audit logs.</p>
+    </div>
   </div>
   <div class="d-flex gap-2">
     <a class="cl-btn cl-btn--secondary cl-btn--sm" asp-action="Audit">
@@ -32,7 +35,7 @@
   </div>
   <div class="col-12 col-sm-6 col-lg-3">
     <div class="cl-stat-tile">
-      <div class="cl-stat-title">Squads Created</div>
+      <div class="cl-stat-title">Teams Created</div>
       <div class="cl-stat-value">@(ViewData["TeamsCount"] ?? 0)</div>
     </div>
   </div>
@@ -47,8 +50,8 @@
 <div class="row g-4 mb-5">
   <div class="col-12 col-lg-8">
     <div class="cl-card p-0 overflow-hidden">
-      <div class="p-3 border-bottom d-flex justify-content-between align-items-center" style="background: var(--surface);">
-        <h2 class="cl-title-card mb-0" style="font-size: 15px;">Recent Users</h2>
+      <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
+        <h2 class="cl-title-card cl-font-15 mb-0">Recent Users</h2>
         <span class="cl-badge">@users.Count total</span>
       </div>
       <div class="table-responsive">
@@ -66,9 +69,9 @@
             {
               <tr>
                 <td><strong>@u.DisplayName</strong></td>
-                <td class="text-muted">@u.Email</td>
+                <td class="cl-text-muted">@u.Email</td>
                 <td>@(u.CollegeOrCompany ?? "Independent")</td>
-                <td class="text-muted tabular-nums" style="font-size: 13px;">@u.CreatedAt.ToString("MMM d, yyyy")</td>
+                <td class="cl-text-muted tabular-nums cl-font-13">@u.CreatedAt.ToString("MMM d, yyyy")</td>
               </tr>
             }
           </tbody>
@@ -83,12 +86,12 @@
       <div class="d-flex flex-column gap-3">
         @foreach (var log in Model.Take(5))
         {
-          <div class="p-2 rounded-2" style="background: var(--surface-2);">
+          <div class="p-2 rounded-2 cl-card--soft">
             <div class="d-flex justify-content-between align-items-center mb-1">
               <span class="cl-badge cl-badge--accent">@log.Action</span>
-              <span class="text-muted tabular-nums" style="font-size: 11px;">@log.CreatedAt.ToString("HH:mm") UTC</span>
+              <span class="cl-text-muted tabular-nums cl-font-11">@log.CreatedAt.ToString("HH:mm") UTC</span>
             </div>
-            <div class="text-muted" style="font-size: 12px;">@(log.Actor?.DisplayName ?? "System") &bull; @log.EntityType #@log.EntityId</div>
+            <div class="cl-text-muted cl-font-12">@(log.Actor?.DisplayName ?? "System") &bull; @log.EntityType #@log.EntityId</div>
           </div>
         }
       </div>

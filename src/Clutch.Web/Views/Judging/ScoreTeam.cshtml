@@ -1,34 +1,34 @@
 @model Clutch.Web.Models.RubricScoreFormViewModel
 @{
-    ViewData["Title"] = $"Score Squad — {Model.TeamName}";
+    ViewData["Title"] = $"Score Team — {Model.TeamName}";
 }
 
 <div class="mb-4">
   <div class="d-flex align-items-center gap-2 mb-2">
     <span class="cl-badge cl-badge--warning">Rubric scoring</span>
-    <a class="text-muted d-inline-flex align-items-center gap-1 text-decoration-none" asp-action="HackathonTeams" asp-route-id="@Model.HackathonId" style="font-size: 13px;">
+    <a class="text-muted d-inline-flex align-items-center gap-1 text-decoration-none cl-font-13" asp-action="HackathonTeams" asp-route-id="@Model.HackathonId">
       <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-chevron-left"></use></svg>
-      <span>Back to squad list</span>
+      <span>Back to team list</span>
     </a>
   </div>
   <h1 class="cl-title-page mb-1">Evaluating @Model.TeamName</h1>
-  <p class="cl-text-muted mb-0" style="font-size: 14px;">@Model.HackathonTitle @(string.IsNullOrEmpty(Model.TrackName) ? "" : $"• Track: {Model.TrackName}")</p>
+  <p class="cl-text-muted cl-font-14 mb-0">@Model.HackathonTitle @(string.IsNullOrEmpty(Model.TrackName) ? "" : $"• Track: {Model.TrackName}")</p>
 </div>
 
 <div class="row g-4 mb-5">
   <div class="col-12 col-lg-5">
     <!-- Project Submission Preview -->
-    <div class="cl-card position-sticky mb-4" style="top: 88px;">
+    <div class="cl-card cl-sticky-sidebar mb-4">
       <h2 class="cl-title-card mb-3">Project submission</h2>
       <h3 class="cl-title-card text-primary mb-2">@(Model.ProjectTitle ?? "Untitled project")</h3>
-      <p class="cl-text-muted mb-4" style="white-space: pre-line; font-size: 14px; line-height: 1.5;">
+      <p class="cl-text-muted cl-pre-line cl-font-14 cl-line-height-15 mb-4">
         @(Model.ProjectDescription ?? "No description provided.")
       </p>
 
       <div class="d-grid gap-2">
         @if (!string.IsNullOrEmpty(Model.RepoUrl))
         {
-          <a class="cl-btn cl-btn--secondary w-100 justify-content-between" href="@Model.RepoUrl" target="_blank" rel="noopener">
+          <a class="cl-btn cl-btn--secondary cl-w-100 justify-content-between" href="@Model.RepoUrl" target="_blank" rel="noopener">
             <span class="d-flex align-items-center gap-2">
               <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-search"></use></svg>
               <span>Inspect Source Repository</span>
@@ -38,7 +38,7 @@
         }
         @if (!string.IsNullOrEmpty(Model.DemoUrl))
         {
-          <a class="cl-btn cl-btn--secondary w-100 justify-content-between" href="@Model.DemoUrl" target="_blank" rel="noopener">
+          <a class="cl-btn cl-btn--secondary cl-w-100 justify-content-between" href="@Model.DemoUrl" target="_blank" rel="noopener">
             <span class="d-flex align-items-center gap-2">
               <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-layers"></use></svg>
               <span>View Live Demo</span>
@@ -55,7 +55,7 @@
     <div class="cl-card">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h2 class="cl-title-card mb-0">Rubric criteria</h2>
-        <span class="text-muted" style="font-size: 12px;">Weights total 100%</span>
+        <span class="text-muted cl-font-12">Weights total 100%</span>
       </div>
 
       <form asp-action="ScoreTeam" asp-route-hackathonId="@Model.HackathonId" asp-route-teamId="@Model.TeamId" method="post" novalidate data-judge-form>
@@ -73,16 +73,16 @@
           <input type="hidden" asp-for="Criteria[i].MaxPoints" />
           <input type="hidden" asp-for="Criteria[i].WeightPercent" />
 
-          <div class="p-3 rounded-2 mb-3 border" style="background: var(--surface-2);">
+          <div class="p-3 rounded-2 mb-3 border cl-surface-2-bg">
             <div class="d-flex justify-content-between align-items-center mb-1">
-              <strong class="text-body" style="font-size: 15px;">@Model.Criteria[i].Name</strong>
+              <strong class="text-body cl-font-15">@Model.Criteria[i].Name</strong>
               <span class="cl-badge cl-badge--accent">
                 Weight: @Model.Criteria[i].WeightPercent% (Max @Model.Criteria[i].MaxPoints pts)
               </span>
             </div>
             @if (!string.IsNullOrEmpty(Model.Criteria[i].Description))
             {
-              <p class="cl-text-muted mb-3" style="font-size: 13px;">@Model.Criteria[i].Description</p>
+              <p class="cl-text-muted cl-font-13 mb-3">@Model.Criteria[i].Description</p>
             }
 
             <div class="row g-2 align-items-center mb-2">
@@ -94,7 +94,7 @@
               </div>
               <div class="col-12 col-sm-8">
                 <label class="cl-label" asp-for="Criteria[i].Comment">Feedback (optional):</label>
-                <input class="cl-input" type="text" asp-for="Criteria[i].Comment" placeholder="Constructive notes for the squad..." />
+                <input class="cl-input" type="text" asp-for="Criteria[i].Comment" placeholder="Constructive notes for the team..." />
               </div>
             </div>
           </div>

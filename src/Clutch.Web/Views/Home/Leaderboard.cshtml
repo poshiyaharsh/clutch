@@ -1,6 +1,6 @@
 @model List<TeamRow>
 @{
-    ViewData["Title"] = "Live Leaderboard — CodeMind AI Hackathon";
+    ViewData["Title"] = "Live leaderboard";
 }
 
 <!-- Leaderboard Header -->
@@ -8,10 +8,10 @@
   <div>
     <div class="d-flex align-items-center gap-2 mb-2">
       <span class="cl-badge cl-badge--accent">CodeMind AI Hackathon</span>
-      <span class="text-muted" style="font-size: 13px;">42 teams competing</span>
+      <span class="cl-text-muted cl-font-13">42 teams competing</span>
     </div>
     <h1 class="cl-title-page mb-1">Live Scoreboard</h1>
-    <p class="cl-text-muted mb-0" style="font-size: 14px;">
+    <p class="cl-text-muted cl-font-14 mb-0">
       Multi-judge weighted evaluation scores. Updated continuously in real time.
     </p>
   </div>
@@ -24,7 +24,7 @@
     </div>
 
     <!-- Track Filter Dropdown -->
-    <select id="track-filter" class="cl-select" style="width: auto; height: 36px; font-size: 13px;" onchange="filterBoard(this.value)">
+    <select id="track-filter" class="cl-select cl-input-select-inline" onchange="filterBoard(this.value)">
       <option value="all">All Tracks</option>
       <option value="Health">Healthcare & Biotech</option>
       <option value="Education">Education & Accessibility</option>
@@ -43,16 +43,16 @@
       <div class="cl-leaderboard-rank">@(i + 1)</div>
       <div class="d-flex align-items-center gap-3">
         <!-- Team Initials Avatar -->
-        <span class="cl-avatar" style="@(isTop ? "background: var(--accent); color: #fff;" : "")">
+        <span class="cl-avatar @(isTop ? "cl-avatar--accent" : "")">
           @(t.Name.Length >= 2 ? t.Name.Substring(0, 2).ToUpperInvariant() : t.Name.ToUpperInvariant())
         </span>
         <div>
-          <div class="fw-semibold text-body" style="font-size: 15px;">@t.Name</div>
+          <div class="fw-semibold text-body cl-font-15">@t.Name</div>
           <div class="d-flex align-items-center gap-2 mt-1">
             <span class="cl-badge">@t.Track</span>
             @if (t.Pending)
             {
-              <span class="text-muted" style="font-size: 12px;">Waiting for judge rubric</span>
+              <span class="cl-text-muted cl-font-12">Waiting for judge rubric</span>
             }
             else
             {
@@ -68,7 +68,7 @@
         <div class="cl-leaderboard-score" data-value="@t.Score">
           @(t.Pending ? "–" : t.Score.ToString("0.0"))
         </div>
-        <div class="text-muted" style="font-size: 11px;">pts / 100</div>
+        <div class="cl-text-muted cl-font-11">pts / 100</div>
       </div>
     </li>
   }
@@ -78,7 +78,7 @@
 <div class="cl-card p-4 d-flex flex-wrap justify-content-between align-items-center gap-3">
   <div>
     <h3 class="cl-title-card mb-1">Simulate Real-Time Evaluation</h3>
-    <p class="cl-text-muted mb-0" style="font-size: 13px;">
+    <p class="cl-text-muted cl-font-13 mb-0">
       Simulates an incoming SignalR score event to demonstrate count-up numbers and FLIP animation.
     </p>
   </div>
@@ -90,22 +90,22 @@
 
 @section Scripts {
 <script>
-  const squadScores = {
+  const teamScores = {
     "Null Pointers": 92.4,
     "Byte Me": 88.1,
     "Git Happens": 85.7,
     "Ctrl+Alt+Elite": 81.3,
-    "Segfault Squad": 77.9,
+    "Segfault Seven": 77.9,
     "Rubber Duckies": 70.0
   };
 
   document.getElementById('simulate').addEventListener('click', () => {
-    const teams = Object.keys(squadScores);
+    const teams = Object.keys(teamScores);
     const pick = teams[Math.floor(Math.random() * teams.length)];
     const bonus = 2 + Math.random() * 8;
-    squadScores[pick] = Math.min(99.9, squadScores[pick] + bonus);
+    teamScores[pick] = Math.min(99.9, teamScores[pick] + bonus);
 
-    clRenderBoard(teams.map(name => ({ team: name, score: squadScores[name] })));
+    clRenderBoard(teams.map(name => ({ team: name, score: teamScores[name] })));
     clToast(`${pick} received an updated evaluation score`);
   });
 

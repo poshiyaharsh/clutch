@@ -1,0 +1,37 @@
+@model (string Size, string Variant)
+@{
+    var size = Model.Size?.ToLowerInvariant() ?? "md";
+    var variant = Model.Variant?.ToLowerInvariant() ?? "full";
+    var isMarkOnly = variant == "mark-only" || variant == "mark";
+
+    var (markDim, totalWidth, totalHeight, rx, strokeW, arcR, dotR, dotCx, fontSize, textY) = size switch
+    {
+        "sm" => (24, isMarkOnly ? 24 : 96, 24, 7, 2.8, 5.5, 1.5, 15.5, 16, 17.5),
+        "lg" => (44, isMarkOnly ? 44 : 172, 44, 12, 5.2, 10.0, 2.7, 28.5, 28, 31.5),
+        _ => (32, isMarkOnly ? 32 : 128, 32, 9, 3.8, 7.2, 2.0, 20.8, 22, 23.5) // "md" default
+    };
+    var uniqueId = Guid.NewGuid().ToString("N").Substring(0, 8);
+}
+
+<svg class="cl-logo-svg" width="@totalWidth" height="@totalHeight" viewBox="0 0 @totalWidth @totalHeight" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="cl-grad-@uniqueId" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="var(--accent)" />
+      <stop offset="100%" stop-color="var(--accent-hover)" />
+    </linearGradient>
+  </defs>
+  <!-- Mark -->
+  <rect x="0" y="0" width="@markDim" height="@markDim" rx="@rx" fill="url(#cl-grad-@uniqueId)" />
+  <!-- Geometric Bold C -->
+  <path d="M @(markDim * 0.62) @(markDim * 0.32) A @arcR @arcR 0 1 0 @(markDim * 0.62) @(markDim * 0.68)"
+        fill="none" stroke="#FFFFFF" stroke-width="@strokeW" stroke-linecap="round" />
+  <!-- Clutch Dot in opening -->
+  <circle cx="@dotCx" cy="@(markDim * 0.50)" r="@dotR" fill="#FFFFFF" />
+
+  @if (!isMarkOnly)
+  {
+    var textX = markDim + (size == "sm" ? 8 : (size == "lg" ? 14 : 10));
+    <!-- Wordmark text rendered with currentColor to match theme text automatically -->
+    @Html.Raw($"<text x=\"{textX}\" y=\"{textY}\" fill=\"currentColor\" font-family=\"var(--font-family)\" font-weight=\"700\" font-size=\"{fontSize}\" letter-spacing=\"-0.03em\">Clutch</text>")
+  }
+</svg>

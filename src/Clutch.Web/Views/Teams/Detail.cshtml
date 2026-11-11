@@ -1,13 +1,13 @@
 @model Clutch.Web.Models.TeamDetailViewModel
 @{
-    ViewData["Title"] = $"{Model.Name} — Squad";
+    ViewData["Title"] = $"{Model.Name} — Team";
 }
 
 <div class="mb-4">
   <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-2">
     <div class="d-flex align-items-center gap-2">
-      <span class="cl-badge cl-badge--accent">Squad</span>
-      <a class="text-muted d-inline-flex align-items-center gap-1 text-decoration-none" asp-controller="Hackathons" asp-action="Detail" asp-route-slug="@Model.HackathonSlug" style="font-size: 13px;">
+      <span class="cl-badge cl-badge--accent">Team</span>
+      <a class="cl-text-muted d-inline-flex align-items-center gap-1 text-decoration-none cl-font-13" asp-controller="Hackathons" asp-action="Detail" asp-route-slug="@Model.HackathonSlug">
         <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-chevron-left"></use></svg>
         <span>@Model.HackathonTitle</span>
       </a>
@@ -15,9 +15,9 @@
 
     @if (Model.IsCurrentUserMember)
     {
-      <form asp-action="Leave" asp-route-id="@Model.Id" method="post" onsubmit="return confirm('Are you sure you want to leave this squad?');" class="m-0">
+      <form asp-action="Leave" asp-route-id="@Model.Id" method="post" onsubmit="return confirm('Are you sure you want to leave this team?');" class="m-0">
         @Html.AntiForgeryToken()
-        <button class="cl-btn cl-btn--danger cl-btn--sm" type="submit">Leave squad</button>
+        <button class="cl-btn cl-btn--danger cl-btn--sm" type="submit">Leave team</button>
       </form>
     }
   </div>
@@ -30,7 +30,7 @@
   <div class="col-12 col-lg-8">
     <div class="cl-card mb-4">
       <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="cl-title-card mb-0">Squad roster (@Model.Members.Count/@Model.MaxTeamSize)</h2>
+        <h2 class="cl-title-card mb-0">Team roster (@Model.Members.Count/@Model.MaxTeamSize)</h2>
         @if (Model.Members.Count < Model.MaxTeamSize && Model.IsRegistrationOpen)
         {
           <span class="cl-badge cl-badge--success">Open slots available</span>
@@ -56,7 +56,7 @@
               <tr>
                 <td>
                   <div class="d-flex align-items-center gap-2">
-                    <span class="cl-avatar cl-avatar-sm">@(m.DisplayName.Length >= 2 ? m.DisplayName.Substring(0, 2).ToUpperInvariant() : "U")</span>
+                    <span class="cl-avatar">@(m.DisplayName.Length >= 2 ? m.DisplayName.Substring(0, 2).ToUpperInvariant() : "U")</span>
                     <strong>@m.DisplayName</strong>
                     @if (m.IsLead)
                     {
@@ -64,8 +64,8 @@
                     }
                   </div>
                 </td>
-                <td class="text-muted">@(m.CollegeOrCompany ?? "Independent")</td>
-                <td class="text-muted tabular-nums" style="font-size: 13px;">@m.JoinedAt.ToString("MMM d")</td>
+                <td class="cl-text-muted">@(m.CollegeOrCompany ?? "Independent")</td>
+                <td class="cl-text-muted tabular-nums cl-font-13">@m.JoinedAt.ToString("MMM d")</td>
                 @if (Model.IsCurrentUserLead)
                 {
                   <td class="text-end">
@@ -112,7 +112,7 @@
             <span class="cl-badge cl-badge--accent">Track: @Model.Submission.TrackName</span>
           </div>
         }
-        <p class="cl-text-muted mb-4" style="white-space: pre-line; font-size: 14px;">@Model.Submission.Description</p>
+        <p class="cl-text-muted cl-font-14 cl-pre-line mb-4">@Model.Submission.Description</p>
 
         <div class="d-flex flex-wrap gap-2 mb-4">
           <a class="cl-btn cl-btn--secondary cl-btn--sm" href="@Model.Submission.RepoUrl" target="_blank" rel="noopener">
@@ -142,7 +142,7 @@
       }
       else
       {
-        <p class="cl-text-muted mb-4" style="font-size: 14px;">No project has been submitted yet for this squad.</p>
+        <p class="cl-text-muted cl-font-14 mb-4">No project has been submitted yet for this team.</p>
         @if (Model.IsCurrentUserLead)
         {
           if (Model.IsSubmissionOpen)
@@ -153,29 +153,29 @@
           }
           else
           {
-            <div class="p-3 rounded-2" style="background: var(--warning-soft); color: var(--warning-fg); font-size: 13px;">
+            <div class="p-3 rounded-2 cl-badge--warning cl-font-13">
               Project submissions are currently closed for this hackathon.
             </div>
           }
         }
         else
         {
-          <p class="text-muted mb-0" style="font-size: 13px;">Only the squad leader (@Model.LeadName) can submit the project.</p>
+          <p class="cl-text-muted cl-font-13 mb-0">Only the team leader (@Model.LeadName) can submit the project.</p>
         }
       }
     </div>
   </div>
 
   <div class="col-12 col-lg-4">
-    <div class="cl-card position-sticky" style="top: 88px;">
-      <h2 class="cl-title-card mb-2">Squad invite code</h2>
-      <p class="cl-text-muted mb-3" style="font-size: 13px;">Share this code with teammates so they can join your squad.</p>
+    <div class="cl-card cl-sticky-sidebar">
+      <h2 class="cl-title-card mb-2">Team invite code</h2>
+      <p class="cl-text-muted cl-font-13 mb-3">Share this code with teammates so they can join your team.</p>
 
-      <div class="p-3 rounded-2 text-center mb-3" style="background: var(--surface-2); border: 1px dashed var(--border);">
+      <div class="p-3 rounded-2 text-center mb-3 cl-card--soft cl-border-dashed">
         <span class="cl-title-section mb-0 text-primary tabular-nums">@Model.JoinCode</span>
       </div>
 
-      <button class="cl-btn cl-btn--secondary w-100" type="button" onclick="copyText('@Model.JoinCode', 'Join code copied to clipboard');">
+      <button class="cl-btn cl-btn--secondary cl-w-100" type="button" onclick="copyText('@Model.JoinCode', 'Join code copied to clipboard');">
         <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-copy"></use></svg>
         <span>Copy code</span>
       </button>

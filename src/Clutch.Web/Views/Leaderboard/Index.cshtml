@@ -8,13 +8,13 @@
   <div>
     <div class="d-flex align-items-center gap-2 mb-2">
       <partial name="_Badge" model='(Model.IsLocked ? "Final results" : "Live scoring", Model.IsLocked ? "success" : "warning")' />
-      <a class="text-muted text-decoration-none d-inline-flex align-items-center gap-1" asp-controller="Hackathons" asp-action="Detail" asp-route-slug="@Model.HackathonSlug" style="font-size: 13px;">
+      <a class="cl-text-muted text-decoration-none d-inline-flex align-items-center gap-1 cl-font-13" asp-controller="Hackathons" asp-action="Detail" asp-route-slug="@Model.HackathonSlug">
         <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-chevron-left"></use></svg>
         <span>@Model.HackathonTitle</span>
       </a>
     </div>
     <h1 class="cl-title-page mb-1">Scoreboard</h1>
-    <p class="cl-text-muted mb-0" style="font-size: 14px;">
+    <p class="cl-text-muted cl-font-14 mb-0">
       Multi-judge weighted evaluation scores. Ties broken by primary criterion score and submission timestamp.
     </p>
   </div>
@@ -30,7 +30,7 @@
 
 @if (!Model.Rows.Any())
 {
-  <partial name="_EmptyState" model='("No ranked squads yet", "Evaluations will appear on this scoreboard once judges submit rubric scores.", "Back to event", $"/hackathons/{Model.HackathonSlug}")' />
+  <partial name="_EmptyState" model='("No ranked teams yet", "Evaluations will appear on this scoreboard once judges submit rubric scores.", "Back to event", $"/hackathons/{Model.HackathonSlug}")' />
 }
 else
 {
@@ -42,11 +42,11 @@ else
       <li class="cl-leaderboard-row @(isTop ? "cl-leaderboard-row--top" : "")" data-team="@row.TeamName">
         <div class="cl-leaderboard-rank">@row.Rank</div>
         <div class="d-flex align-items-center gap-3">
-          <span class="cl-avatar" style="@(isTop ? "background: var(--accent); color: #fff;" : "")">
+          <span class="cl-avatar @(isTop ? "cl-avatar--accent" : "")">
             @(row.TeamName.Length >= 2 ? row.TeamName.Substring(0, 2).ToUpperInvariant() : row.TeamName.ToUpperInvariant())
           </span>
           <div>
-            <div class="fw-semibold text-body" style="font-size: 15px;">@row.TeamName</div>
+            <div class="fw-semibold text-body cl-font-15">@row.TeamName</div>
             <div class="d-flex align-items-center gap-2 mt-1">
               @if (!string.IsNullOrEmpty(row.TrackName))
               {
@@ -54,7 +54,7 @@ else
               }
               @if (row.SubmittedAt.HasValue)
               {
-                <span class="text-muted" style="font-size: 12px;">Submitted @row.SubmittedAt.Value.ToString("MMM d, HH:mm") UTC</span>
+                <span class="cl-text-muted cl-font-12">Submitted @row.SubmittedAt.Value.ToString("MMM d, HH:mm") UTC</span>
               }
             </div>
           </div>
@@ -63,7 +63,7 @@ else
           <div class="cl-leaderboard-score" data-value="@row.TotalScore">
             @row.TotalScore.ToString("F1")
           </div>
-          <div class="text-muted" style="font-size: 11px;">pts / 100</div>
+          <div class="cl-text-muted cl-font-11">pts / 100</div>
         </div>
       </li>
     }

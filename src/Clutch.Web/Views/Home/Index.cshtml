@@ -1,6 +1,6 @@
 @model List<EventCard>
 @{
-    ViewData["Title"] = "Discover Hackathons";
+    ViewData["Title"] = "Discover hackathons";
 }
 
 <!-- Hero Section with subtle accent tint gradient -->
@@ -10,11 +10,11 @@
     <div class="col-12 col-lg-8">
       <div class="d-inline-flex align-items-center gap-2 mb-3">
         <span class="cl-badge cl-badge--accent">Clutch Platform</span>
-        <span class="text-muted" style="font-size: 13px;">Built for engineers, judges & organizers</span>
+        <span class="cl-text-muted cl-font-13">Built for engineers, judges & organizers</span>
       </div>
       <h1 class="cl-title-hero mb-3">The home for world-class hackathons.</h1>
-      <p class="cl-text-muted fs-5 mb-4" style="max-width: 60ch;">
-        Discover premier hackathons, coordinate your squad, submit software projects, and watch the live evaluated scoreboard in real time.
+      <p class="cl-text-muted fs-5 cl-max-60ch mb-4">
+        Discover premier hackathons, coordinate your team, submit software projects, and watch the live evaluated scoreboard in real time.
       </p>
       <div class="d-flex flex-wrap gap-3">
         <a class="cl-btn cl-btn--primary cl-btn--lg" href="#events">
@@ -37,7 +37,7 @@
       <span class="cl-live-dot"></span>
       <span>Live scoring</span>
     </div>
-    <span class="fw-medium text-body" style="font-size: 14px;">Campus Climate Jam is actively in review by judges</span>
+    <span class="fw-medium text-body cl-font-14">Campus Climate Jam is actively in review by judges</span>
   </div>
   <a class="cl-btn cl-btn--ghost cl-btn--sm" asp-action="Leaderboard" asp-route-id="2">
     <span>View scoreboard</span>
@@ -50,17 +50,17 @@
   <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
     <div>
       <h2 id="events-heading" class="cl-title-section mb-1">Featured hackathons</h2>
-      <p class="cl-text-muted mb-0" style="font-size: 14px;">Browse upcoming and ongoing technology hackathons</p>
+      <p class="cl-text-muted cl-font-14 mb-0">Browse upcoming and ongoing technology hackathons</p>
     </div>
 
     <!-- Filter & Search Bar -->
     <div class="d-flex flex-wrap align-items-center gap-2">
-      <div class="position-relative" style="min-width: 220px;">
-        <input type="text" id="event-search" class="cl-input" placeholder="Search events..." style="height: 36px; padding-left: 36px; font-size: 13px;" />
+      <div class="position-relative">
+        <input type="text" id="event-search" class="cl-input cl-input-search-inline" placeholder="Search events..." />
         <svg class="cl-icon cl-icon-sm position-absolute top-50 start-0 translate-middle-y ms-2 text-muted"><use href="/img/icons.svg#icon-search"></use></svg>
       </div>
 
-      <select id="status-filter" class="cl-select" style="width: auto; height: 36px; font-size: 13px; padding-right: 28px;">
+      <select id="status-filter" class="cl-select cl-input-select-inline">
         <option value="all">All statuses</option>
         <option value="open">Open</option>
         <option value="judging">Judging</option>
@@ -82,17 +82,17 @@
           <article class="cl-card cl-card--interactive h-100 d-flex flex-column" onclick="location.href='@Url.Action("Event", new { id = ev.Id })'">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <partial name="_Badge" model="(ev.Status, ev.StatusClass)" />
-              <div class="d-flex align-items-center gap-1 text-muted" style="font-size: 12px;">
+              <div class="d-flex align-items-center gap-1 cl-text-muted cl-font-12">
                 <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-calendar"></use></svg>
                 <span>@ev.DatesText</span>
               </div>
             </div>
 
             <h3 class="cl-title-card mb-2">@ev.Title</h3>
-            <p class="cl-text-muted mb-4 flex-grow-1" style="font-size: 14px; line-height: 1.5;">@ev.Blurb</p>
+            <p class="cl-text-muted cl-font-14 mb-4 flex-grow-1">@ev.Blurb</p>
 
             <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-auto">
-              <div class="d-flex align-items-center gap-2 text-muted" style="font-size: 13px;">
+              <div class="d-flex align-items-center gap-2 cl-text-muted cl-font-13">
                 <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-users"></use></svg>
                 <span><strong>@ev.Teams</strong> teams registered</span>
               </div>
@@ -112,17 +112,17 @@
 <section class="py-5 border-top mb-4">
   <div class="text-center mb-5">
     <h2 class="cl-title-section mb-2">How Clutch works</h2>
-    <p class="cl-text-muted mx-auto" style="max-width: 50ch;">A streamlined journey from registration to winning the scoreboard.</p>
+    <p class="cl-text-muted cl-max-48ch mx-auto">A streamlined journey from registration to winning the scoreboard.</p>
   </div>
 
   <div class="row g-4">
     <div class="col-12 col-md-4">
       <div class="cl-card h-100 p-4">
-        <div class="d-inline-flex align-items-center justify-content-center p-2 rounded-2 mb-3" style="background: var(--accent-soft); color: var(--accent);">
+        <div class="d-inline-flex align-items-center justify-content-center p-2 rounded-2 mb-3 cl-card--accent text-primary">
           <svg class="cl-icon"><use href="/img/icons.svg#icon-users"></use></svg>
         </div>
-        <h3 class="cl-title-card mb-2">1. Form your squad</h3>
-        <p class="cl-text-muted mb-0" style="font-size: 14px;">
+        <h3 class="cl-title-card mb-2">1. Form your team</h3>
+        <p class="cl-text-muted cl-font-14 mb-0">
           Register as an individual or assemble a team with an instant shareable join code.
         </p>
       </div>
@@ -130,11 +130,11 @@
 
     <div class="col-12 col-md-4">
       <div class="cl-card h-100 p-4">
-        <div class="d-inline-flex align-items-center justify-content-center p-2 rounded-2 mb-3" style="background: var(--accent-soft); color: var(--accent);">
+        <div class="d-inline-flex align-items-center justify-content-center p-2 rounded-2 mb-3 cl-card--accent text-primary">
           <svg class="cl-icon"><use href="/img/icons.svg#icon-layers"></use></svg>
         </div>
         <h3 class="cl-title-card mb-2">2. Ship your project</h3>
-        <p class="cl-text-muted mb-0" style="font-size: 14px;">
+        <p class="cl-text-muted cl-font-14 mb-0">
           Submit source repository URLs and live demo links before the deadline locks.
         </p>
       </div>
@@ -142,11 +142,11 @@
 
     <div class="col-12 col-md-4">
       <div class="cl-card h-100 p-4">
-        <div class="d-inline-flex align-items-center justify-content-center p-2 rounded-2 mb-3" style="background: var(--accent-soft); color: var(--accent);">
+        <div class="d-inline-flex align-items-center justify-content-center p-2 rounded-2 mb-3 cl-card--accent text-primary">
           <svg class="cl-icon"><use href="/img/icons.svg#icon-trophy"></use></svg>
         </div>
         <h3 class="cl-title-card mb-2">3. Climb the scoreboard</h3>
-        <p class="cl-text-muted mb-0" style="font-size: 14px;">
+        <p class="cl-text-muted cl-font-14 mb-0">
           Judges score across weighted rubrics, streaming real-time leaderboard movements.
         </p>
       </div>
@@ -156,7 +156,6 @@
 
 @section Scripts {
 <script>
-  // Filter and search logic for event cards
   const searchInput = document.getElementById('event-search');
   const statusFilter = document.getElementById('status-filter');
   const items = document.querySelectorAll('.event-item');
