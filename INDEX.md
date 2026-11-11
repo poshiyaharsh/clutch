@@ -31,7 +31,6 @@
 |---|---|
 | design/clutch-mark.svg, design/clutch-wordmark.svg | Logo mark (favicon) and wordmark |
 | docs/BRAND.md | Name meaning, mark, brand line, voice, usage rules |
-| design/theme.css | Design tokens + base components (copy to wwwroot/css) |
 
 ## .agent/
 | Path | Purpose |
@@ -44,7 +43,7 @@
 |---|---|
 | .github/workflows/ci.yml | Build + test on every push and PR |
 
-## src/ (created during Phase 2+)
+## src/
 | Path | Purpose |
 |---|---|
 | src/Clutch.Web/Clutch.Web.csproj, Program.cs | Web project definition and pipeline configuration |
@@ -78,12 +77,14 @@
 | src/Clutch.Web/Models/SubmissionViewModels.cs | ViewModels for project code and demo submissions |
 | src/Clutch.Web/Models/JudgingViewModels.cs | ViewModels for rubric scoring, judge assignments, and scoreboard rows |
 | src/Clutch.Web/Models/ErrorViewModel.cs | Model for global error page |
-| src/Clutch.Web/Models/MockData.cs | Fake data for design phase |
-| src/Clutch.Web/Views/Shared/_Layout.cshtml | Site shell: header, nav, footer, toast |
-| src/Clutch.Web/Views/Shared/_NotificationBell.cshtml | Bell button + notifications drawer |
-| src/Clutch.Web/Views/Shared/_Toast.cshtml | Toast container |
-| src/Clutch.Web/Views/Shared/_EmptyState.cshtml | Reusable empty state |
-| src/Clutch.Web/Views/Shared/_StatusSticker.cshtml | Status sticker badge |
+| src/Clutch.Web/Models/MockData.cs | Mock data for preview routes |
+| src/Clutch.Web/Views/Shared/_Layout.cshtml | Modern product shell: navbar, search, theme switcher, command menu |
+| src/Clutch.Web/Views/Shared/_Badge.cshtml | Modern pill and status badge component |
+| src/Clutch.Web/Views/Shared/_NotificationBell.cshtml | Notification popover with Lucide bell icon |
+| src/Clutch.Web/Views/Shared/_ThemeToggle.cshtml | Light / Dark / System segmented theme switcher |
+| src/Clutch.Web/Views/Shared/_CommandMenu.cshtml | Ctrl+K / Cmd+K quick command search dialog |
+| src/Clutch.Web/Views/Shared/_Toast.cshtml | Toast notification container |
+| src/Clutch.Web/Views/Shared/_EmptyState.cshtml | Reusable clean empty state |
 | src/Clutch.Web/Views/Shared/Error.cshtml | Friendly global error view |
 | src/Clutch.Web/Views/Account/*.cshtml | Authentication views: Login, Register, AccessDenied |
 | src/Clutch.Web/Views/Hackathons/*.cshtml | Hackathon views: Index, Create, Detail |
@@ -92,20 +93,19 @@
 | src/Clutch.Web/Views/Judging/*.cshtml | Judging views: Index, HackathonTeams, ScoreTeam |
 | src/Clutch.Web/Views/Leaderboard/*.cshtml | Scoreboard views: Index, Hidden |
 | src/Clutch.Web/Views/Admin/*.cshtml | Platform administration and audit trail views |
-| src/Clutch.Web/Views/Home/*.cshtml | Mock pages: Index, Event, Leaderboard, Team, Judge, Organizer, Admin |
-| src/Clutch.Web/wwwroot/css/theme.css | Design tokens + components |
-| src/Clutch.Web/wwwroot/css/site.css | Page-level layout |
-| src/Clutch.Web/wwwroot/js/site.js | Toast, leaderboard re-rank animation, judge total preview |
+| src/Clutch.Web/Views/Home/*.cshtml | Modern views: Index, Event, Leaderboard, Team, Judge, Organizer, Admin |
+| src/Clutch.Web/wwwroot/css/clutch-theme.css | Calm high-end product design tokens and components |
+| src/Clutch.Web/wwwroot/css/site.css | Page-level layout, slim navbar, command palette, dashboard shell |
+| src/Clutch.Web/wwwroot/img/icons.svg | Lucide vector icon SVG sprite (no emoji) |
+| src/Clutch.Web/wwwroot/js/site.js | Theme persistence, command menu, live FLIP leaderboard, judge scoring |
 
 ## tests/
 | Path | Purpose |
 |---|---|
-| tests/Clutch.Tests/Clutch.Tests.csproj | Unit and integration test project (xUnit, FluentAssertions) |
-| tests/Clutch.Tests/SetupTests.cs | Verification test suite for setup, mock data, and preview routes |
-| tests/Clutch.Tests/FoundationTests.cs | Domain service logic, weighted scoring math, and policy tests |
-| tests/Clutch.Tests/CoreFeatureTests.cs | Core feature tests for teams, submissions, deadlines, and hackathons |
-| tests/Clutch.Tests/JudgingTests.cs | Rubric evaluation, lock immutability, conflict prevention, and scoring tests |
-| tests/Clutch.Tests/ExtrasTests.cs | CSV exports, audit logging, email sender, and SignalR hub tests |
-| tests/Clutch.Tests/SecurityAndHardeningTests.cs | Security headers, CSRF enforcement, IDOR checks, and auth boundary tests |
-
-_Antigravity: add rows here as the solution grows._
+| tests/Clutch.Tests/Clutch.Tests.csproj | Test project definition |
+| tests/Clutch.Tests/SetupTests.cs | Verification test for solution wiring and test runner |
+| tests/Clutch.Tests/FoundationTests.cs | EF Core DbContext, user authentication, and entity relation tests |
+| tests/Clutch.Tests/CoreFeatureTests.cs | Core hackathon, team, and submission service integration tests |
+| tests/Clutch.Tests/JudgingTests.cs | Multi-judge rubric scoring, conflict-of-interest, and locking tests |
+| tests/Clutch.Tests/ExtrasTests.cs | SignalR live leaderboard, CSV export, email service, and audit log tests |
+| tests/Clutch.Tests/SecurityAndHardeningTests.cs | Security headers, rate limiting, and CSRF protection tests |

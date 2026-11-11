@@ -1,0 +1,25 @@
+<div class="dropdown">
+  <button type="button" class="cl-btn cl-btn--ghost cl-btn--icon-only" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Toggle theme">
+    <svg class="cl-icon"><use href="/img/icons.svg#icon-sun"></use></svg>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end shadow-sm p-1" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); min-width: 140px;">
+    <li>
+      <button type="button" class="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2" onclick="setTheme('light')" data-theme-value="light">
+        <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-sun"></use></svg>
+        <span style="font-size: 13px;">Light</span>
+      </button>
+    </li>
+    <li>
+      <button type="button" class="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2" onclick="setTheme('dark')" data-theme-value="dark">
+        <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-moon"></use></svg>
+        <span style="font-size: 13px;">Dark</span>
+      </button>
+    </li>
+    <li>
+      <button type="button" class="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2" onclick="setTheme('system')" data-theme-value="system">
+        <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-monitor"></use></svg>
+        <span style="font-size: 13px;">System</span>
+      </button>
+    </li>
+  </ul>
+</div>

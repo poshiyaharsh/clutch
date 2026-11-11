@@ -1,74 +1,75 @@
-# DESIGN_SYSTEM — Clutch
+# DESIGN_SYSTEM — Clutch Modern Product UI
 
-## Concept
-A sticker-pack scoreboard. The site feels like a hackathon wall: chunky outlines, hard offset shadows, bright sticker badges, loud type. The ONE memorable thing is the **live leaderboard**: ranks are tilted stickers, scores tick up when judges save, top 3 get colored medals. Everything else stays calm so that moment lands.
+## 1. Design Direction
+Calm, precise, high-end product UI. Generous whitespace, quiet surfaces, one confident violet-blue accent color (`#5B4CF5`), crisp typography with tabular numbers. The only expressive moment is the live leaderboard. Everything else stays restrained and distraction-free.
 
-## Tokens (see design/theme.css)
-| Name | Hex | Use |
+## 2. Tokens (defined in `wwwroot/css/clutch-theme.css`)
+
+### Typography
+- **Font Family**: Inter (variable font) with features `"cv11" 1, "ss01" 1` and `tabular-nums` for all numbers, ranks, and scores.
+- **Headings**: 600 weight, tracking `-0.02em`, sentence case (no all-caps).
+- **Body**: 15px / 1.6 line-height.
+- **Type Scale**: 12, 13, 14, 15, 18, 24, 32, 48px. Page titles: 32px, hero titles: 48px.
+
+### Neutrals (Light Mode)
+| Token | Hex | Role |
 |---|---|---|
-| Paper | #F2EDFF | Page background (lavender white) |
-| Ink | #1A1033 | Text, borders, shadows (deep violet, not neutral black) |
-| Electric | #4B4BFF | Primary actions, links |
-| Bubblegum | #FF5CA8 | Highlights, rank 3, live indicator |
-| Lemon | #FFD83D | Rank 1, warnings, "new" stickers |
-| Mint | #27E0A3 | Success, rank 2, "submitted" |
-Dark mode: Paper -> #14102B, Ink -> #F2EDFF, accents slightly lighter. Handled by tokens only.
+| `--bg` | `#FAFAFB` | Canvas / page background |
+| `--surface` | `#FFFFFF` | Cards, navbar, modal surfaces |
+| `--surface-2` | `#F4F4F6` | Secondary wells, hover states, table headers |
+| `--border` | `#E6E6EA` | 1px clean hairline borders |
+| `--text` | `#14141A` | High-contrast primary copy |
+| `--text-muted` | `#6B6B76` | Secondary labels, descriptions |
+| `--text-subtle` | `#8E8E99` | Placeholders, disabled text |
 
-## Type
-- Display: **Bricolage Grotesque** (700/800), tight tracking, used big for page titles, ranks and scores.
-- Body/UI: **Figtree** (400/500/700).
-- Scale (rem): 0.8125, 1, 1.125, 1.5, 2, 3, 4.5. Body line-height 1.55, max line 70ch.
-- Sentence case everywhere. No all-caps labels, no tracked-out eyebrows.
+### Neutrals (Dark Mode)
+| Token | Hex | Role |
+|---|---|---|
+| `--bg` | `#0B0B0F` | Deep dark page canvas |
+| `--surface` | `#121218` | Elevated card surfaces |
+| `--surface-2` | `#1A1A22` | Secondary containers |
+| `--border` | `#26262F` | Subtle dark borders |
+| `--text` | `#F4F4F6` | Primary crisp text |
+| `--text-muted` | `#9A9AA6` | Secondary body text |
 
-## Shape and depth
-- Borders: 2.5px solid Ink on interactive and card surfaces.
-- Shadow: hard offset `4px 4px 0 Ink` (no blur). Pressed buttons move 2px and shrink the shadow.
-- Radii by role: inputs 8px, cards 16px, buttons and badges 999px, stickers rotate -3deg to 3deg.
-- Spacing scale: 4, 8, 12, 16, 24, 32, 48, 72.
+### Brand & Status Colors
+| Token | Light | Dark | Purpose |
+|---|---|---|---|
+| `--accent` | `#5B4CF5` | `#5B4CF5` | Primary violet-blue brand accent |
+| `--accent-hover` | `#4A3BE0` | `#7367F7` | Interactive hover states |
+| `--accent-soft` | `#EEEBFF` | `#1E1A44` | Soft tint backgrounds & top-3 highlight |
+| `--success` | `#12A150` | `#12A150` | Open registration, submitted projects |
+| `--warning` | `#E5A00D` | `#E5A00D` | Judging phases, pending scores |
+| `--danger` | `#E5484D` | `#E5484D` | Destructive actions, closed events, errors |
+| `--info` | `#2F80ED` | `#2F80ED` | Announcements, informational callouts |
 
-## Motion (sparing)
-- One orchestrated moment: leaderboard score tick + row reorder on live update (300–500ms).
-- Responses to action only: button press, toast in, drawer open.
-- No scroll-triggered fades on every section. Respect `prefers-reduced-motion` (swap to instant).
+### Geometry & Depth
+- **Radii**: Controls & inputs `8px`, cards & modals `12px`, badges & avatars `999px` (pills).
+- **Borders**: 1px solid `var(--border)`. No thick outlines or cartoon borders.
+- **Shadows**: Soft, multi-layered elevation (e.g. `0 1px 2px rgba(0,0,0,0.04)`, `0 4px 16px rgba(0,0,0,0.06)`).
+- **Spacing Scale**: 4, 8, 12, 16, 24, 32, 48, 64, 96px. Max content container: 1200px.
+- **Motion**: 150–220ms ease-out transitions only. Respects `prefers-reduced-motion`.
 
-## Components
-Button (primary/secondary/ghost/danger), Input/Select/Textarea, Card, Sticker badge (status), Rank sticker, Leaderboard row, Toast, Empty state, Notification bell + drawer, Stepper (only for real sequences: create event steps), Table (admin), Tabs, Modal.
+## 3. Icons
+- Standardized Lucide icons embedded as an inline SVG sprite in `wwwroot/img/icons.svg`.
+- Zero emoji anywhere in the UI.
 
-## Screens (wireframes)
-**Home**
-```
-[Clutch]                        [Events] [Sign in]
-BIG LINE: Build it. Ship it. Get scored.
-[Find a hackathon]   <- primary     [Host one] <- secondary
-Live now: stack of event cards, each with a status sticker
-```
-**Event detail**
-```
-Banner + title + status sticker (Open / Closing in 2d / Judging)
-Left: about, tracks, rubric summary, schedule   Right: sticky card
-Right card: deadline countdown, team size, [Create team] [Join with code]
-```
-**Leaderboard (hero screen)**
-```
-Event title            (o) Live
-#1 sticker  Team name   track chip        92.4 (ticks up)
-#2 sticker  ...                           88.1
-#3 sticker  ...                           85.7
-Rows 4+ : smaller, same structure. "Pending" chip if not fully judged.
-```
-**Judge scoring**
-```
-Team header (name, track, links)  |  Progress: 3 of 8 teams scored
-One card per criterion: slider + number input, 1-line comment
-[Save scores] sticky bottom bar on mobile
-```
-**Organizer dashboard**: stat tiles (registrations, submissions, judged %), tabs: Overview / Teams / Judges / Rubric / Announcements.
+## 4. Components
+- **Button**: `.cl-btn` (`--primary`, `--secondary`, `--ghost`, `--danger`, sizes `--sm`, `--lg`, `--icon-only`).
+- **Badge**: `.cl-badge` (`--success`, `--warning`, `--danger`, `--accent`).
+- **Card**: `.cl-card` (`--interactive`, `--soft`, `--accent`).
+- **Avatar**: `.cl-avatar` with uppercase initials, `.cl-avatar-group` for stacked team displays.
+- **Stat Tile**: `.cl-stat-tile` with value and `.cl-stat-delta` (`--up`, `--down`, `--neutral`).
+- **Command Menu**: Ctrl+K / Cmd+K quick switcher backdrop and search dialog.
+- **Leaderboard**: Hero ranked list with pulsing live dot, count-up animation, and FLIP row rearrangement.
+- **Toast**: `.cl-toast-box` polite non-blocking status notification.
 
-## Copy rules
-- Buttons say what happens: "Create team", "Save scores", "Publish event". Toast repeats it: "Team created".
-- Errors: what went wrong + fix. "That team name is taken in this event. Try another."
-- Empty states invite: "No teams yet. Create the first one."
-- No apologizing in errors, no filler, no emoji spam (max one per empty state).
-
-## Quality floor
-375px first, 44px touch targets, 4.5:1 contrast, visible focus ring (3px Electric outline + offset), form labels always visible, skeleton or spinner under 200ms rule, no layout shift on live updates.
+## 5. Screen Specifications
+1. **Home**: Hero with headline, 2 CTA buttons, subtle radial accent tint gradient, live now strip, event cards with search and filter, 3-step "How Clutch works" section, and clean footer.
+2. **Event Detail**: Status badges, key facts strip (duration, team size, prize pool, location), tabs (Overview, Tracks, Rubric, Schedule, Announcements), sticky registration countdown card.
+3. **Team Management**: Team header, member roster with initials avatars and lead role badge, 8-character join code card with copy action, submission card with live demo and repository links.
+4. **Judge Scoring**: Split layout with project repository and demo preview on the left; criteria cards with range sliders, number outputs, feedback inputs, live weighted total calculation, and sticky save bar on the right.
+5. **Leaderboard**: Real-time scoreboard with rank numbers, team initials avatars, track badges, delta movement indicators, top-3 restrained accent-soft highlights, pulsing live indicator, and SignalR live update integration.
+6. **Organizer Dashboard**: Split sidebar layout, 4 stat tiles with deltas, pure inline SVG registration velocity sparkline, tabbed navigation, and data tables with search and CSV export actions.
+7. **Authentication**: Centered cards with clean input fields, password show/hide eye toggles, clear validation feedback, and links to registration/login.
+8. **Error & System Pages**: Friendly, helpful 403, 404, and 500 error cards with clear actions to return home.

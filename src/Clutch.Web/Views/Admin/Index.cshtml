@@ -1,32 +1,58 @@
 @model IReadOnlyList<Clutch.Web.Domain.AuditLog>
 @{
-    ViewData["Title"] = "Platform administration";
+    ViewData["Title"] = "Platform Administration";
     var users = ViewData["Users"] as List<Clutch.Web.Domain.ApplicationUser> ?? [];
 }
 
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
   <div>
-    <h1 class="mb-1">Platform administration</h1>
-    <p class="text-muted mb-0">System health, directory oversight, and platform audit logs.</p>
+    <h1 class="cl-title-page mb-1">Platform Administration</h1>
+    <p class="cl-text-muted mb-0" style="font-size: 14px;">System health, directory oversight, and platform audit logs.</p>
   </div>
   <div class="d-flex gap-2">
-    <a class="cl-btn cl-btn--secondary" asp-action="Audit">Full audit trail</a>
+    <a class="cl-btn cl-btn--secondary cl-btn--sm" asp-action="Audit">
+      <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-shield"></use></svg>
+      <span>Full audit trail</span>
+    </a>
   </div>
 </div>
 
-<div class="cl-stats mb-5">
-  <div class="cl-card cl-stat"><strong>@(ViewData["HackathonsCount"] ?? 0)</strong>total hackathons</div>
-  <div class="cl-card cl-stat"><strong>@(ViewData["UsersCount"] ?? 0)</strong>registered users</div>
-  <div class="cl-card cl-stat"><strong>@(ViewData["TeamsCount"] ?? 0)</strong>squads created</div>
-  <div class="cl-card cl-stat"><strong>@(ViewData["JudgesCount"] ?? 0)</strong>active judges</div>
+<div class="row g-3 mb-4">
+  <div class="col-12 col-sm-6 col-lg-3">
+    <div class="cl-stat-tile">
+      <div class="cl-stat-title">Total Hackathons</div>
+      <div class="cl-stat-value">@(ViewData["HackathonsCount"] ?? 0)</div>
+    </div>
+  </div>
+  <div class="col-12 col-sm-6 col-lg-3">
+    <div class="cl-stat-tile">
+      <div class="cl-stat-title">Registered Users</div>
+      <div class="cl-stat-value">@(ViewData["UsersCount"] ?? 0)</div>
+    </div>
+  </div>
+  <div class="col-12 col-sm-6 col-lg-3">
+    <div class="cl-stat-tile">
+      <div class="cl-stat-title">Squads Created</div>
+      <div class="cl-stat-value">@(ViewData["TeamsCount"] ?? 0)</div>
+    </div>
+  </div>
+  <div class="col-12 col-sm-6 col-lg-3">
+    <div class="cl-stat-tile">
+      <div class="cl-stat-title">Active Judges</div>
+      <div class="cl-stat-value">@(ViewData["JudgesCount"] ?? 0)</div>
+    </div>
+  </div>
 </div>
 
 <div class="row g-4 mb-5">
   <div class="col-12 col-lg-8">
-    <div class="cl-card">
-      <h2 class="h4 mb-3">Recent users</h2>
+    <div class="cl-card p-0 overflow-hidden">
+      <div class="p-3 border-bottom d-flex justify-content-between align-items-center" style="background: var(--surface);">
+        <h2 class="cl-title-card mb-0" style="font-size: 15px;">Recent Users</h2>
+        <span class="cl-badge">@users.Count total</span>
+      </div>
       <div class="table-responsive">
-        <table class="table align-middle mb-0">
+        <table class="cl-table">
           <thead>
             <tr>
               <th>User</th>
@@ -40,9 +66,9 @@
             {
               <tr>
                 <td><strong>@u.DisplayName</strong></td>
-                <td>@u.Email</td>
+                <td class="text-muted">@u.Email</td>
                 <td>@(u.CollegeOrCompany ?? "Independent")</td>
-                <td class="small text-muted">@u.CreatedAt.ToString("MMM d, yyyy")</td>
+                <td class="text-muted tabular-nums" style="font-size: 13px;">@u.CreatedAt.ToString("MMM d, yyyy")</td>
               </tr>
             }
           </tbody>
@@ -53,28 +79,19 @@
 
   <div class="col-12 col-lg-4">
     <div class="cl-card h-100">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="h4 mb-0">Audit activity</h2>
-        <a class="small fw-bold" asp-action="Audit">View all</a>
+      <h2 class="cl-title-card mb-3">Recent Security Activity</h2>
+      <div class="d-flex flex-column gap-3">
+        @foreach (var log in Model.Take(5))
+        {
+          <div class="p-2 rounded-2" style="background: var(--surface-2);">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="cl-badge cl-badge--accent">@log.Action</span>
+              <span class="text-muted tabular-nums" style="font-size: 11px;">@log.CreatedAt.ToString("HH:mm") UTC</span>
+            </div>
+            <div class="text-muted" style="font-size: 12px;">@(log.Actor?.DisplayName ?? "System") &bull; @log.EntityType #@log.EntityId</div>
+          </div>
+        }
       </div>
-
-      @if (!Model.Any())
-      {
-        <p class="text-muted small">No audit log entries recorded yet.</p>
-      }
-      else
-      {
-        <ul class="list-unstyled d-grid gap-3 mb-0">
-          @foreach (var log in Model.Take(5))
-          {
-            <li class="pb-2 border-bottom">
-              <div class="small fw-bold">@log.Action (@log.EntityType)</div>
-              <div class="text-muted small">Actor: @(log.Actor?.DisplayName ?? log.ActorId ?? "System")</div>
-              <div class="text-muted small">@log.CreatedAt.ToString("g")</div>
-            </li>
-          }
-        </ul>
-      }
     </div>
   </div>
 </div>

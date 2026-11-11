@@ -1,39 +1,196 @@
-@{ ViewData["Title"] = "Organizer dashboard"; }
+@{
+    ViewData["Title"] = "Organizer Console — CodeMind AI Hackathon";
+}
 
-<h1 class="mb-4">Your hackathons</h1>
+<!-- Sidebar + Dashboard Shell -->
+<div class="cl-dashboard-shell">
+  <!-- Left Sidebar -->
+  <aside class="cl-sidebar">
+    <div class="px-2 py-1 mb-2">
+      <span class="text-muted fw-semibold text-uppercase" style="font-size: 11px; letter-spacing: 0.05em;">Console</span>
+    </div>
+    <a class="cl-sidebar-link active" href="#overview">
+      <svg class="cl-icon"><use href="/img/icons.svg#icon-activity"></use></svg>
+      <span>Overview</span>
+    </a>
+    <a class="cl-sidebar-link" href="#teams">
+      <svg class="cl-icon"><use href="/img/icons.svg#icon-users"></use></svg>
+      <span>Teams (42)</span>
+    </a>
+    <a class="cl-sidebar-link" href="#judges">
+      <svg class="cl-icon"><use href="/img/icons.svg#icon-sliders"></use></svg>
+      <span>Judges (6)</span>
+    </a>
+    <a class="cl-sidebar-link" href="#rubric">
+      <svg class="cl-icon"><use href="/img/icons.svg#icon-layers"></use></svg>
+      <span>Rubric</span>
+    </a>
+    <a class="cl-sidebar-link" href="#announcements">
+      <svg class="cl-icon"><use href="/img/icons.svg#icon-bell"></use></svg>
+      <span>Announcements</span>
+    </a>
+  </aside>
 
-<div class="cl-tabs mb-4" role="tablist" aria-label="Sections">
-  <a class="cl-btn" href="#">Overview</a>
-  <a class="cl-btn cl-btn--secondary" href="#">Teams</a>
-  <a class="cl-btn cl-btn--secondary" href="#">Judges</a>
-  <a class="cl-btn cl-btn--secondary" href="#">Rubric</a>
-  <a class="cl-btn cl-btn--secondary" href="#">Announcements</a>
-</div>
+  <!-- Right Dashboard Content -->
+  <div class="cl-dashboard-content">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+      <div>
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <span class="cl-badge cl-badge--success">Published Event</span>
+          <span class="text-muted" style="font-size: 13px;">CodeMind AI Hackathon</span>
+        </div>
+        <h1 class="cl-title-page mb-1">Organizer Dashboard</h1>
+        <p class="cl-text-muted mb-0" style="font-size: 14px;">
+          Manage team submissions, judge allocations, and publish final locked ranks.
+        </p>
+      </div>
 
-<div class="cl-stats mb-5">
-  <div class="cl-card cl-stat"><strong>42</strong>teams registered</div>
-  <div class="cl-card cl-stat"><strong>31</strong>projects submitted</div>
-  <div class="cl-card cl-stat"><strong>68%</strong>judging done</div>
-  <div class="cl-card cl-stat"><strong>6</strong>judges assigned</div>
-</div>
+      <div class="d-flex flex-wrap gap-2">
+        <a class="cl-btn cl-btn--secondary cl-btn--sm" href="/export/hackathons/1/teams">
+          <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-download"></use></svg>
+          <span>Export Teams (CSV)</span>
+        </a>
+        <button class="cl-btn cl-btn--primary cl-btn--sm" type="button" onclick="clToast('Judging locked successfully')">
+          <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-shield"></use></svg>
+          <span>Lock Judging</span>
+        </button>
+      </div>
+    </div>
 
-<div class="d-flex flex-wrap gap-3 mb-4">
-  <button class="cl-btn cl-btn--primary" type="button" onclick="clToast('Event published')">Publish event</button>
-  <button class="cl-btn cl-btn--secondary" type="button" onclick="clToast('Judging locked')">Lock judging</button>
-  <button class="cl-btn cl-btn--ghost" type="button">Export teams (CSV)</button>
-</div>
+    <!-- Stat Tiles with Deltas -->
+    <div class="row g-3 mb-4">
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="cl-stat-tile">
+          <div class="cl-stat-title">Registered Teams</div>
+          <div class="cl-stat-value">42</div>
+          <div class="cl-stat-delta cl-stat-delta--up">
+            <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-arrow-up"></use></svg>
+            <span>+12 this week</span>
+          </div>
+        </div>
+      </div>
 
-<div class="cl-card" style="overflow-x:auto">
-  <table class="table align-middle mb-0">
-    <thead><tr><th>Team</th><th>Track</th><th>Submitted</th><th>Judged by</th></tr></thead>
-    <tbody>
-      @foreach (var t in MockData.Leaderboard)
-      {
-        <tr>
-          <td><strong>@t.Name</strong></td><td>@t.Track</td>
-          <td>@(t.Pending ? "Not yet" : "Yes")</td><td>@(t.Pending ? "0 of 3" : "3 of 3")</td>
-        </tr>
-      }
-    </tbody>
-  </table>
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="cl-stat-tile">
+          <div class="cl-stat-title">Projects Submitted</div>
+          <div class="cl-stat-value">31</div>
+          <div class="cl-stat-delta cl-stat-delta--up">
+            <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-arrow-up"></use></svg>
+            <span>74% submission rate</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="cl-stat-tile">
+          <div class="cl-stat-title">Evaluation Progress</div>
+          <div class="cl-stat-value">68%</div>
+          <div class="cl-stat-delta cl-stat-delta--neutral">
+            <span>21 of 31 scored</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="cl-stat-tile">
+          <div class="cl-stat-title">Active Judges</div>
+          <div class="cl-stat-value">6</div>
+          <div class="cl-stat-delta cl-stat-delta--neutral">
+            <span>All judges confirmed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Registration Over Time Sparkline (Pure Inline SVG) -->
+    <div class="cl-card mb-4 p-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h2 class="cl-title-card mb-1">Registration Growth Velocity</h2>
+          <p class="cl-text-muted mb-0" style="font-size: 13px;">Daily active team registrations leading up to deadline</p>
+        </div>
+        <span class="cl-badge cl-badge--success">+280% vs previous event</span>
+      </div>
+
+      <!-- Inline SVG Chart -->
+      <div style="width: 100%; height: 120px;">
+        <svg viewBox="0 0 600 120" class="w-100 h-100" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="sparkline-grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#5B4CF5" stop-opacity="0.25"></stop>
+              <stop offset="100%" stop-color="#5B4CF5" stop-opacity="0.0"></stop>
+            </linearGradient>
+          </defs>
+          <path d="M0,110 Q75,100 150,92 T300,70 T450,35 T600,10 L600,120 L0,120 Z" fill="url(#sparkline-grad)"></path>
+          <path d="M0,110 Q75,100 150,92 T300,70 T450,35 T600,10" fill="none" stroke="#5B4CF5" stroke-width="2.5" stroke-linecap="round"></path>
+          <circle cx="600" cy="10" r="4" fill="#5B4CF5"></circle>
+        </svg>
+      </div>
+      <div class="d-flex justify-content-between text-muted pt-2 border-top mt-2" style="font-size: 11px;">
+        <span>Day 1 (Nov 20)</span>
+        <span>Day 5</span>
+        <span>Day 10</span>
+        <span>Today (42 Teams)</span>
+      </div>
+    </div>
+
+    <!-- Management Data Table with Search and Bulk Actions -->
+    <div class="cl-card p-0 overflow-hidden">
+      <div class="p-3 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-3" style="background: var(--surface);">
+        <div class="d-flex align-items-center gap-2">
+          <h3 class="cl-title-card mb-0" style="font-size: 15px;">Participating Teams</h3>
+          <span class="cl-badge">6 of 42 shown</span>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <div class="position-relative">
+            <input type="text" id="table-search" class="cl-input" placeholder="Filter teams..." style="height: 32px; font-size: 13px; padding-left: 28px; width: 180px;" />
+            <svg class="cl-icon cl-icon-sm position-absolute top-50 start-0 translate-middle-y ms-2 text-muted"><use href="/img/icons.svg#icon-search"></use></svg>
+          </div>
+          <button class="cl-btn cl-btn--secondary cl-btn--sm" type="button" onclick="clToast('Bulk notification dispatched')">
+            <span>Notify Selected</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="cl-table">
+          <thead>
+            <tr>
+              <th style="width: 36px;"><input type="checkbox" aria-label="Select all" /></th>
+              <th>Team</th>
+              <th>Track</th>
+              <th>Status</th>
+              <th>Evaluation</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach (var t in MockData.Leaderboard)
+            {
+              <tr>
+                <td><input type="checkbox" aria-label="Select @t.Name" /></td>
+                <td>
+                  <div class="fw-semibold text-body">@t.Name</div>
+                  <div class="text-muted" style="font-size: 12px;">3 members</div>
+                </td>
+                <td><span class="cl-badge">@t.Track</span></td>
+                <td>
+                  <partial name="_Badge" model='(t.Pending ? "Pending Demo" : "Submitted", t.Pending ? "warning" : "success")' />
+                </td>
+                <td>
+                  <span class="tabular-nums fw-medium">@(t.Pending ? "0 of 3" : "3 of 3 scored")</span>
+                </td>
+                <td class="text-end">
+                  <button class="cl-btn cl-btn--ghost cl-btn--sm" type="button" onclick="clToast('Reviewing @t.Name')">
+                    <span>Inspect</span>
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

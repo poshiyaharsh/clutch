@@ -1,19 +1,29 @@
 @model Clutch.Web.Models.ErrorViewModel
 @{
-    ViewData["Title"] = "Something went wrong";
+    ViewData["Title"] = "Something Went Wrong";
 }
 
-<div class="cl-empty my-5">
-  <span class="cl-sticker cl-sticker--draft mb-3">Error</span>
-  <h1 class="h2 mb-2">Something went wrong</h1>
-  <p class="text-muted mb-4">An unexpected issue occurred while processing your request. Our team has been notified.</p>
+<div class="row justify-content-center py-5">
+  <div class="col-12 col-md-8 col-lg-6">
+    <div class="cl-card text-center p-5">
+      <div class="d-inline-flex align-items-center justify-content-center p-3 rounded-circle mb-3" style="background: var(--danger-soft); color: var(--danger-fg);">
+        <svg class="cl-icon cl-icon-lg"><use href="/img/icons.svg#icon-alert-circle"></use></svg>
+      </div>
+      <h1 class="cl-title-section mb-2">Something went wrong</h1>
+      <p class="cl-text-muted mx-auto mb-4" style="max-width: 48ch;">
+        An unexpected error occurred while processing your request. Our monitoring team has logged this occurrence.
+      </p>
 
-  @if (Model?.ShowRequestId == true)
-  {
-    <p class="small text-muted mb-4">Request ID: <code>@Model.RequestId</code></p>
-  }
+      @if (Model?.ShowRequestId == true)
+      {
+        <div class="p-2 rounded-2 mb-4 d-inline-block text-muted" style="background: var(--surface-2); font-size: 12px;">
+          <span>Request ID:</span> <code class="text-body fw-semibold">@Model.RequestId</code>
+        </div>
+      }
 
-  <div class="d-flex justify-content-center gap-3">
-    <a class="cl-btn cl-btn--primary" asp-controller="Home" asp-action="Index">Return home</a>
+      <div class="d-flex justify-content-center gap-3">
+        <a class="cl-btn cl-btn--primary" asp-controller="Home" asp-action="Index">Return to home</a>
+      </div>
+    </div>
   </div>
 </div>

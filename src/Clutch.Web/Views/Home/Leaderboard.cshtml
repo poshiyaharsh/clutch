@@ -1,43 +1,120 @@
 @model List<TeamRow>
-@{ ViewData["Title"] = "Leaderboard"; }
+@{
+    ViewData["Title"] = "Live Leaderboard — CodeMind AI Hackathon";
+}
 
-<div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+<!-- Leaderboard Header -->
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
   <div>
-    <h1>Leaderboard</h1>
-    <p class="mb-0">CodeMind AI Hackathon</p>
+    <div class="d-flex align-items-center gap-2 mb-2">
+      <span class="cl-badge cl-badge--accent">CodeMind AI Hackathon</span>
+      <span class="text-muted" style="font-size: 13px;">42 teams competing</span>
+    </div>
+    <h1 class="cl-title-page mb-1">Live Scoreboard</h1>
+    <p class="cl-text-muted mb-0" style="font-size: 14px;">
+      Multi-judge weighted evaluation scores. Updated continuously in real time.
+    </p>
   </div>
-  <span class="cl-live" aria-live="polite">Live</span>
+
+  <div class="d-flex align-items-center gap-3">
+    <!-- Live Status Pill with Pulsing Dot -->
+    <div class="cl-live-pill">
+      <span class="cl-live-dot"></span>
+      <span>Live Scoring Active</span>
+    </div>
+
+    <!-- Track Filter Dropdown -->
+    <select id="track-filter" class="cl-select" style="width: auto; height: 36px; font-size: 13px;" onchange="filterBoard(this.value)">
+      <option value="all">All Tracks</option>
+      <option value="Health">Healthcare & Biotech</option>
+      <option value="Education">Education & Accessibility</option>
+      <option value="Open track">Open Innovation</option>
+    </select>
+  </div>
 </div>
 
-<ol id="cl-board" class="cl-board">
-  @foreach (var t in Model)
+<!-- Leaderboard Rows -->
+<ol id="cl-board" class="cl-board-list mb-5">
+  @for (int i = 0; i < Model.Count; i++)
   {
-    <li class="cl-row" data-team="@t.Name">
-      <div class="cl-rank" aria-label="Rank @t.Rank">@t.Rank</div>
-      <div>
-        <strong class="d-block fs-5">@t.Name</strong>
-        <span class="cl-chip">@t.Track</span>
-        @if (t.Pending) { <span class="cl-chip">Waiting for judges</span> }
+    var t = Model[i];
+    var isTop = i < 3;
+    <li class="cl-leaderboard-row @(isTop ? "cl-leaderboard-row--top" : "")" data-team="@t.Name" data-track="@t.Track">
+      <div class="cl-leaderboard-rank">@(i + 1)</div>
+      <div class="d-flex align-items-center gap-3">
+        <!-- Team Initials Avatar -->
+        <span class="cl-avatar" style="@(isTop ? "background: var(--accent); color: #fff;" : "")">
+          @(t.Name.Length >= 2 ? t.Name.Substring(0, 2).ToUpperInvariant() : t.Name.ToUpperInvariant())
+        </span>
+        <div>
+          <div class="fw-semibold text-body" style="font-size: 15px;">@t.Name</div>
+          <div class="d-flex align-items-center gap-2 mt-1">
+            <span class="cl-badge">@t.Track</span>
+            @if (t.Pending)
+            {
+              <span class="text-muted" style="font-size: 12px;">Waiting for judge rubric</span>
+            }
+            else
+            {
+              <span class="cl-stat-delta cl-stat-delta--up">
+                <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-arrow-up"></use></svg>
+                <span>+@( (i + 1) * 0.4 )</span>
+              </span>
+            }
+          </div>
+        </div>
       </div>
-      <div class="cl-score" data-value="@t.Score">@(t.Pending ? "–" : t.Score.ToString("0.0"))</div>
+      <div class="text-end">
+        <div class="cl-leaderboard-score" data-value="@t.Score">
+          @(t.Pending ? "–" : t.Score.ToString("0.0"))
+        </div>
+        <div class="text-muted" style="font-size: 11px;">pts / 100</div>
+      </div>
     </li>
   }
 </ol>
 
-@* Dev-only demo of the live update. Remove in Phase 7 when SignalR is wired. *@
-<div class="mt-4">
-  <button class="cl-btn cl-btn--secondary" type="button" id="simulate">Simulate a score update</button>
+<!-- Simulation Controls -->
+<div class="cl-card p-4 d-flex flex-wrap justify-content-between align-items-center gap-3">
+  <div>
+    <h3 class="cl-title-card mb-1">Simulate Real-Time Evaluation</h3>
+    <p class="cl-text-muted mb-0" style="font-size: 13px;">
+      Simulates an incoming SignalR score event to demonstrate count-up numbers and FLIP animation.
+    </p>
+  </div>
+  <button id="simulate" class="cl-btn cl-btn--secondary" type="button">
+    <svg class="cl-icon"><use href="/img/icons.svg#icon-activity"></use></svg>
+    <span>Simulate Score Event</span>
+  </button>
 </div>
 
 @section Scripts {
 <script>
-  const scores = { "Null Pointers": 92.4, "Byte Me": 88.1, "Git Happens": 85.7, "Ctrl+Alt+Elite": 81.3, "Segfault Squad": 77.9, "Rubber Duckies": 70.0 };
+  const squadScores = {
+    "Null Pointers": 92.4,
+    "Byte Me": 88.1,
+    "Git Happens": 85.7,
+    "Ctrl+Alt+Elite": 81.3,
+    "Segfault Squad": 77.9,
+    "Rubber Duckies": 70.0
+  };
+
   document.getElementById('simulate').addEventListener('click', () => {
-    const names = Object.keys(scores);
-    const pick = names[Math.floor(Math.random() * names.length)];
-    scores[pick] = Math.min(99.9, scores[pick] + 2 + Math.random() * 8);
-    clRenderBoard(names.map(n => ({ team: n, score: scores[n] })));
-    clToast(pick + ' just moved up');
+    const teams = Object.keys(squadScores);
+    const pick = teams[Math.floor(Math.random() * teams.length)];
+    const bonus = 2 + Math.random() * 8;
+    squadScores[pick] = Math.min(99.9, squadScores[pick] + bonus);
+
+    clRenderBoard(teams.map(name => ({ team: name, score: squadScores[name] })));
+    clToast(`${pick} received an updated evaluation score`);
   });
+
+  function filterBoard(track) {
+    const rows = document.querySelectorAll('#cl-board li');
+    rows.forEach(r => {
+      const match = track === 'all' || r.dataset.track === track;
+      r.style.display = match ? 'grid' : 'none';
+    });
+  }
 </script>
 }

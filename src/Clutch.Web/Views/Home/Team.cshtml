@@ -1,33 +1,148 @@
-@{ ViewData["Title"] = "Create team"; }
+@{
+    ViewData["Title"] = "Null Pointers — Squad Overview";
+}
+
+<!-- Team Header -->
+<div class="mb-4">
+  <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+    <span class="cl-badge cl-badge--success">Active squad</span>
+    <span class="text-muted" style="font-size: 13px;">CodeMind AI Hackathon • Track: Healthcare & Biotech</span>
+  </div>
+  <h1 class="cl-title-page mb-1">Null Pointers</h1>
+  <p class="cl-text-muted mb-0">Formed by Alex Chen • 3 of 4 team member slots filled</p>
+</div>
 
 <div class="row g-4">
   <div class="col-12 col-lg-7">
-    <h1>Create your team</h1>
-    <form method="post" class="cl-card mt-4" novalidate>
-      @* Phase 5: @Html.AntiForgeryToken() is added automatically by the form tag helper when asp-action is used *@
-      <div class="cl-field">
-        <label class="cl-label" for="name">Team name</label>
-        <input id="name" class="cl-input" name="Name" placeholder="Null Pointers" maxlength="40" required />
-        <span class="cl-error" data-valmsg-for="Name"></span>
+    <!-- Team Member List -->
+    <div class="cl-card mb-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="cl-title-card mb-0">Team roster (3/4)</h2>
+        <span class="cl-badge cl-badge--accent">1 slot remaining</span>
       </div>
-      <div class="cl-field">
-        <label class="cl-label" for="track">Track</label>
-        <select id="track" class="cl-select" name="Track">
-          <option>Health</option><option>Education</option><option>Open track</option>
-        </select>
+
+      <div class="d-flex flex-column gap-3">
+        <div class="d-flex justify-content-between align-items-center p-2 rounded-2" style="background: var(--surface-2);">
+          <div class="d-flex align-items-center gap-3">
+            <span class="cl-avatar" style="background: var(--accent); color: #fff;">AC</span>
+            <div>
+              <div class="fw-semibold text-body" style="font-size: 14px;">Alex Chen</div>
+              <div class="text-muted" style="font-size: 12px;">alex@mit.edu</div>
+            </div>
+          </div>
+          <span class="cl-badge cl-badge--accent">Team Lead</span>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center p-2 rounded-2" style="background: var(--surface-2);">
+          <div class="d-flex align-items-center gap-3">
+            <span class="cl-avatar">SR</span>
+            <div>
+              <div class="fw-semibold text-body" style="font-size: 14px;">Sara Rodriguez</div>
+              <div class="text-muted" style="font-size: 12px;">sara@berkeley.edu</div>
+            </div>
+          </div>
+          <span class="cl-badge">Member</span>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center p-2 rounded-2" style="background: var(--surface-2);">
+          <div class="d-flex align-items-center gap-3">
+            <span class="cl-avatar">DK</span>
+            <div>
+              <div class="fw-semibold text-body" style="font-size: 14px;">Devon Kim</div>
+              <div class="text-muted" style="font-size: 12px;">devon@stanford.edu</div>
+            </div>
+          </div>
+          <span class="cl-badge">Member</span>
+        </div>
       </div>
-      <button class="cl-btn cl-btn--primary" type="button" onclick="clToast('Team created')">Create team</button>
-    </form>
-  </div>
-  <aside class="col-12 col-lg-5">
-    <div class="cl-card">
-      <h2 class="h4">Your join code</h2>
-      <p class="display fs-2 mb-2">K7Q2-M9XD</p>
-      <p class="mb-3">Share it so teammates can join. Teams hold up to 4 people.</p>
-      <button class="cl-btn cl-btn--secondary" type="button" onclick="navigator.clipboard?.writeText('K7Q2M9XD'); clToast('Code copied')">Copy code</button>
     </div>
-    <div class="mt-4">
-      <partial name="_EmptyState" model='("No teammates yet", "Send your code to the people you want on this team.", (string?)null, (string?)null)' />
+
+    <!-- Project Submission Card with Inline Validation Form -->
+    <div class="cl-card">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="cl-title-card mb-0">Project submission</h2>
+        <span class="cl-badge cl-badge--success">Ready for judging</span>
+      </div>
+
+      <form id="submission-form" onsubmit="event.preventDefault(); clToast('Submission saved successfully');">
+        <div class="cl-field">
+          <label class="cl-label" for="proj-title">Project Title</label>
+          <input id="proj-title" class="cl-input" value="CardioPulse AI" required />
+          <span class="cl-hint">Choose a clear, descriptive name for your application.</span>
+        </div>
+
+        <div class="cl-field">
+          <label class="cl-label" for="proj-desc">Elevator Pitch & Description</label>
+          <textarea id="proj-desc" class="cl-textarea" rows="4" required>Real-time ECG telemetry analysis for mobile triage in remote medical environments.</textarea>
+          <span class="cl-hint">Highlight the core problem, technical implementation, and demo instructions.</span>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-12 col-md-6">
+            <div class="cl-field">
+              <label class="cl-label" for="repo-url">Repository URL</label>
+              <input id="repo-url" class="cl-input" type="url" value="https://github.com/poshiyaharsh/cardiopulse" required />
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="cl-field">
+              <label class="cl-label" for="demo-url">Live Demo / Video Link</label>
+              <input id="demo-url" class="cl-input" type="url" value="https://cardiopulse-demo.dev" required />
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mt-2">
+          <button class="cl-btn cl-btn--primary" type="submit">
+            <svg class="cl-icon"><use href="/img/icons.svg#icon-check"></use></svg>
+            <span>Save submission</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Right Aside: Join Code Card -->
+  <aside class="col-12 col-lg-5">
+    <div class="cl-card mb-4">
+      <h2 class="cl-title-card mb-2">Team join code</h2>
+      <p class="cl-text-muted mb-3" style="font-size: 13px;">
+        Share this 8-character unique code with teammates so they can instantly join your squad.
+      </p>
+
+      <div class="d-flex align-items-center justify-content-between p-3 rounded-2 mb-3" style="background: var(--surface-2); border: 1px dashed var(--border);">
+        <span class="cl-title-section mb-0 tabular-nums fw-bold text-body" id="code-val">K7Q2-M9XD</span>
+        <button class="cl-btn cl-btn--secondary cl-btn--sm" type="button" onclick="copyText('K7Q2M9XD', 'Join code copied to clipboard')">
+          <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-copy"></use></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+
+      <div class="d-flex align-items-center gap-2 text-muted" style="font-size: 12px;">
+        <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-info"></use></svg>
+        <span>Squads are limited to a maximum of 4 members.</span>
+      </div>
+    </div>
+
+    <!-- Quick Links Card -->
+    <div class="cl-card">
+      <h3 class="cl-title-card mb-3">Next milestones</h3>
+      <div class="d-flex flex-column gap-3 text-muted" style="font-size: 13px;">
+        <div class="d-flex gap-2">
+          <svg class="cl-icon cl-icon-sm text-success mt-1"><use href="/img/icons.svg#icon-check-circle"></use></svg>
+          <div>
+            <strong class="text-body d-block">Team Formed</strong>
+            <span>3 members connected to the squad.</span>
+          </div>
+        </div>
+        <div class="d-flex gap-2">
+          <svg class="cl-icon cl-icon-sm text-primary mt-1"><use href="/img/icons.svg#icon-clock"></use></svg>
+          <div>
+            <strong class="text-body d-block">Submission Review</strong>
+            <span>Locking Dec 6, 12:00 UTC for judge scoring.</span>
+          </div>
+        </div>
+      </div>
     </div>
   </aside>
 </div>

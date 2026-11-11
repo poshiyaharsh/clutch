@@ -1,15 +1,17 @@
 @model Clutch.Web.Models.RegisterViewModel
 @{
-    ViewData["Title"] = "Create account";
+    ViewData["Title"] = "Create Account";
 }
 
-<div class="row justify-content-center my-4">
-  <div class="col-12 col-md-8 col-lg-6">
-    <div class="cl-card">
-      <div class="mb-4">
-        <span class="cl-sticker cl-sticker--open mb-2">Join Clutch</span>
-        <h1 class="h2 mb-1">Create an account</h1>
-        <p class="text-muted">Compete in hackathons, form squads, and track the live leaderboard.</p>
+<div class="row justify-content-center py-5">
+  <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+    <div class="cl-card p-4 p-md-5">
+      <div class="text-center mb-4">
+        <span class="cl-brand-logo bg-primary text-white mx-auto mb-3" style="width: 36px; height: 36px;">
+          <svg class="cl-icon" style="width: 20px; height: 20px; stroke: #fff;"><use href="/img/icons.svg#icon-sparkles"></use></svg>
+        </span>
+        <h1 class="cl-title-card mb-1" style="font-size: 22px;">Create your account</h1>
+        <p class="cl-text-muted mb-0" style="font-size: 14px;">Compete, collaborate, and build with Clutch</p>
       </div>
 
       <form asp-action="Register" method="post" novalidate>
@@ -18,47 +20,65 @@
         <div asp-validation-summary="ModelOnly" class="cl-error mb-3"></div>
 
         <div class="cl-field">
-          <label class="cl-label" asp-for="DisplayName">Full name or handle</label>
-          <input class="cl-input" asp-for="DisplayName" placeholder="Alex Rivera" />
+          <label class="cl-label" asp-for="DisplayName">Full Name or Handle</label>
+          <input class="cl-input" asp-for="DisplayName" placeholder="Alex Rivera" required />
           <span class="cl-error" asp-validation-for="DisplayName"></span>
         </div>
 
         <div class="cl-field">
-          <label class="cl-label" asp-for="Email">Email</label>
-          <input class="cl-input" asp-for="Email" placeholder="alex@domain.com" autocomplete="username" />
+          <label class="cl-label" asp-for="Email">Email Address</label>
+          <input class="cl-input" asp-for="Email" placeholder="alex@example.com" autocomplete="username" required />
           <span class="cl-error" asp-validation-for="Email"></span>
         </div>
 
         <div class="cl-field">
-          <label class="cl-label" asp-for="CollegeOrCompany">College, university, or company (optional)</label>
-          <input class="cl-input" asp-for="CollegeOrCompany" placeholder="Stanford University" />
+          <label class="cl-label" asp-for="CollegeOrCompany">Institution / Company (optional)</label>
+          <input class="cl-input" asp-for="CollegeOrCompany" placeholder="Stanford University or Company Inc." />
           <span class="cl-error" asp-validation-for="CollegeOrCompany"></span>
         </div>
 
         <div class="cl-field">
-          <label class="cl-label" asp-for="DesiredRole">Account type</label>
+          <label class="cl-label" asp-for="DesiredRole">Account Role</label>
           <select class="cl-select" asp-for="DesiredRole">
-            <option value="Participant">Participant — Join teams & compete</option>
-            <option value="Organizer">Organizer — Host & manage hackathons</option>
+            <option value="Participant">Participant — Join squads and build projects</option>
+            <option value="Organizer">Organizer — Create and manage hackathons</option>
           </select>
         </div>
 
-        <div class="cl-field">
-          <label class="cl-label" asp-for="Password">Password</label>
-          <input class="cl-input" asp-for="Password" placeholder="Minimum 6 characters" autocomplete="new-password" />
-          <span class="cl-error" asp-validation-for="Password"></span>
+        <div class="row g-3">
+          <div class="col-12 col-md-6">
+            <div class="cl-field">
+              <label class="cl-label" asp-for="Password">Password</label>
+              <div class="position-relative">
+                <input id="reg-pwd" class="cl-input" asp-for="Password" type="password" placeholder="At least 6 chars" autocomplete="new-password" required style="padding-right: 40px;" />
+                <button type="button" class="btn btn-link position-absolute top-50 end-0 translate-middle-y text-muted pe-3 p-0" onclick="togglePasswordVisibility('reg-pwd', this)" aria-label="Toggle password visibility">
+                  <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-eye"></use></svg>
+                </button>
+              </div>
+              <span class="cl-error" asp-validation-for="Password"></span>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="cl-field">
+              <label class="cl-label" asp-for="ConfirmPassword">Confirm Password</label>
+              <div class="position-relative">
+                <input id="reg-cpwd" class="cl-input" asp-for="ConfirmPassword" type="password" placeholder="Repeat password" autocomplete="new-password" required style="padding-right: 40px;" />
+                <button type="button" class="btn btn-link position-absolute top-50 end-0 translate-middle-y text-muted pe-3 p-0" onclick="togglePasswordVisibility('reg-cpwd', this)" aria-label="Toggle confirm password visibility">
+                  <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-eye"></use></svg>
+                </button>
+              </div>
+              <span class="cl-error" asp-validation-for="ConfirmPassword"></span>
+            </div>
+          </div>
         </div>
 
-        <div class="cl-field">
-          <label class="cl-label" asp-for="ConfirmPassword">Confirm password</label>
-          <input class="cl-input" asp-for="ConfirmPassword" placeholder="Repeat your password" autocomplete="new-password" />
-          <span class="cl-error" asp-validation-for="ConfirmPassword"></span>
-        </div>
+        <button class="cl-btn cl-btn--primary w-100 mb-3" type="submit">
+          <span>Create account</span>
+        </button>
 
-        <button class="cl-btn cl-btn--primary w-100 mb-3" type="submit">Create account</button>
-
-        <p class="text-center small text-muted mb-0">
-          Already have an account? <a asp-action="Login">Sign in here</a>
+        <p class="text-center cl-text-muted mb-0" style="font-size: 13px;">
+          Already have an account? <a asp-action="Login" class="fw-semibold">Sign in</a>
         </p>
       </form>
     </div>

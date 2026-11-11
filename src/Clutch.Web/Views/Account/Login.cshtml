@@ -1,15 +1,17 @@
 @model Clutch.Web.Models.LoginViewModel
 @{
-    ViewData["Title"] = "Sign in";
+    ViewData["Title"] = "Sign In";
 }
 
-<div class="row justify-content-center my-4">
-  <div class="col-12 col-md-8 col-lg-5">
-    <div class="cl-card">
-      <div class="mb-4">
-        <span class="cl-sticker mb-2">Welcome back</span>
-        <h1 class="h2 mb-1">Sign in to Clutch</h1>
-        <p class="text-muted">Enter your credentials to access your hackathons and teams.</p>
+<div class="row justify-content-center py-5">
+  <div class="col-12 col-sm-10 col-md-8 col-lg-5 col-xl-4">
+    <div class="cl-card p-4 p-md-5">
+      <div class="text-center mb-4">
+        <span class="cl-brand-logo bg-primary text-white mx-auto mb-3" style="width: 36px; height: 36px;">
+          <svg class="cl-icon" style="width: 20px; height: 20px; stroke: #fff;"><use href="/img/icons.svg#icon-sparkles"></use></svg>
+        </span>
+        <h1 class="cl-title-card mb-1" style="font-size: 22px;">Welcome back</h1>
+        <p class="cl-text-muted mb-0" style="font-size: 14px;">Sign in to your Clutch account</p>
       </div>
 
       <form asp-action="Login" method="post" novalidate>
@@ -19,26 +21,37 @@
         <div asp-validation-summary="ModelOnly" class="cl-error mb-3"></div>
 
         <div class="cl-field">
-          <label class="cl-label" asp-for="Email">Email</label>
-          <input class="cl-input" asp-for="Email" placeholder="you@domain.com" autocomplete="username" />
+          <label class="cl-label" asp-for="Email">Email Address</label>
+          <input class="cl-input" asp-for="Email" placeholder="you@example.com" autocomplete="username" required />
           <span class="cl-error" asp-validation-for="Email"></span>
         </div>
 
         <div class="cl-field">
-          <label class="cl-label" asp-for="Password">Password</label>
-          <input class="cl-input" asp-for="Password" placeholder="••••••••" autocomplete="current-password" />
+          <div class="d-flex justify-content-between align-items-center">
+            <label class="cl-label" asp-for="Password">Password</label>
+          </div>
+          <div class="position-relative">
+            <input id="login-pwd" class="cl-input" asp-for="Password" type="password" placeholder="••••••••" autocomplete="current-password" required style="padding-right: 40px;" />
+            <button type="button" class="btn btn-link position-absolute top-50 end-0 translate-middle-y text-muted pe-3 p-0" onclick="togglePasswordVisibility('login-pwd', this)" aria-label="Toggle password visibility">
+              <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-eye"></use></svg>
+            </button>
+          </div>
           <span class="cl-error" asp-validation-for="Password"></span>
         </div>
 
-        <div class="form-check mb-4">
-          <input class="form-check-input" type="checkbox" asp-for="RememberMe" id="rememberMeCheck" />
-          <label class="form-check-label" for="rememberMeCheck">Remember this browser</label>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <label class="d-inline-flex align-items-center gap-2 mb-0" style="font-size: 13px; cursor: pointer;">
+            <input type="checkbox" asp-for="RememberMe" class="rounded-1" />
+            <span>Remember for 30 days</span>
+          </label>
         </div>
 
-        <button class="cl-btn cl-btn--primary w-100 mb-3" type="submit">Sign in</button>
+        <button class="cl-btn cl-btn--primary w-100 mb-3" type="submit">
+          <span>Sign in</span>
+        </button>
 
-        <p class="text-center small text-muted mb-0">
-          Do not have an account? <a asp-action="Register">Create an account</a>
+        <p class="text-center cl-text-muted mb-0" style="font-size: 13px;">
+          Do not have an account? <a asp-action="Register" class="fw-semibold">Create account</a>
         </p>
       </form>
     </div>

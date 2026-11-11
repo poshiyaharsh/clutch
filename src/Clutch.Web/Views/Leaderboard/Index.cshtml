@@ -3,88 +3,92 @@
     ViewData["Title"] = $"Leaderboard — {Model.HackathonTitle}";
 }
 
-<div class="mb-4">
-  <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-2">
-    <div class="d-flex align-items-center gap-2">
-      <span class="cl-sticker @(Model.IsLocked ? "cl-sticker--open" : "cl-sticker--judging")">
-        @(Model.IsLocked ? "Final results" : "Live scoring")
-      </span>
-      <a class="text-muted small fw-bold text-decoration-none" asp-controller="Hackathons" asp-action="Detail" asp-route-slug="@Model.HackathonSlug">
-        ← @Model.HackathonTitle
+<!-- Leaderboard Header -->
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+  <div>
+    <div class="d-flex align-items-center gap-2 mb-2">
+      <partial name="_Badge" model='(Model.IsLocked ? "Final results" : "Live scoring", Model.IsLocked ? "success" : "warning")' />
+      <a class="text-muted text-decoration-none d-inline-flex align-items-center gap-1" asp-controller="Hackathons" asp-action="Detail" asp-route-slug="@Model.HackathonSlug" style="font-size: 13px;">
+        <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-chevron-left"></use></svg>
+        <span>@Model.HackathonTitle</span>
       </a>
     </div>
-
-    @if (!Model.IsLocked)
-    {
-      <span class="cl-live">Live ranking active</span>
-    }
+    <h1 class="cl-title-page mb-1">Scoreboard</h1>
+    <p class="cl-text-muted mb-0" style="font-size: 14px;">
+      Multi-judge weighted evaluation scores. Ties broken by primary criterion score and submission timestamp.
+    </p>
   </div>
 
-  <h1 class="display mb-1">Scoreboard</h1>
-  <p class="text-muted">Weighted rubric score calculated across assigned judges. Ties broken by primary criterion score and submission timestamp.</p>
+  @if (!Model.IsLocked)
+  {
+    <div class="cl-live-pill">
+      <span class="cl-live-dot"></span>
+      <span>Live Scoring Active</span>
+    </div>
+  }
 </div>
 
 @if (!Model.Rows.Any())
 {
-  <div class="cl-empty my-5">
-    <span class="cl-sticker mb-3">No scores</span>
-    <h2 class="h3 mb-2">No ranked squads yet</h2>
-    <p class="text-muted mb-4">Evaluations will appear on this scoreboard once judges begin submitting rubric scores.</p>
-    <a class="cl-btn cl-btn--secondary" asp-controller="Hackathons" asp-action="Detail" asp-route-slug="@Model.HackathonSlug">Back to event</a>
-  </div>
+  <partial name="_EmptyState" model='("No ranked squads yet", "Evaluations will appear on this scoreboard once judges submit rubric scores.", "Back to event", $"/hackathons/{Model.HackathonSlug}")' />
 }
 else
 {
-  <ol class="cl-board">
-    @foreach (var row in Model.Rows)
+  <ol id="cl-board" class="cl-board-list mb-5">
+    @for (int i = 0; i < Model.Rows.Count; i++)
     {
-      <li class="cl-row">
-        <div class="cl-rank">@row.Rank</div>
-        <div>
-          <h2 class="h4 mb-1">@row.TeamName</h2>
-          <div class="d-flex flex-wrap align-items-center gap-2 small text-muted">
-            @if (!string.IsNullOrEmpty(row.TrackName))
-            {
-              <span class="badge bg-light text-dark border">@row.TrackName</span>
-            }
-            @if (row.SubmittedAt.HasValue)
-            {
-              <span>Submitted @row.SubmittedAt.Value.ToString("MMM d, HH:mm") UTC</span>
-            }
+      var row = Model.Rows[i];
+      var isTop = i < 3;
+      <li class="cl-leaderboard-row @(isTop ? "cl-leaderboard-row--top" : "")" data-team="@row.TeamName">
+        <div class="cl-leaderboard-rank">@row.Rank</div>
+        <div class="d-flex align-items-center gap-3">
+          <span class="cl-avatar" style="@(isTop ? "background: var(--accent); color: #fff;" : "")">
+            @(row.TeamName.Length >= 2 ? row.TeamName.Substring(0, 2).ToUpperInvariant() : row.TeamName.ToUpperInvariant())
+          </span>
+          <div>
+            <div class="fw-semibold text-body" style="font-size: 15px;">@row.TeamName</div>
+            <div class="d-flex align-items-center gap-2 mt-1">
+              @if (!string.IsNullOrEmpty(row.TrackName))
+              {
+                <span class="cl-badge">@row.TrackName</span>
+              }
+              @if (row.SubmittedAt.HasValue)
+              {
+                <span class="text-muted" style="font-size: 12px;">Submitted @row.SubmittedAt.Value.ToString("MMM d, HH:mm") UTC</span>
+              }
+            </div>
           </div>
         </div>
         <div class="text-end">
-          <div class="cl-score">@row.TotalScore.ToString("F1")</div>
-          <span class="small text-muted">pts / 100</span>
+          <div class="cl-leaderboard-score" data-value="@row.TotalScore">
+            @row.TotalScore.ToString("F1")
+          </div>
+          <div class="text-muted" style="font-size: 11px;">pts / 100</div>
         </div>
       </li>
     }
   </ol>
 }
 
-@if (!Model.IsLocked)
-{
-  <script src="https://cdn.jsdelivr.net/npm/@@microsoft/signalr@8.0.7/dist/browser/signalr.min.js"></script>
+@section Scripts {
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const connection = new signalR.HubConnectionBuilder()
-        .withUrl("/hubs/leaderboard")
-        .withAutomaticReconnect()
-        .build();
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl("/hubs/leaderboard")
+      .withAutomaticReconnect()
+      .build();
 
-      connection.start().then(() => {
-        connection.invoke("JoinHackathonLeaderboard", @Model.HackathonId);
-      }).catch(err => console.warn("SignalR connection error:", err));
-
-      connection.on("LeaderboardUpdated", (leaderboard) => {
-        if (window.clToast) window.clToast("Scoreboard updated live!");
-        setTimeout(() => window.location.reload(), 1200);
-      });
-
-      connection.on("JudgingLocked", () => {
-        if (window.clToast) window.clToast("Judging has finalized!");
-        setTimeout(() => window.location.reload(), 1200);
-      });
+    connection.on("RankingUpdated", (data) => {
+      if (data.hackathonId === @Model.HackathonId) {
+        clToast(`Scores updated: ${data.teamName} moved to ${data.totalScore.toFixed(1)} pts`);
+        if (window.clRenderBoard && Array.isArray(data.leaderboard)) {
+          window.clRenderBoard(data.leaderboard.map(r => ({ team: r.teamName, score: r.totalScore })));
+        } else {
+          setTimeout(() => location.reload(), 1200);
+        }
+      }
     });
+
+    connection.start().catch(err => console.error(err));
   </script>
 }

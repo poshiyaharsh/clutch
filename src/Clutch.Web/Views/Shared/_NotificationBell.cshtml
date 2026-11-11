@@ -1,14 +1,30 @@
-@* Phase 3: static. Phase 5: bind to INotificationService unread count. *@
-<button type="button" class="cl-btn cl-btn--secondary cl-bell" data-bs-toggle="offcanvas" data-bs-target="#cl-notifs" aria-label="Notifications, 2 unread">
-  <span aria-hidden="true">🔔</span><span class="cl-bell-count">2</span>
-</button>
-<div class="offcanvas offcanvas-end cl-drawer" tabindex="-1" id="cl-notifs" aria-labelledby="cl-notifs-title">
-  <div class="offcanvas-header">
-    <h2 id="cl-notifs-title" class="h4 mb-0">Notifications</h2>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body d-grid gap-3 align-content-start">
-    <div class="cl-card cl-card--flat"><strong>Judging is open</strong><p class="mb-0">Campus Climate Jam moved to judging.</p></div>
-    <div class="cl-card cl-card--flat"><strong>Team invite</strong><p class="mb-0">Byte Me added you as a member.</p></div>
+<div class="dropdown">
+  <button type="button" class="cl-btn cl-btn--ghost cl-btn--icon-only position-relative" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Notifications (2 unread)">
+    <svg class="cl-icon"><use href="/img/icons.svg#icon-bell"></use></svg>
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background: var(--accent); font-size: 10px; padding: 3px 6px;">
+      2
+    </span>
+  </button>
+  <div class="dropdown-menu dropdown-menu-end shadow-md p-0" style="width: 320px; border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--border);">
+    <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
+      <span class="fw-semibold text-body" style="font-size: 14px;">Notifications</span>
+      <span class="cl-badge cl-badge--accent">2 new</span>
+    </div>
+    <div class="d-flex flex-column p-2 gap-1" style="max-height: 280px; overflow-y: auto;">
+      <div class="p-2 rounded-2 cl-card--interactive">
+        <div class="d-flex align-items-center gap-2 mb-1">
+          <span class="cl-badge cl-badge--warning">Judging</span>
+          <span class="text-muted" style="font-size: 11px;">10m ago</span>
+        </div>
+        <p class="mb-0 fw-medium" style="font-size: 13px;">Campus Climate Jam is now open for evaluation.</p>
+      </div>
+      <div class="p-2 rounded-2 cl-card--interactive">
+        <div class="d-flex align-items-center gap-2 mb-1">
+          <span class="cl-badge cl-badge--success">Team</span>
+          <span class="text-muted" style="font-size: 11px;">1h ago</span>
+        </div>
+        <p class="mb-0 fw-medium" style="font-size: 13px;">Byte Me accepted your member request.</p>
+      </div>
+    </div>
   </div>
 </div>

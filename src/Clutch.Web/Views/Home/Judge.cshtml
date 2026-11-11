@@ -1,37 +1,113 @@
 @model List<Criterion>
-@{ ViewData["Title"] = "Score team"; }
+@{
+    ViewData["Title"] = "Judge Evaluation — Null Pointers";
+}
 
-<div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
-  <div>
-    <h1>Null Pointers</h1>
-    <div class="cl-meta mt-2">
-      <span class="cl-chip">Health</span>
-      <a href="#">Repo</a>
-      <a href="#">Demo</a>
+<!-- Split Layout -->
+<div class="row g-4 align-items-start">
+  <!-- Left Side: Team Information & Links -->
+  <div class="col-12 col-lg-5">
+    <div class="cl-card position-sticky" style="top: 88px;">
+      <div class="d-flex align-items-center gap-2 mb-2">
+        <span class="cl-badge cl-badge--warning">In Evaluation</span>
+        <span class="text-muted" style="font-size: 13px;">CodeMind AI Hackathon</span>
+      </div>
+
+      <h1 class="cl-title-page mb-2">Null Pointers</h1>
+      <p class="cl-text-muted mb-4" style="font-size: 14px;">
+        Track: <strong class="text-body">Healthcare & Biotech</strong>
+      </p>
+
+      <div class="p-3 rounded-2 mb-4" style="background: var(--surface-2);">
+        <h2 class="cl-title-card mb-2" style="font-size: 15px;">CardioPulse AI</h2>
+        <p class="cl-text-muted mb-0" style="font-size: 13px; line-height: 1.5;">
+          Real-time ECG telemetry analysis for mobile triage in remote medical environments. Uses embedded edge inference to flag high-risk anomalies within 200 milliseconds.
+        </p>
+      </div>
+
+      <div class="d-grid gap-2 mb-4">
+        <a class="cl-btn cl-btn--secondary w-100 justify-content-between" href="https://github.com/poshiyaharsh/cardiopulse" target="_blank" rel="noopener">
+          <span class="d-flex align-items-center gap-2">
+            <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-search"></use></svg>
+            <span>Review Source Code</span>
+          </span>
+          <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-external-link"></use></svg>
+        </a>
+
+        <a class="cl-btn cl-btn--secondary w-100 justify-content-between" href="https://cardiopulse-demo.dev" target="_blank" rel="noopener">
+          <span class="d-flex align-items-center gap-2">
+            <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-layers"></use></svg>
+            <span>Launch Live Demo</span>
+          </span>
+          <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-external-link"></use></svg>
+        </a>
+      </div>
+
+      <div class="pt-3 border-top">
+        <div class="d-flex justify-content-between align-items-center text-muted" style="font-size: 13px;">
+          <span>Evaluation Progress</span>
+          <span class="fw-semibold text-body">3 of 8 scored</span>
+        </div>
+        <div class="progress mt-2" style="height: 6px; background: var(--surface-2);">
+          <div class="progress-bar" role="progressbar" style="width: 37.5%; background: var(--accent);" aria-valuenow="37.5" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </div>
     </div>
   </div>
-  <p class="mb-0"><strong>3 of 8</strong> teams scored</p>
+
+  <!-- Right Side: Criteria Cards with Slider + Live Total + Sticky Save Bar -->
+  <div class="col-12 col-lg-7">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="cl-title-section mb-0">Rubric Scoring</h2>
+      <span class="text-muted" style="font-size: 12px;">Weights sum to 100%</span>
+    </div>
+
+    <form data-judge-form onsubmit="event.preventDefault(); clToast('Evaluation scores saved successfully');">
+      <div class="d-flex flex-column gap-3 mb-4">
+        @for (int i = 0; i < Model.Count; i++)
+        {
+          var c = Model[i];
+          <div class="cl-card">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <div>
+                <h3 class="cl-title-card mb-1">@c.Name</h3>
+                <p class="cl-text-muted mb-0" style="font-size: 13px;">@c.Hint</p>
+              </div>
+              <span class="cl-badge cl-badge--accent">@c.Weight% weight</span>
+            </div>
+
+            <!-- Slider + Number Input -->
+            <div class="cl-slider-wrapper my-3">
+              <input id="crit-@i" class="cl-slider" type="range" min="0" max="@c.Max" step="0.5" value="7.5"
+                     data-criterion data-weight="@c.Weight" aria-label="@c.Name score" />
+              <span id="crit-@i-out" class="cl-slider-value">7.5 / @c.Max</span>
+            </div>
+
+            <div class="cl-field mb-0">
+              <label class="cl-label" for="crit-note-@i">Judge feedback (optional)</label>
+              <input id="crit-note-@i" class="cl-input" placeholder="Feedback on @c.Name.ToLowerInvariant()..." style="height: 36px; font-size: 13px;" />
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Sticky Save Bar -->
+      <div class="cl-card position-sticky p-3 d-flex flex-wrap justify-content-between align-items-center gap-3 shadow-md"
+           style="bottom: 16px; z-index: 10; background: var(--surface); border: 1px solid var(--border);">
+        <div class="d-flex align-items-baseline gap-2">
+          <span class="text-muted" style="font-size: 13px;">Calculated Total:</span>
+          <span id="cl-total" class="cl-title-section text-primary tabular-nums mb-0">75.0</span>
+          <span class="text-muted" style="font-size: 13px;">/ 100 pts</span>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <span class="text-muted d-none d-sm-inline" style="font-size: 12px;">Press Enter to save</span>
+          <button class="cl-btn cl-btn--primary" type="submit">
+            <svg class="cl-icon"><use href="/img/icons.svg#icon-check"></use></svg>
+            <span>Save scores</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
-
-<form method="post" class="d-grid gap-4">
-  @for (int i = 0; i < Model.Count; i++)
-  {
-    var c = Model[i];
-    <div class="cl-card cl-criterion">
-      <div class="d-flex justify-content-between gap-3">
-        <div><strong class="fs-5">@c.Name</strong><p class="mb-0">@c.Hint</p></div>
-        <span class="cl-chip align-self-start">@c.Weight%</span>
-      </div>
-      <input id="c@(i)" class="cl-range" type="range" min="0" max="@c.Max" value="5" data-criterion data-weight="@c.Weight" aria-label="@c.Name score" />
-      <p class="mb-0"><strong id="c@(i)-out">5/@c.Max</strong></p>
-      <div class="cl-field mb-0">
-        <label class="cl-label" for="note@(i)">Comment (optional)</label>
-        <input id="note@(i)" class="cl-input" maxlength="200" />
-      </div>
-    </div>
-  }
-  <div class="cl-savebar">
-    <p class="mb-0">Total so far: <strong class="display fs-4" id="cl-total">50.0</strong> / 100</p>
-    <button class="cl-btn cl-btn--primary" type="button" onclick="clToast('Scores saved')">Save scores</button>
-  </div>
-</form>

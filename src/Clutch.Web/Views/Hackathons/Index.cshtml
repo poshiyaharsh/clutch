@@ -1,30 +1,25 @@
 @model IEnumerable<Clutch.Web.Models.HackathonListItemViewModel>
 @{
-    ViewData["Title"] = "Browse hackathons";
+    ViewData["Title"] = "Browse Hackathons";
 }
 
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
   <div>
-    <h1 class="mb-1">Active hackathons</h1>
-    <p class="text-muted mb-0">Browse published hackathons, form squads, and show up to compete.</p>
+    <h1 class="cl-title-page mb-1">Active Hackathons</h1>
+    <p class="cl-text-muted mb-0" style="font-size: 14px;">Browse published hackathons, form squads, and show up to compete.</p>
   </div>
   @if (User.IsInRole("Admin") || User.IsInRole("Organizer"))
   {
-    <a class="cl-btn cl-btn--primary" asp-action="Create">Host a hackathon</a>
+    <a class="cl-btn cl-btn--primary" asp-action="Create">
+      <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-plus"></use></svg>
+      <span>Host a hackathon</span>
+    </a>
   }
 </div>
 
 @if (!Model.Any())
 {
-  <div class="cl-empty my-5">
-    <span class="cl-sticker mb-3">No events</span>
-    <h2 class="h3 mb-2">No active hackathons found</h2>
-    <p class="text-muted mb-4">Check back soon or create your own hackathon if you have organizer privileges.</p>
-    @if (User.IsInRole("Admin") || User.IsInRole("Organizer"))
-    {
-      <a class="cl-btn cl-btn--primary" asp-action="Create">Create hackathon</a>
-    }
-  </div>
+  <partial name="_EmptyState" model='("No active hackathons found", "Check back soon or create your own hackathon if you have organizer privileges.", "Host a hackathon", "/hackathons/create")' />
 }
 else
 {
@@ -32,25 +27,26 @@ else
     @foreach (var h in Model)
     {
       <div class="col-12 col-md-6 col-lg-4">
-        <div class="cl-card h-100 d-flex flex-column justify-content-between">
+        <article class="cl-card h-100 d-flex flex-column justify-content-between">
           <div>
-            <div class="d-flex justify-content-between align-items-start mb-2">
-              <span class="cl-sticker @(h.Status == Clutch.Web.Domain.HackathonStatus.Published ? "cl-sticker--open" : "cl-sticker--draft")">
-                @h.Status
-              </span>
-              <span class="small text-muted">@h.StartsAt.ToString("MMM d") – @h.EndsAt.ToString("MMM d")</span>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <partial name="_Badge" model='(h.Status.ToString(), h.Status == Clutch.Web.Domain.HackathonStatus.Published ? "open" : "draft")' />
+              <span class="text-muted" style="font-size: 12px;">@h.StartsAt.ToString("MMM d") – @h.EndsAt.ToString("MMM d")</span>
             </div>
-            <h2 class="h4 mb-2">@h.Title</h2>
-            <p class="text-muted small mb-3">@h.Description</p>
+            <h2 class="cl-title-card mb-2">@h.Title</h2>
+            <p class="cl-text-muted mb-3" style="font-size: 13px; line-height: 1.5;">@h.Description</p>
           </div>
           <div>
-            <div class="d-flex justify-content-between align-items-center mb-3 small fw-bold">
-              <span>@h.TeamCount teams competing</span>
+            <div class="d-flex justify-content-between align-items-center mb-3 text-muted" style="font-size: 12px;">
+              <span><strong>@h.TeamCount</strong> teams registered</span>
               <span>Squad max: @h.MaxTeamSize</span>
             </div>
-            <a class="cl-btn cl-btn--secondary w-100" asp-action="Detail" asp-route-slug="@h.Slug">View details</a>
+            <a class="cl-btn cl-btn--secondary w-100" asp-action="Detail" asp-route-slug="@h.Slug">
+              <span>View event</span>
+              <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-chevron-right"></use></svg>
+            </a>
           </div>
-        </div>
+        </article>
       </div>
     }
   </div>

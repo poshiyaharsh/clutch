@@ -1,0 +1,12 @@
+@model (string Text, string Variant)
+@{
+    var variantClass = Model.Variant.ToLowerInvariant() switch
+    {
+        "open" or "published" or "success" => "cl-badge--success",
+        "judging" or "warning" or "scoring" => "cl-badge--warning",
+        "closed" or "cancelled" or "danger" => "cl-badge--danger",
+        "draft" or "info" or "accent" => "cl-badge--accent",
+        _ => ""
+    };
+}
+<span class="cl-badge @variantClass">@Model.Text</span>

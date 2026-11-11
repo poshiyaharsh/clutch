@@ -1,14 +1,21 @@
 @{
-    ViewData["Title"] = "Access restricted";
+    ViewData["Title"] = "Access Restricted";
 }
 
-<div class="cl-empty my-5">
-  <span class="cl-sticker cl-sticker--draft mb-3">Restricted</span>
-  <h1 class="h2 mb-2">Access restricted</h1>
-  <p class="text-muted mb-4">You do not have permission to access this resource or perform this action.</p>
-
-  <div class="d-flex justify-content-center gap-3">
-    <a class="cl-btn cl-btn--secondary" asp-controller="Home" asp-action="Index">Back to home</a>
-    <a class="cl-btn cl-btn--primary" asp-controller="Account" asp-action="Login">Sign in with another account</a>
+<div class="row justify-content-center py-5">
+  <div class="col-12 col-md-8 col-lg-6">
+    <div class="cl-card text-center p-5">
+      <div class="d-inline-flex align-items-center justify-content-center p-3 rounded-circle mb-3" style="background: var(--danger-soft); color: var(--danger-fg);">
+        <svg class="cl-icon cl-icon-lg"><use href="/img/icons.svg#icon-shield"></use></svg>
+      </div>
+      <h1 class="cl-title-section mb-2">Access restricted</h1>
+      <p class="cl-text-muted mx-auto mb-4" style="max-width: 48ch;">
+        You do not possess the required permissions or role to view this resource. Contact an administrator or sign in with an authorized account.
+      </p>
+      <div class="d-flex justify-content-center gap-3">
+        <a class="cl-btn cl-btn--secondary" asp-controller="Home" asp-action="Index">Back to home</a>
+        <a class="cl-btn cl-btn--primary" asp-controller="Account" asp-action="Login">Sign in</a>
+      </div>
+    </div>
   </div>
 </div>

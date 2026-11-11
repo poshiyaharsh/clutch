@@ -6,38 +6,36 @@
 <div class="mb-4">
   <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-2">
     <div class="d-flex align-items-center gap-2">
-      <span class="cl-sticker @(Model.Status == Clutch.Web.Domain.HackathonStatus.Published ? "cl-sticker--open" : "cl-sticker--draft")">
-        @Model.Status
-      </span>
-      <span class="text-muted small">Hosted by @Model.OrganizerName</span>
+      <partial name="_Badge" model='(Model.Status.ToString(), Model.Status == Clutch.Web.Domain.HackathonStatus.Published ? "open" : "draft")' />
+      <span class="text-muted" style="font-size: 13px;">Hosted by @Model.OrganizerName</span>
     </div>
 
     @if (User.IsInRole("Admin") || (User.Identity?.IsAuthenticated == true && User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value == Model.OrganizerId))
     {
       <div class="dropdown">
-        <button class="cl-btn cl-btn--secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        <button class="cl-btn cl-btn--secondary cl-btn--sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
           Manage status
         </button>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu dropdown-menu-end shadow-sm" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);">
           <li>
-            <form asp-action="UpdateStatus" asp-route-id="@Model.Id" method="post">
+            <form asp-action="UpdateStatus" asp-route-id="@Model.Id" method="post" class="m-0">
               @Html.AntiForgeryToken()
               <input type="hidden" name="status" value="Published" />
-              <button type="submit" class="dropdown-item">Publish</button>
+              <button type="submit" class="dropdown-item py-2 px-3">Publish</button>
             </form>
           </li>
           <li>
-            <form asp-action="UpdateStatus" asp-route-id="@Model.Id" method="post">
+            <form asp-action="UpdateStatus" asp-route-id="@Model.Id" method="post" class="m-0">
               @Html.AntiForgeryToken()
               <input type="hidden" name="status" value="Closed" />
-              <button type="submit" class="dropdown-item">Close submissions</button>
+              <button type="submit" class="dropdown-item py-2 px-3">Close submissions</button>
             </form>
           </li>
           <li>
-            <form asp-action="UpdateStatus" asp-route-id="@Model.Id" method="post">
+            <form asp-action="UpdateStatus" asp-route-id="@Model.Id" method="post" class="m-0">
               @Html.AntiForgeryToken()
               <input type="hidden" name="status" value="Cancelled" />
-              <button type="submit" class="dropdown-item text-danger">Cancel event</button>
+              <button type="submit" class="dropdown-item py-2 px-3 text-danger">Cancel event</button>
             </form>
           </li>
         </ul>
@@ -45,110 +43,125 @@
     }
   </div>
 
-  <h1 class="display mb-3">@Model.Title</h1>
-  <p class="lead" style="max-width: 65ch;">@Model.Description</p>
+  <h1 class="cl-title-page mb-2">@Model.Title</h1>
+  <p class="cl-text-muted fs-5 mb-0" style="max-width: 65ch;">@Model.Description</p>
 </div>
 
-<div class="cl-stats mb-5">
-  <div class="cl-card cl-stat">
-    <strong>@Model.StartsAt.ToString("MMM d") – @Model.EndsAt.ToString("MMM d")</strong>
-    Event duration
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md-3">
+    <div class="cl-card p-3">
+      <div class="text-muted mb-1" style="font-size: 12px;">Duration</div>
+      <div class="fw-semibold text-body">@Model.StartsAt.ToString("MMM d") – @Model.EndsAt.ToString("MMM d")</div>
+    </div>
   </div>
-  <div class="cl-card cl-stat">
-    <strong>@Model.Teams.Count</strong>
-    Teams registered
+  <div class="col-6 col-md-3">
+    <div class="cl-card p-3">
+      <div class="text-muted mb-1" style="font-size: 12px;">Teams</div>
+      <div class="fw-semibold text-body">@Model.Teams.Count registered</div>
+    </div>
   </div>
-  <div class="cl-card cl-stat">
-    <strong>Max @Model.MaxTeamSize</strong>
-    Hackers per squad
+  <div class="col-6 col-md-3">
+    <div class="cl-card p-3">
+      <div class="text-muted mb-1" style="font-size: 12px;">Team Limit</div>
+      <div class="fw-semibold text-body">Up to @Model.MaxTeamSize members</div>
+    </div>
   </div>
-  <div class="cl-card cl-stat">
-    <strong>@(Model.IsRegistrationOpen ? "Open" : "Closed")</strong>
-    Registration
+  <div class="col-6 col-md-3">
+    <div class="cl-card p-3">
+      <div class="text-muted mb-1" style="font-size: 12px;">Registration</div>
+      <div class="fw-semibold text-body">@(Model.IsRegistrationOpen ? "Open" : "Closed")</div>
+    </div>
   </div>
 </div>
 
 <div class="row g-4 mb-5">
   <div class="col-12 col-lg-8">
-    @if (Model.Tracks.Any())
-    {
-      <div class="cl-card mb-4">
-        <h2 class="h4 mb-3">Tracks & Themes</h2>
+    <div class="cl-card mb-4">
+      <h2 class="cl-title-card mb-3">Competition tracks</h2>
+      @if (!Model.Tracks.Any())
+      {
+        <p class="cl-text-muted mb-0">General open track.</p>
+      }
+      else
+      {
         <div class="d-flex flex-wrap gap-2">
-          @foreach (var tr in Model.Tracks)
+          @foreach (var track in Model.Tracks)
           {
-            <div class="p-2 px-3 border rounded-pill bg-light fw-bold small">
-              @tr.Name
-            </div>
+            <span class="cl-badge cl-badge--accent" style="font-size: 13px; padding: 4px 12px;">@track.Name</span>
           }
         </div>
-      </div>
-    }
+      }
+    </div>
 
+    <!-- Announcements -->
     <div class="cl-card mb-4">
       <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="h4 mb-0">Announcements</h2>
+        <h2 class="cl-title-card mb-0">Announcements</h2>
         @if (User.IsInRole("Admin") || (User.Identity?.IsAuthenticated == true && User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value == Model.OrganizerId))
         {
-          <button class="cl-btn cl-btn--ghost py-1 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#postAnnouncement">
-            + Post announcement
+          <button class="cl-btn cl-btn--secondary cl-btn--sm" type="button" data-bs-toggle="collapse" data-bs-target="#newAnnouncementForm">
+            <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-plus"></use></svg>
+            <span>Post announcement</span>
           </button>
         }
       </div>
 
-      <div class="collapse mb-3" id="postAnnouncement">
-        <form asp-action="AddAnnouncement" asp-route-id="@Model.Id" method="post" class="p-3 border rounded">
+      <div class="collapse mb-3" id="newAnnouncementForm">
+        <form asp-action="PostAnnouncement" asp-route-id="@Model.Id" method="post" class="p-3 rounded-2 border" style="background: var(--surface-2);">
           @Html.AntiForgeryToken()
-          <div class="cl-field">
-            <label class="cl-label">Title</label>
-            <input class="cl-input" name="title" required placeholder="Announcement headline" />
+          <div class="cl-field mb-2">
+            <label class="cl-label">Announcement Title</label>
+            <input class="cl-input" name="title" required placeholder="Important update..." />
           </div>
-          <div class="cl-field">
-            <label class="cl-label">Content</label>
-            <textarea class="cl-textarea" name="body" rows="3" required placeholder="Announcement message..."></textarea>
+          <div class="cl-field mb-3">
+            <label class="cl-label">Message Body</label>
+            <textarea class="cl-textarea" name="body" required rows="3"></textarea>
           </div>
-          <button class="cl-btn cl-btn--primary" type="submit">Publish announcement</button>
+          <button class="cl-btn cl-btn--primary cl-btn--sm" type="submit">Broadcast announcement</button>
         </form>
       </div>
 
       @if (!Model.Announcements.Any())
       {
-        <p class="text-muted small mb-0">No announcements posted yet.</p>
+        <p class="cl-text-muted mb-0" style="font-size: 14px;">No announcements posted yet.</p>
       }
       else
       {
-        <div class="d-grid gap-3">
+        <div class="d-flex flex-column gap-3">
           @foreach (var a in Model.Announcements)
           {
-            <div class="p-3 border rounded">
-              <div class="d-flex justify-content-between small text-muted mb-1">
-                <span class="fw-bold">@a.AuthorName</span>
-                <span>@a.CreatedAt.ToString("g")</span>
+            <div class="p-3 rounded-2" style="background: var(--surface-2);">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <strong class="text-body" style="font-size: 14px;">@a.Title</strong>
+                <span class="text-muted" style="font-size: 11px;">@a.CreatedAt.ToString("MMM d, HH:mm") UTC</span>
               </div>
-              <h3 class="h5 mb-1">@a.Title</h3>
-              <p class="mb-0 text-muted">@a.Body</p>
+              <p class="cl-text-muted mb-0" style="font-size: 13px; line-height: 1.5;">@a.Body</p>
             </div>
           }
         </div>
       }
     </div>
 
+    <!-- Registered Squads -->
     <div class="cl-card">
-      <h2 class="h4 mb-3">Registered squads (@Model.Teams.Count)</h2>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="cl-title-card mb-0">Registered squads (@Model.Teams.Count)</h2>
+      </div>
+
       @if (!Model.Teams.Any())
       {
-        <p class="text-muted small mb-0">Be the first team to enter this hackathon!</p>
+        <p class="cl-text-muted mb-0" style="font-size: 14px;">No squads registered yet.</p>
       }
       else
       {
         <div class="table-responsive">
-          <table class="table align-middle mb-0">
+          <table class="cl-table">
             <thead>
               <tr>
                 <th>Squad</th>
-                <th>Leader</th>
+                <th>Lead</th>
                 <th>Members</th>
-                <th>Submission</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -157,15 +170,15 @@
                 <tr>
                   <td><strong>@t.Name</strong></td>
                   <td>@t.LeadName</td>
-                  <td>@t.MemberCount / @Model.MaxTeamSize</td>
+                  <td class="tabular-nums">@t.MemberCount / @Model.MaxTeamSize</td>
                   <td>
                     @if (t.HasSubmitted)
                     {
-                      <span class="cl-sticker cl-sticker--open py-0">Submitted</span>
+                      <span class="cl-badge cl-badge--success">Submitted</span>
                     }
                     else
                     {
-                      <span class="text-muted small">Pending</span>
+                      <span class="text-muted" style="font-size: 13px;">Pending</span>
                     }
                   </td>
                 </tr>
@@ -178,12 +191,12 @@
   </div>
 
   <div class="col-12 col-lg-4">
-    <div class="cl-card cl-sticky">
-      <h2 class="h4 mb-3">Compete in this event</h2>
+    <div class="cl-card position-sticky" style="top: 88px;">
+      <h2 class="cl-title-card mb-3">Compete in this event</h2>
 
       @if (Model.IsRegistrationOpen)
       {
-        <p class="small text-muted mb-3">Registration is currently open. Form a squad or join an existing team with an invite code.</p>
+        <p class="cl-text-muted mb-3" style="font-size: 13px;">Registration is open. Form a squad or join an existing team with an invite code.</p>
 
         @if (User.Identity?.IsAuthenticated == true)
         {
@@ -197,15 +210,17 @@
       }
       else
       {
-        <div class="alert alert-warning mb-3">
+        <div class="p-3 rounded-2 mb-3" style="background: var(--warning-soft); color: var(--warning-fg); font-size: 13px;">
           Registration is closed for this event.
         </div>
       }
 
-      <hr />
-      <div class="d-flex justify-content-between align-items-center">
-        <span class="small fw-bold">Scoreboard</span>
-        <a class="cl-btn cl-btn--ghost py-1 px-3" asp-controller="Leaderboard" asp-action="Index" asp-route-hackathonId="@Model.Id">View ranks</a>
+      <div class="pt-3 border-top d-flex justify-content-between align-items-center">
+        <span class="fw-semibold text-body" style="font-size: 13px;">Live Scoreboard</span>
+        <a class="cl-btn cl-btn--ghost cl-btn--sm" asp-controller="Leaderboard" asp-action="Index" asp-route-hackathonId="@Model.Id">
+          <span>View ranks</span>
+          <svg class="cl-icon cl-icon-sm"><use href="/img/icons.svg#icon-chevron-right"></use></svg>
+        </a>
       </div>
     </div>
   </div>

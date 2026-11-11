@@ -1,8 +1,15 @@
 @{
-  var toastText = TempData["Toast"] ?? TempData["ToastMessage"] ?? TempData["ToastError"];
+    var toastText = TempData["Toast"] ?? TempData["ToastMessage"] ?? TempData["ToastError"];
 }
-<div id="cl-toast" class="cl-toast" role="status" aria-live="polite" hidden>@toastText</div>
+<div id="cl-toast" class="cl-toast-box" role="status" aria-live="polite">
+  <svg class="cl-icon text-primary"><use href="/img/icons.svg#icon-check-circle"></use></svg>
+  <div class="cl-toast-message">@toastText</div>
+</div>
 @if (toastText is not null)
 {
-  <script>document.addEventListener('DOMContentLoaded', () => window.clToast(document.getElementById('cl-toast').textContent));</script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.clToast('@Html.Raw(toastText)');
+    });
+  </script>
 }
