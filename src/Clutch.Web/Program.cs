@@ -46,6 +46,10 @@ builder.Services.AddScoped<IHackathonService, HackathonService>();
 builder.Services.AddScoped<ITeamService, TeamService>();
 builder.Services.AddScoped<IScoringService, ScoringService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IEmailSender, SmtpEmailSender>();
+builder.Services.AddScoped<IAuditService, AuditService>();
+
+builder.Services.AddSignalR();
 
 builder.Services.AddControllersWithViews();
 
@@ -64,6 +68,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<Clutch.Web.Hubs.LeaderboardHub>("/hubs/leaderboard");
 
 app.MapControllerRoute(
     name: "default",

@@ -13,11 +13,16 @@ public class TeamsController : Controller
 {
     private readonly ITeamService _teamService;
     private readonly IHackathonService _hackathonService;
+    private readonly IScoringService _scoringService;
 
-    public TeamsController(ITeamService teamService, IHackathonService hackathonService)
+    public TeamsController(
+        ITeamService teamService,
+        IHackathonService hackathonService,
+        IScoringService scoringService)
     {
         _teamService = teamService;
         _hackathonService = hackathonService;
+        _scoringService = scoringService;
     }
 
     [HttpGet("create")]
@@ -207,5 +212,22 @@ public class TeamsController : Controller
         }
 
         return RedirectToAction(nameof(Detail), new { id });
+    }
+
+    [AllowAnonymous]
+    [HttpGet("{id:int}/card")]
+    public async Task<IActionResult> ResultCard(int id)
+    {
+        var team = await _teamService.GetByIdAsync(id);
+        if (team is null) return NotFound();
+
+        var leaderboard = await _scoringService.CalculateLeaderboardAsync(team.HackathonId);
+        var entry = leaderboard.FirstOrDefault(r => r.TeamId == id);
+
+        ViewData["Rank"] = entry?.Rank ?? 0;
+        ViewData["Score"] = entry?.TotalScore ?? 0m;
+        ViewData["IsLocked"] = await _scoringService.IsJudgingLockedAsync(team.HackathonId);
+
+        return View(team);
     }
 }

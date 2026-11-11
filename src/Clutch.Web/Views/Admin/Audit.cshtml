@@ -1,0 +1,48 @@
+@model IReadOnlyList<Clutch.Web.Domain.AuditLog>
+@{
+    ViewData["Title"] = "System audit trail";
+}
+
+<div class="mb-4">
+  <div class="d-flex align-items-center gap-2 mb-2">
+    <span class="cl-sticker cl-sticker--draft">Security log</span>
+    <a class="text-muted small fw-bold text-decoration-none" asp-action="Index">← Admin overview</a>
+  </div>
+  <h1 class="display mb-1">System audit trail</h1>
+  <p class="text-muted">Immutable log of security-sensitive platform operations, state changes, and scoring locks.</p>
+</div>
+
+<div class="cl-card">
+  @if (!Model.Any())
+  {
+    <p class="text-muted small mb-0">No audit records found.</p>
+  }
+  else
+  {
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead>
+          <tr>
+            <th>Timestamp (UTC)</th>
+            <th>Actor</th>
+            <th>Action</th>
+            <th>Target</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach (var log in Model)
+          {
+            <tr>
+              <td class="small text-muted font-monospace">@log.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</td>
+              <td><strong>@(log.Actor?.DisplayName ?? log.ActorId ?? "System")</strong></td>
+              <td><span class="badge bg-light text-dark border">@log.Action</span></td>
+              <td>@log.EntityType #@log.EntityId</td>
+              <td class="small text-muted font-monospace">@(log.Details ?? "—")</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

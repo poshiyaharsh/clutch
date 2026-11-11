@@ -26,7 +26,7 @@
         }
         @if (User.IsInRole("Admin"))
         {
-          <a class="cl-navlink d-none d-md-inline" asp-controller="Home" asp-action="Admin">Admin</a>
+          <a class="cl-navlink d-none d-md-inline" asp-controller="Admin" asp-action="Index">Admin</a>
         }
         <partial name="_NotificationBell" />
         @if (User.Identity?.IsAuthenticated == true)

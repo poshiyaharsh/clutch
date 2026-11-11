@@ -60,6 +60,9 @@
 | src/Clutch.Web/Services/ITeamService.cs | Team management service interface and implementation |
 | src/Clutch.Web/Services/IScoringService.cs | Weighted scoring and leaderboard calculation service |
 | src/Clutch.Web/Services/INotificationService.cs | In-app notification service |
+| src/Clutch.Web/Services/IEmailSender.cs | Templated SMTP and mock email delivery service |
+| src/Clutch.Web/Services/IAuditService.cs | System audit logging and security event tracking service |
+| src/Clutch.Web/Hubs/LeaderboardHub.cs | SignalR live scoreboard real-time broadcasting hub |
 | src/Clutch.Web/Controllers/HomeController.cs | Main preview and navigation controller |
 | src/Clutch.Web/Controllers/AccountController.cs | Identity authentication controller (Login, Register, Logout) |
 | src/Clutch.Web/Controllers/HackathonsController.cs | Hackathon CRUD, status transitions, and announcements controller |
@@ -67,6 +70,8 @@
 | src/Clutch.Web/Controllers/SubmissionsController.cs | Project submission and track selection controller |
 | src/Clutch.Web/Controllers/JudgingController.cs | Judge assignments, squad evaluations, and rubric scoring controller |
 | src/Clutch.Web/Controllers/LeaderboardController.cs | Real-time calculated scoreboard and results reveal controller |
+| src/Clutch.Web/Controllers/ExportController.cs | CSV data export for teams, participants, and scoring sheets |
+| src/Clutch.Web/Controllers/AdminController.cs | Administration panel and security audit log inspection controller |
 | src/Clutch.Web/Models/AccountViewModels.cs | ViewModels for user authentication |
 | src/Clutch.Web/Models/HackathonViewModels.cs | ViewModels for hackathon listing, details, and creation |
 | src/Clutch.Web/Models/TeamViewModels.cs | ViewModels for squad creation, join codes, and roster |
@@ -82,10 +87,11 @@
 | src/Clutch.Web/Views/Shared/Error.cshtml | Friendly global error view |
 | src/Clutch.Web/Views/Account/*.cshtml | Authentication views: Login, Register, AccessDenied |
 | src/Clutch.Web/Views/Hackathons/*.cshtml | Hackathon views: Index, Create, Detail |
-| src/Clutch.Web/Views/Teams/*.cshtml | Squad management views: Create, Join, Detail |
+| src/Clutch.Web/Views/Teams/*.cshtml | Squad management views: Create, Join, Detail, ResultCard |
 | src/Clutch.Web/Views/Submissions/*.cshtml | Project submission editing view |
 | src/Clutch.Web/Views/Judging/*.cshtml | Judging views: Index, HackathonTeams, ScoreTeam |
 | src/Clutch.Web/Views/Leaderboard/*.cshtml | Scoreboard views: Index, Hidden |
+| src/Clutch.Web/Views/Admin/*.cshtml | Platform administration and audit trail views |
 | src/Clutch.Web/Views/Home/*.cshtml | Mock pages: Index, Event, Leaderboard, Team, Judge, Organizer, Admin |
 | src/Clutch.Web/wwwroot/css/theme.css | Design tokens + components |
 | src/Clutch.Web/wwwroot/css/site.css | Page-level layout |
@@ -99,5 +105,6 @@
 | tests/Clutch.Tests/FoundationTests.cs | Domain service logic, weighted scoring math, and policy tests |
 | tests/Clutch.Tests/CoreFeatureTests.cs | Core feature tests for teams, submissions, deadlines, and hackathons |
 | tests/Clutch.Tests/JudgingTests.cs | Rubric evaluation, lock immutability, conflict prevention, and scoring tests |
+| tests/Clutch.Tests/ExtrasTests.cs | CSV exports, audit logging, email sender, and SignalR hub tests |
 
 _Antigravity: add rows here as the solution grows._

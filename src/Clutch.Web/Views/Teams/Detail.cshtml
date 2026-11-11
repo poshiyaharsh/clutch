@@ -122,12 +122,17 @@
           }
         </div>
 
-        @if (Model.IsCurrentUserLead && Model.IsSubmissionOpen)
-        {
-          <a class="cl-btn cl-btn--primary" asp-controller="Submissions" asp-action="Edit" asp-route-teamId="@Model.Id">
-            Edit submission
+        <div class="d-flex flex-wrap gap-3 mb-4">
+          @if (Model.IsCurrentUserLead && Model.IsSubmissionOpen)
+          {
+            <a class="cl-btn cl-btn--primary" asp-controller="Submissions" asp-action="Edit" asp-route-teamId="@Model.Id">
+              Edit submission
+            </a>
+          }
+          <a class="cl-btn cl-btn--secondary" asp-action="ResultCard" asp-route-id="@Model.Id">
+            View result certificate
           </a>
-        }
+        </div>
       }
       else
       {

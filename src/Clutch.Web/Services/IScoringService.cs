@@ -1,4 +1,6 @@
 using Clutch.Web.Domain;
+using Clutch.Web.Hubs;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Clutch.Web.Services;
@@ -31,10 +33,12 @@ public interface IScoringService
 public class ScoringService : IScoringService
 {
     private readonly Data.AppDbContext _db;
+    private readonly IHubContext<LeaderboardHub>? _hubContext;
 
-    public ScoringService(Data.AppDbContext db)
+    public ScoringService(Data.AppDbContext db, IHubContext<LeaderboardHub>? hubContext = null)
     {
         _db = db;
+        _hubContext = hubContext;
     }
 
     public async Task<bool> IsJudgingLockedAsync(int hackathonId)
@@ -101,6 +105,17 @@ public class ScoringService : IScoringService
         }
 
         await _db.SaveChangesAsync();
+
+        if (_hubContext != null)
+        {
+            var team = await _db.Teams.FindAsync(teamId);
+            if (team != null)
+            {
+                var leaderboard = await CalculateLeaderboardAsync(team.HackathonId);
+                await _hubContext.Clients.Group(LeaderboardHub.GetGroupName(team.HackathonId))
+                    .SendAsync("LeaderboardUpdated", leaderboard);
+            }
+        }
     }
 
     public async Task<IReadOnlyList<Hackathon>> GetAssignedHackathonsForJudgeAsync(string judgeId)
@@ -156,6 +171,13 @@ public class ScoringService : IScoringService
         });
 
         await _db.SaveChangesAsync();
+
+        if (_hubContext != null)
+        {
+            await _hubContext.Clients.Group(LeaderboardHub.GetGroupName(hackathonId))
+                .SendAsync("JudgingLocked", hackathonId);
+        }
+
         return true;
     }
 
@@ -249,6 +271,13 @@ public class ScoringService : IScoringService
         });
 
         await _db.SaveChangesAsync();
+
+        if (_hubContext != null)
+        {
+            await _hubContext.Clients.Group(LeaderboardHub.GetGroupName(hackathonId))
+                .SendAsync("JudgingLocked", hackathonId);
+        }
+
         return true;
     }
 }

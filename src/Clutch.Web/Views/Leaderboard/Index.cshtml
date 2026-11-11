@@ -61,3 +61,30 @@ else
     }
   </ol>
 }
+
+@if (!Model.IsLocked)
+{
+  <script src="https://cdn.jsdelivr.net/npm/@@microsoft/signalr@8.0.7/dist/browser/signalr.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/hubs/leaderboard")
+        .withAutomaticReconnect()
+        .build();
+
+      connection.start().then(() => {
+        connection.invoke("JoinHackathonLeaderboard", @Model.HackathonId);
+      }).catch(err => console.warn("SignalR connection error:", err));
+
+      connection.on("LeaderboardUpdated", (leaderboard) => {
+        if (window.clToast) window.clToast("Scoreboard updated live!");
+        setTimeout(() => window.location.reload(), 1200);
+      });
+
+      connection.on("JudgingLocked", () => {
+        if (window.clToast) window.clToast("Judging has finalized!");
+        setTimeout(() => window.location.reload(), 1200);
+      });
+    });
+  </script>
+}
