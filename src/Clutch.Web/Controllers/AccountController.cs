@@ -3,9 +3,11 @@ using Clutch.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace Clutch.Web.Controllers;
 
+[EnableRateLimiting("auth-limit")]
 public class AccountController : Controller
 {
     private readonly SignInManager<ApplicationUser> _signInManager;

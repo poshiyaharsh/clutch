@@ -106,5 +106,6 @@
 | tests/Clutch.Tests/CoreFeatureTests.cs | Core feature tests for teams, submissions, deadlines, and hackathons |
 | tests/Clutch.Tests/JudgingTests.cs | Rubric evaluation, lock immutability, conflict prevention, and scoring tests |
 | tests/Clutch.Tests/ExtrasTests.cs | CSV exports, audit logging, email sender, and SignalR hub tests |
+| tests/Clutch.Tests/SecurityAndHardeningTests.cs | Security headers, CSRF enforcement, IDOR checks, and auth boundary tests |
 
 _Antigravity: add rows here as the solution grows._
