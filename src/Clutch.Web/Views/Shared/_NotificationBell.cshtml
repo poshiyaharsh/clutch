@@ -1,0 +1,14 @@
+@* Phase 3: static. Phase 5: bind to INotificationService unread count. *@
+<button type="button" class="cl-btn cl-btn--secondary cl-bell" data-bs-toggle="offcanvas" data-bs-target="#cl-notifs" aria-label="Notifications, 2 unread">
+  <span aria-hidden="true">🔔</span><span class="cl-bell-count">2</span>
+</button>
+<div class="offcanvas offcanvas-end cl-drawer" tabindex="-1" id="cl-notifs" aria-labelledby="cl-notifs-title">
+  <div class="offcanvas-header">
+    <h2 id="cl-notifs-title" class="h4 mb-0">Notifications</h2>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body d-grid gap-3 align-content-start">
+    <div class="cl-card cl-card--flat"><strong>Judging is open</strong><p class="mb-0">Campus Climate Jam moved to judging.</p></div>
+    <div class="cl-card cl-card--flat"><strong>Team invite</strong><p class="mb-0">Byte Me added you as a member.</p></div>
+  </div>
+</div>

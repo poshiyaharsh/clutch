@@ -1,0 +1,39 @@
+@model List<EventCard>
+@{ ViewData["Title"] = "Clutch. Find a hackathon"; }
+
+<section class="cl-hero mb-5">
+  <h1>Build it. Ship it. Get scored.</h1>
+  <p class="fs-5 mt-3">Join a hackathon, form a team, submit your project and watch the leaderboard move.</p>
+  <div class="d-flex flex-wrap gap-3 mt-4">
+    <a class="cl-btn cl-btn--primary" href="#events">Find a hackathon</a>
+    <a class="cl-btn cl-btn--secondary" asp-action="Organizer">Host one</a>
+  </div>
+</section>
+
+<section id="events" aria-labelledby="events-title">
+  <h2 id="events-title" class="mb-4">Hackathons</h2>
+  @if (Model.Count == 0)
+  {
+    <partial name="_EmptyState" model='("No hackathons yet", "Host the first one and invite your people.", "Create a hackathon", "#")' />
+  }
+  else
+  {
+    <div class="row g-4">
+      @foreach (var e in Model)
+      {
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="cl-card h-100 d-flex flex-column gap-3">
+            <div class="cl-meta">
+              <partial name="_StatusSticker" model="(e.Status, e.StatusClass)" />
+              <span class="cl-chip">@e.DatesText</span>
+            </div>
+            <h3 class="h4 mb-0">@e.Title</h3>
+            <p class="mb-0">@e.Blurb</p>
+            <p class="mt-auto mb-0"><strong>@e.Teams</strong> teams registered</p>
+            <a class="cl-btn cl-btn--secondary" asp-action="Event" asp-route-id="@e.Id" aria-label="View @e.Title">View event</a>
+          </article>
+        </div>
+      }
+    </div>
+  }
+</section>

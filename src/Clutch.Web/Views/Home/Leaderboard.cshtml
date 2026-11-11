@@ -1,0 +1,43 @@
+@model List<TeamRow>
+@{ ViewData["Title"] = "Leaderboard"; }
+
+<div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+  <div>
+    <h1>Leaderboard</h1>
+    <p class="mb-0">CodeMind AI Hackathon</p>
+  </div>
+  <span class="cl-live" aria-live="polite">Live</span>
+</div>
+
+<ol id="cl-board" class="cl-board">
+  @foreach (var t in Model)
+  {
+    <li class="cl-row" data-team="@t.Name">
+      <div class="cl-rank" aria-label="Rank @t.Rank">@t.Rank</div>
+      <div>
+        <strong class="d-block fs-5">@t.Name</strong>
+        <span class="cl-chip">@t.Track</span>
+        @if (t.Pending) { <span class="cl-chip">Waiting for judges</span> }
+      </div>
+      <div class="cl-score" data-value="@t.Score">@(t.Pending ? "–" : t.Score.ToString("0.0"))</div>
+    </li>
+  }
+</ol>
+
+@* Dev-only demo of the live update. Remove in Phase 7 when SignalR is wired. *@
+<div class="mt-4">
+  <button class="cl-btn cl-btn--secondary" type="button" id="simulate">Simulate a score update</button>
+</div>
+
+@section Scripts {
+<script>
+  const scores = { "Null Pointers": 92.4, "Byte Me": 88.1, "Git Happens": 85.7, "Ctrl+Alt+Elite": 81.3, "Segfault Squad": 77.9, "Rubber Duckies": 70.0 };
+  document.getElementById('simulate').addEventListener('click', () => {
+    const names = Object.keys(scores);
+    const pick = names[Math.floor(Math.random() * names.length)];
+    scores[pick] = Math.min(99.9, scores[pick] + 2 + Math.random() * 8);
+    clRenderBoard(names.map(n => ({ team: n, score: scores[n] })));
+    clToast(pick + ' just moved up');
+  });
+</script>
+}

@@ -1,0 +1,22 @@
+/* Page-level layout only. Colors, radii and fonts come from genz-theme.css tokens. */
+.cl-skip { position: absolute; left: -999px; top: 0; background: var(--lemon); color: var(--ink); padding: .6rem 1rem; z-index: 100; border: var(--border); }
+.cl-skip:focus { left: 1rem; top: 1rem; }
+.cl-header { border-bottom: var(--border); background: var(--paper); position: sticky; top: 0; z-index: 50; }
+.cl-logo { font-size: 1.75rem; color: var(--ink); text-decoration: none; }
+.cl-navlink { color: var(--ink); font-weight: 700; text-decoration: none; padding: .5rem; }
+.cl-navlink:hover { text-decoration: underline; text-underline-offset: 4px; }
+.cl-bell { position: relative; padding: .5rem .9rem; }
+.cl-bell-count { background: var(--bubblegum); border: 2px solid var(--ink); border-radius: 999px; font-size: .75rem; min-width: 1.4rem; text-align: center; }
+.cl-drawer { background: var(--paper); color: var(--ink); border-left: var(--border); }
+.cl-footer { border-top: var(--border); margin-top: 3rem; }
+.cl-hero h1 { max-width: 14ch; }
+.cl-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 1rem; }
+.cl-stat strong { font: 800 2.25rem var(--font-display); display: block; }
+.cl-sticky { position: sticky; top: 6rem; }
+.cl-criterion { display: grid; gap: .5rem; }
+.cl-range { width: 100%; accent-color: var(--electric); }
+.cl-savebar { position: sticky; bottom: 0; padding: .75rem 0; background: var(--paper); border-top: var(--border); display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.cl-tabs { display: flex; gap: .5rem; flex-wrap: wrap; }
+.cl-tabs a { text-decoration: none; }
+.cl-meta { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.cl-chip { border: var(--border); border-radius: 999px; padding: .1rem .7rem; font-weight: 600; font-size: .85rem; background: var(--surface); }

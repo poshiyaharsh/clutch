@@ -1,0 +1,47 @@
+@model EventCard
+@{ ViewData["Title"] = Model.Title; }
+
+<div class="row g-4">
+  <div class="col-12 col-lg-8">
+    <div class="cl-meta mb-3">
+      <partial name="_StatusSticker" model="(Model.Status, Model.StatusClass)" />
+      <span class="cl-chip">@Model.DatesText</span>
+    </div>
+    <h1>@Model.Title</h1>
+    <p class="fs-5 mt-3">@Model.Blurb</p>
+
+    <h2 class="mt-5 mb-3">Tracks</h2>
+    <div class="cl-meta"><span class="cl-chip">Health</span><span class="cl-chip">Education</span><span class="cl-chip">Open track</span></div>
+
+    <h2 class="mt-5 mb-3">How you’re judged</h2>
+    <div class="d-grid gap-3">
+      @foreach (var c in MockData.Rubric)
+      {
+        <div class="cl-card cl-card--flat d-flex justify-content-between gap-3">
+          <div><strong>@c.Name</strong><p class="mb-0">@c.Hint</p></div>
+          <span class="cl-chip align-self-start">@c.Weight%</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <aside class="col-12 col-lg-4">
+    <div class="cl-card cl-sticky d-grid gap-3">
+      <div>
+        <strong class="display fs-3">2 days left</strong>
+        <p class="mb-0">to register. Closes Dec 3, 11:59 pm.</p>
+      </div>
+      <p class="mb-0">Teams of 1–4 people.</p>
+      <a class="cl-btn cl-btn--primary" asp-action="Team">Create team</a>
+      <a class="cl-btn cl-btn--secondary" href="#join" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="join">Join with code</a>
+      <div class="collapse" id="join">
+        <div class="cl-field mb-2">
+          <label class="cl-label" for="code">Join code</label>
+          <input id="code" class="cl-input" placeholder="8 characters" maxlength="8" />
+        </div>
+        <button class="cl-btn" type="button" onclick="clToast('Joined team')">Join team</button>
+      </div>
+      <a asp-action="Leaderboard" asp-route-id="@Model.Id">See leaderboard</a>
+    </div>
+  </aside>
+</div>

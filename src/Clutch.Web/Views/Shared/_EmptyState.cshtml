@@ -1,0 +1,9 @@
+@model (string Title, string Body, string? Cta, string? Href)
+<div class="cl-empty">
+  <h3>@Model.Title</h3>
+  <p class="mx-auto">@Model.Body</p>
+  @if (Model.Cta is not null)
+  {
+    <a class="cl-btn cl-btn--primary" href="@Model.Href">@Model.Cta</a>
+  }
+</div>

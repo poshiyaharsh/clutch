@@ -1,0 +1,33 @@
+@{ ViewData["Title"] = "Create team"; }
+
+<div class="row g-4">
+  <div class="col-12 col-lg-7">
+    <h1>Create your team</h1>
+    <form method="post" class="cl-card mt-4" novalidate>
+      @* Phase 5: @Html.AntiForgeryToken() is added automatically by the form tag helper when asp-action is used *@
+      <div class="cl-field">
+        <label class="cl-label" for="name">Team name</label>
+        <input id="name" class="cl-input" name="Name" placeholder="Null Pointers" maxlength="40" required />
+        <span class="cl-error" data-valmsg-for="Name"></span>
+      </div>
+      <div class="cl-field">
+        <label class="cl-label" for="track">Track</label>
+        <select id="track" class="cl-select" name="Track">
+          <option>Health</option><option>Education</option><option>Open track</option>
+        </select>
+      </div>
+      <button class="cl-btn cl-btn--primary" type="button" onclick="clToast('Team created')">Create team</button>
+    </form>
+  </div>
+  <aside class="col-12 col-lg-5">
+    <div class="cl-card">
+      <h2 class="h4">Your join code</h2>
+      <p class="display fs-2 mb-2">K7Q2-M9XD</p>
+      <p class="mb-3">Share it so teammates can join. Teams hold up to 4 people.</p>
+      <button class="cl-btn cl-btn--secondary" type="button" onclick="navigator.clipboard?.writeText('K7Q2M9XD'); clToast('Code copied')">Copy code</button>
+    </div>
+    <div class="mt-4">
+      <partial name="_EmptyState" model='("No teammates yet", "Send your code to the people you want on this team.", (string?)null, (string?)null)' />
+    </div>
+  </aside>
+</div>

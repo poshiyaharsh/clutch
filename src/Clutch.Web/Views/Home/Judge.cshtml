@@ -1,0 +1,37 @@
+@model List<Criterion>
+@{ ViewData["Title"] = "Score team"; }
+
+<div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+  <div>
+    <h1>Null Pointers</h1>
+    <div class="cl-meta mt-2">
+      <span class="cl-chip">Health</span>
+      <a href="#">Repo</a>
+      <a href="#">Demo</a>
+    </div>
+  </div>
+  <p class="mb-0"><strong>3 of 8</strong> teams scored</p>
+</div>
+
+<form method="post" class="d-grid gap-4">
+  @for (int i = 0; i < Model.Count; i++)
+  {
+    var c = Model[i];
+    <div class="cl-card cl-criterion">
+      <div class="d-flex justify-content-between gap-3">
+        <div><strong class="fs-5">@c.Name</strong><p class="mb-0">@c.Hint</p></div>
+        <span class="cl-chip align-self-start">@c.Weight%</span>
+      </div>
+      <input id="c@(i)" class="cl-range" type="range" min="0" max="@c.Max" value="5" data-criterion data-weight="@c.Weight" aria-label="@c.Name score" />
+      <p class="mb-0"><strong id="c@(i)-out">5/@c.Max</strong></p>
+      <div class="cl-field mb-0">
+        <label class="cl-label" for="note@(i)">Comment (optional)</label>
+        <input id="note@(i)" class="cl-input" maxlength="200" />
+      </div>
+    </div>
+  }
+  <div class="cl-savebar">
+    <p class="mb-0">Total so far: <strong class="display fs-4" id="cl-total">50.0</strong> / 100</p>
+    <button class="cl-btn cl-btn--primary" type="button" onclick="clToast('Scores saved')">Save scores</button>
+  </div>
+</form>

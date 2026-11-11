@@ -1,0 +1,39 @@
+@{ ViewData["Title"] = "Organizer dashboard"; }
+
+<h1 class="mb-4">Your hackathons</h1>
+
+<div class="cl-tabs mb-4" role="tablist" aria-label="Sections">
+  <a class="cl-btn" href="#">Overview</a>
+  <a class="cl-btn cl-btn--secondary" href="#">Teams</a>
+  <a class="cl-btn cl-btn--secondary" href="#">Judges</a>
+  <a class="cl-btn cl-btn--secondary" href="#">Rubric</a>
+  <a class="cl-btn cl-btn--secondary" href="#">Announcements</a>
+</div>
+
+<div class="cl-stats mb-5">
+  <div class="cl-card cl-stat"><strong>42</strong>teams registered</div>
+  <div class="cl-card cl-stat"><strong>31</strong>projects submitted</div>
+  <div class="cl-card cl-stat"><strong>68%</strong>judging done</div>
+  <div class="cl-card cl-stat"><strong>6</strong>judges assigned</div>
+</div>
+
+<div class="d-flex flex-wrap gap-3 mb-4">
+  <button class="cl-btn cl-btn--primary" type="button" onclick="clToast('Event published')">Publish event</button>
+  <button class="cl-btn cl-btn--secondary" type="button" onclick="clToast('Judging locked')">Lock judging</button>
+  <button class="cl-btn cl-btn--ghost" type="button">Export teams (CSV)</button>
+</div>
+
+<div class="cl-card" style="overflow-x:auto">
+  <table class="table align-middle mb-0">
+    <thead><tr><th>Team</th><th>Track</th><th>Submitted</th><th>Judged by</th></tr></thead>
+    <tbody>
+      @foreach (var t in MockData.Leaderboard)
+      {
+        <tr>
+          <td><strong>@t.Name</strong></td><td>@t.Track</td>
+          <td>@(t.Pending ? "Not yet" : "Yes")</td><td>@(t.Pending ? "0 of 3" : "3 of 3")</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
