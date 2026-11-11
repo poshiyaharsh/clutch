@@ -1,6 +1,8 @@
-@* Server messages: set TempData["Toast"]. Client: window.clToast("Team created"). *@
-<div id="cl-toast" class="cl-toast" role="status" aria-live="polite" hidden>@TempData["Toast"]</div>
-@if (TempData["Toast"] is not null)
+@{
+  var toastText = TempData["Toast"] ?? TempData["ToastMessage"] ?? TempData["ToastError"];
+}
+<div id="cl-toast" class="cl-toast" role="status" aria-live="polite" hidden>@toastText</div>
+@if (toastText is not null)
 {
   <script>document.addEventListener('DOMContentLoaded', () => window.clToast(document.getElementById('cl-toast').textContent));</script>
 }

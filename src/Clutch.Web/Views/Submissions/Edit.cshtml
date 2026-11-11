@@ -1,0 +1,70 @@
+@model Clutch.Web.Models.SubmissionEditViewModel
+@{
+    ViewData["Title"] = $"Submit Project — {Model.TeamName}";
+}
+
+<div class="row justify-content-center my-4">
+  <div class="col-12 col-lg-8">
+    <div class="cl-card">
+      <div class="mb-4">
+        <span class="cl-sticker cl-sticker--open mb-2">@Model.TeamName</span>
+        <h1 class="h2 mb-1">Project submission</h1>
+        <p class="text-muted">Submit your squad's project details, repository link, and live demo before the deadline.</p>
+      </div>
+
+      <form asp-action="Edit" method="post" novalidate>
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="TeamId" />
+        <input type="hidden" asp-for="TeamName" />
+        <input type="hidden" asp-for="HackathonId" />
+        <input type="hidden" asp-for="HackathonSlug" />
+
+        <div asp-validation-summary="ModelOnly" class="cl-error mb-3"></div>
+
+        <div class="cl-field">
+          <label class="cl-label" asp-for="Title">Project name</label>
+          <input class="cl-input" asp-for="Title" placeholder="e.g. PromptPilot" />
+          <span class="cl-error" asp-validation-for="Title"></span>
+        </div>
+
+        @if (Model.AvailableTracks.Any())
+        {
+          <div class="cl-field">
+            <label class="cl-label" asp-for="TrackId">Track</label>
+            <select class="cl-select" asp-for="TrackId">
+              <option value="">General / Open track</option>
+              @foreach (var tr in Model.AvailableTracks)
+              {
+                <option value="@tr.Id">@tr.Name</option>
+              }
+            </select>
+            <span class="cl-error" asp-validation-for="TrackId"></span>
+          </div>
+        }
+
+        <div class="cl-field">
+          <label class="cl-label" asp-for="Description">Summary & problem solved</label>
+          <textarea class="cl-textarea" asp-for="Description" rows="5" placeholder="Explain the problem, technical architecture, and impact..."></textarea>
+          <span class="cl-error" asp-validation-for="Description"></span>
+        </div>
+
+        <div class="cl-field">
+          <label class="cl-label" asp-for="RepoUrl">Repository link (GitHub / GitLab)</label>
+          <input class="cl-input" asp-for="RepoUrl" placeholder="https://github.com/organization/project" />
+          <span class="cl-error" asp-validation-for="RepoUrl"></span>
+        </div>
+
+        <div class="cl-field">
+          <label class="cl-label" asp-for="DemoUrl">Live demo link or video walkthrough (optional)</label>
+          <input class="cl-input" asp-for="DemoUrl" placeholder="https://project.vercel.app or YouTube URL" />
+          <span class="cl-error" asp-validation-for="DemoUrl"></span>
+        </div>
+
+        <div class="d-flex justify-content-between gap-3 mt-4">
+          <a class="cl-btn cl-btn--secondary" asp-controller="Teams" asp-action="Detail" asp-route-id="@Model.TeamId">Cancel</a>
+          <button class="cl-btn cl-btn--primary" type="submit">Save submission</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

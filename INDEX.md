@@ -61,14 +61,26 @@
 | src/Clutch.Web/Services/IScoringService.cs | Weighted scoring and leaderboard calculation service |
 | src/Clutch.Web/Services/INotificationService.cs | In-app notification service |
 | src/Clutch.Web/Controllers/HomeController.cs | Main preview and navigation controller |
+| src/Clutch.Web/Controllers/AccountController.cs | Identity authentication controller (Login, Register, Logout) |
+| src/Clutch.Web/Controllers/HackathonsController.cs | Hackathon CRUD, status transitions, and announcements controller |
+| src/Clutch.Web/Controllers/TeamsController.cs | Squad creation, join code membership, and squad management controller |
+| src/Clutch.Web/Controllers/SubmissionsController.cs | Project submission and track selection controller |
+| src/Clutch.Web/Models/AccountViewModels.cs | ViewModels for user authentication |
+| src/Clutch.Web/Models/HackathonViewModels.cs | ViewModels for hackathon listing, details, and creation |
+| src/Clutch.Web/Models/TeamViewModels.cs | ViewModels for squad creation, join codes, and roster |
+| src/Clutch.Web/Models/SubmissionViewModels.cs | ViewModels for project code and demo submissions |
 | src/Clutch.Web/Models/ErrorViewModel.cs | Model for global error page |
-| src/Clutch.Web/Models/MockData.cs | Fake data for design phase. Delete in Phase 5 |
+| src/Clutch.Web/Models/MockData.cs | Fake data for design phase |
 | src/Clutch.Web/Views/Shared/_Layout.cshtml | Site shell: header, nav, footer, toast |
 | src/Clutch.Web/Views/Shared/_NotificationBell.cshtml | Bell button + notifications drawer |
 | src/Clutch.Web/Views/Shared/_Toast.cshtml | Toast container |
 | src/Clutch.Web/Views/Shared/_EmptyState.cshtml | Reusable empty state |
 | src/Clutch.Web/Views/Shared/_StatusSticker.cshtml | Status sticker badge |
 | src/Clutch.Web/Views/Shared/Error.cshtml | Friendly global error view |
+| src/Clutch.Web/Views/Account/*.cshtml | Authentication views: Login, Register, AccessDenied |
+| src/Clutch.Web/Views/Hackathons/*.cshtml | Hackathon views: Index, Create, Detail |
+| src/Clutch.Web/Views/Teams/*.cshtml | Squad management views: Create, Join, Detail |
+| src/Clutch.Web/Views/Submissions/*.cshtml | Project submission editing view |
 | src/Clutch.Web/Views/Home/*.cshtml | Mock pages: Index, Event, Leaderboard, Team, Judge, Organizer, Admin |
 | src/Clutch.Web/wwwroot/css/theme.css | Design tokens + components |
 | src/Clutch.Web/wwwroot/css/site.css | Page-level layout |
@@ -80,5 +92,6 @@
 | tests/Clutch.Tests/Clutch.Tests.csproj | Unit and integration test project (xUnit, FluentAssertions) |
 | tests/Clutch.Tests/SetupTests.cs | Verification test suite for setup, mock data, and preview routes |
 | tests/Clutch.Tests/FoundationTests.cs | Domain service logic, weighted scoring math, and policy tests |
+| tests/Clutch.Tests/CoreFeatureTests.cs | Core feature tests for teams, submissions, deadlines, and hackathons |
 
 _Antigravity: add rows here as the solution grows._

@@ -1,0 +1,104 @@
+@model Clutch.Web.Models.HackathonCreateEditViewModel
+@{
+    ViewData["Title"] = "Host a hackathon";
+}
+
+<div class="row justify-content-center my-4">
+  <div class="col-12 col-lg-8">
+    <div class="cl-card">
+      <div class="mb-4">
+        <span class="cl-sticker cl-sticker--open mb-2">Organizer control</span>
+        <h1 class="h2 mb-1">Create new hackathon</h1>
+        <p class="text-muted">Define the timeline, tracks, squad limits, and competition parameters.</p>
+      </div>
+
+      <form asp-action="Create" method="post" novalidate>
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="cl-error mb-3"></div>
+
+        <div class="row g-3">
+          <div class="col-12 col-md-8">
+            <div class="cl-field">
+              <label class="cl-label" asp-for="Title">Hackathon title</label>
+              <input class="cl-input" asp-for="Title" placeholder="e.g. CodeMind Global AI Jam" />
+              <span class="cl-error" asp-validation-for="Title"></span>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="cl-field">
+              <label class="cl-label" asp-for="Slug">URL slug</label>
+              <input class="cl-input" asp-for="Slug" placeholder="e.g. codemind-ai-2026" />
+              <span class="cl-error" asp-validation-for="Slug"></span>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="cl-field">
+              <label class="cl-label" asp-for="Description">Description & challenge prompt</label>
+              <textarea class="cl-textarea" asp-for="Description" rows="4" placeholder="Brief hackers on the goals, themes, and expectations..."></textarea>
+              <span class="cl-error" asp-validation-for="Description"></span>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="cl-field">
+              <label class="cl-label" asp-for="TracksCommaSeparated">Tracks / themes (comma separated)</label>
+              <input class="cl-input" asp-for="TracksCommaSeparated" placeholder="AI Agents, Developer Tools, Climate Tech, Web3" />
+              <span class="small text-muted">Hackers can tag their project submission with one of these tracks.</span>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="cl-field">
+              <label class="cl-label" asp-for="StartsAt">Start date (UTC)</label>
+              <input class="cl-input" type="datetime-local" asp-for="StartsAt" />
+              <span class="cl-error" asp-validation-for="StartsAt"></span>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="cl-field">
+              <label class="cl-label" asp-for="EndsAt">End date (UTC)</label>
+              <input class="cl-input" type="datetime-local" asp-for="EndsAt" />
+              <span class="cl-error" asp-validation-for="EndsAt"></span>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="cl-field">
+              <label class="cl-label" asp-for="RegistrationDeadline">Registration deadline (UTC)</label>
+              <input class="cl-input" type="datetime-local" asp-for="RegistrationDeadline" />
+              <span class="cl-error" asp-validation-for="RegistrationDeadline"></span>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="cl-field">
+              <label class="cl-label" asp-for="SubmissionDeadline">Project submission deadline (UTC)</label>
+              <input class="cl-input" type="datetime-local" asp-for="SubmissionDeadline" />
+              <span class="cl-error" asp-validation-for="SubmissionDeadline"></span>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="cl-field">
+              <label class="cl-label" asp-for="MaxTeamSize">Maximum team size</label>
+              <input class="cl-input" type="number" asp-for="MaxTeamSize" min="1" max="10" />
+              <span class="cl-error" asp-validation-for="MaxTeamSize"></span>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 d-flex align-items-center">
+            <div class="form-check pt-3">
+              <input class="form-check-input" type="checkbox" asp-for="HideLeaderboardUntilFinal" id="hideBoardCheck" />
+              <label class="form-check-label" for="hideBoardCheck">Hide leaderboard until finalized</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end gap-3 mt-4">
+          <a class="cl-btn cl-btn--secondary" asp-action="Index">Cancel</a>
+          <button class="cl-btn cl-btn--primary" type="submit">Publish hackathon</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

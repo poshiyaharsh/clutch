@@ -17,7 +17,7 @@ public class Hackathon
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public string OrganizerId { get; set; } = string.Empty;
-    public ApplicationUser Organizer { get; set; } = null!;
+    public ApplicationUser? Organizer { get; set; }
 
     public ICollection<Track> Tracks { get; set; } = [];
     public ICollection<Team> Teams { get; set; } = [];
@@ -46,7 +46,7 @@ public class Team
     public string Name { get; set; } = string.Empty;
     public string JoinCode { get; set; } = string.Empty;
     public string LeadId { get; set; } = string.Empty;
-    public ApplicationUser Lead { get; set; } = null!;
+    public ApplicationUser? Lead { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public ICollection<TeamMember> Members { get; set; } = [];
@@ -134,7 +134,7 @@ public class Announcement
     public string Title { get; set; } = string.Empty;
     public string Body { get; set; } = string.Empty;
     public string CreatedById { get; set; } = string.Empty;
-    public ApplicationUser CreatedBy { get; set; } = null!;
+    public ApplicationUser? CreatedBy { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }
 

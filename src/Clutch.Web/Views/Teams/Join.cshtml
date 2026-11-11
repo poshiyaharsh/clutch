@@ -1,0 +1,32 @@
+@model Clutch.Web.Models.TeamJoinViewModel
+@{
+    ViewData["Title"] = "Join squad";
+}
+
+<div class="row justify-content-center my-4">
+  <div class="col-12 col-md-8 col-lg-5">
+    <div class="cl-card">
+      <div class="mb-4">
+        <span class="cl-sticker mb-2">@Model.HackathonTitle</span>
+        <h1 class="h2 mb-1">Enter squad code</h1>
+        <p class="text-muted">Enter the 8-character invite code provided by your squad leader.</p>
+      </div>
+
+      <form asp-action="Join" method="post" novalidate>
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="HackathonId" />
+        <input type="hidden" asp-for="HackathonTitle" />
+
+        <div asp-validation-summary="ModelOnly" class="cl-error mb-3"></div>
+
+        <div class="cl-field">
+          <label class="cl-label" asp-for="JoinCode">Join code</label>
+          <input class="cl-input text-uppercase fw-bold text-center letter-spacing-2" asp-for="JoinCode" placeholder="ABC12345" maxlength="16" />
+          <span class="cl-error" asp-validation-for="JoinCode"></span>
+        </div>
+
+        <button class="cl-btn cl-btn--primary w-100 mt-3" type="submit">Join squad</button>
+      </form>
+    </div>
+  </div>
+</div>

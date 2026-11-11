@@ -1,0 +1,14 @@
+@{
+    ViewData["Title"] = "Access restricted";
+}
+
+<div class="cl-empty my-5">
+  <span class="cl-sticker cl-sticker--draft mb-3">Restricted</span>
+  <h1 class="h2 mb-2">Access restricted</h1>
+  <p class="text-muted mb-4">You do not have permission to access this resource or perform this action.</p>
+
+  <div class="d-flex justify-content-center gap-3">
+    <a class="cl-btn cl-btn--secondary" asp-controller="Home" asp-action="Index">Back to home</a>
+    <a class="cl-btn cl-btn--primary" asp-controller="Account" asp-action="Login">Sign in with another account</a>
+  </div>
+</div>

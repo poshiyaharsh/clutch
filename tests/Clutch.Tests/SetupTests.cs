@@ -46,6 +46,8 @@ public class SetupTests : IClassFixture<WebApplicationFactory<Program>>
     [InlineData("/organizer/preview")]
     [InlineData("/admin/preview")]
     [InlineData("/Home/Error")]
+    [InlineData("/Account/Login")]
+    [InlineData("/Account/Register")]
     public async Task Pages_ReturnSuccessAndCorrectContentType(string url)
     {
         // Arrange

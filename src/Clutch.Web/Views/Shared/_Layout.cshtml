@@ -15,11 +15,28 @@
     <div class="container d-flex align-items-center justify-content-between py-3">
       <a class="cl-logo display d-inline-flex align-items-center gap-2" asp-controller="Home" asp-action="Index" aria-label="Clutch home"><img src="~/favicon.svg" alt="" width="36" height="36" />Clutch</a>
       <nav class="d-flex align-items-center gap-2 gap-md-3" aria-label="Main">
-        <a class="cl-navlink d-none d-sm-inline" asp-controller="Home" asp-action="Index">Events</a>
-        <a class="cl-navlink d-none d-sm-inline" asp-controller="Home" asp-action="Organizer">Host</a>
-        <a class="cl-navlink d-none d-md-inline" asp-controller="Home" asp-action="Admin">Admin</a>
+        <a class="cl-navlink d-none d-sm-inline" asp-controller="Hackathons" asp-action="Index">Events</a>
+        @if (User.IsInRole("Admin") || User.IsInRole("Organizer"))
+        {
+          <a class="cl-navlink d-none d-sm-inline" asp-controller="Hackathons" asp-action="Create">Host</a>
+        }
+        @if (User.IsInRole("Admin"))
+        {
+          <a class="cl-navlink d-none d-md-inline" asp-controller="Home" asp-action="Admin">Admin</a>
+        }
         <partial name="_NotificationBell" />
-        <a class="cl-btn cl-btn--secondary" href="#">Sign in</a>
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+          <span class="d-none d-lg-inline small fw-bold">@(User.Identity.Name?.Split('@')[0])</span>
+          <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="cl-btn cl-btn--secondary py-1 px-3">Sign out</button>
+          </form>
+        }
+        else
+        {
+          <a class="cl-btn cl-btn--secondary" asp-controller="Account" asp-action="Login">Sign in</a>
+        }
       </nav>
     </div>
   </header>

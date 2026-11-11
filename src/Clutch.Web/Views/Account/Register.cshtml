@@ -1,0 +1,66 @@
+@model Clutch.Web.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Create account";
+}
+
+<div class="row justify-content-center my-4">
+  <div class="col-12 col-md-8 col-lg-6">
+    <div class="cl-card">
+      <div class="mb-4">
+        <span class="cl-sticker cl-sticker--open mb-2">Join Clutch</span>
+        <h1 class="h2 mb-1">Create an account</h1>
+        <p class="text-muted">Compete in hackathons, form squads, and track the live leaderboard.</p>
+      </div>
+
+      <form asp-action="Register" method="post" novalidate>
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="ModelOnly" class="cl-error mb-3"></div>
+
+        <div class="cl-field">
+          <label class="cl-label" asp-for="DisplayName">Full name or handle</label>
+          <input class="cl-input" asp-for="DisplayName" placeholder="Alex Rivera" />
+          <span class="cl-error" asp-validation-for="DisplayName"></span>
+        </div>
+
+        <div class="cl-field">
+          <label class="cl-label" asp-for="Email">Email</label>
+          <input class="cl-input" asp-for="Email" placeholder="alex@domain.com" autocomplete="username" />
+          <span class="cl-error" asp-validation-for="Email"></span>
+        </div>
+
+        <div class="cl-field">
+          <label class="cl-label" asp-for="CollegeOrCompany">College, university, or company (optional)</label>
+          <input class="cl-input" asp-for="CollegeOrCompany" placeholder="Stanford University" />
+          <span class="cl-error" asp-validation-for="CollegeOrCompany"></span>
+        </div>
+
+        <div class="cl-field">
+          <label class="cl-label" asp-for="DesiredRole">Account type</label>
+          <select class="cl-select" asp-for="DesiredRole">
+            <option value="Participant">Participant — Join teams & compete</option>
+            <option value="Organizer">Organizer — Host & manage hackathons</option>
+          </select>
+        </div>
+
+        <div class="cl-field">
+          <label class="cl-label" asp-for="Password">Password</label>
+          <input class="cl-input" asp-for="Password" placeholder="Minimum 6 characters" autocomplete="new-password" />
+          <span class="cl-error" asp-validation-for="Password"></span>
+        </div>
+
+        <div class="cl-field">
+          <label class="cl-label" asp-for="ConfirmPassword">Confirm password</label>
+          <input class="cl-input" asp-for="ConfirmPassword" placeholder="Repeat your password" autocomplete="new-password" />
+          <span class="cl-error" asp-validation-for="ConfirmPassword"></span>
+        </div>
+
+        <button class="cl-btn cl-btn--primary w-100 mb-3" type="submit">Create account</button>
+
+        <p class="text-center small text-muted mb-0">
+          Already have an account? <a asp-action="Login">Sign in here</a>
+        </p>
+      </form>
+    </div>
+  </div>
+</div>
