@@ -48,6 +48,7 @@
 | Path | Purpose |
 |---|---|
 | src/Clutch.Web/Clutch.Web.csproj, Program.cs | Minimal web project so the mock pages run (Phase 2 extends these) |
+| src/Clutch.Web/Properties/launchSettings.json | Local development launch profiles (ports 5240 / 7140) |
 | src/Clutch.Web/Controllers/HomeController.cs | Phase 3 preview controller (mock pages) |
 | src/Clutch.Web/Models/MockData.cs | Fake data for design phase. Delete in Phase 5 |
 | src/Clutch.Web/Views/Shared/_Layout.cshtml | Site shell: header, nav, footer, toast |
