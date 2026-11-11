@@ -37,14 +37,21 @@ public class SetupTests : IClassFixture<WebApplicationFactory<Program>>
         leaderboard.Should().BeInDescendingOrder(t => t.Score);
     }
 
-    [Fact]
-    public async Task HomePage_ReturnsSuccessAndCorrectContentType()
+    [Theory]
+    [InlineData("/")]
+    [InlineData("/events/1")]
+    [InlineData("/events/1/leaderboard")]
+    [InlineData("/teams/preview")]
+    [InlineData("/judge/preview")]
+    [InlineData("/organizer/preview")]
+    [InlineData("/admin/preview")]
+    public async Task Pages_ReturnSuccessAndCorrectContentType(string url)
     {
         // Arrange
         var client = _factory.CreateClient();
 
         // Act
-        var response = await client.GetAsync("/");
+        var response = await client.GetAsync(url);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);

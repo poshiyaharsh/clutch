@@ -26,4 +26,7 @@ public class HomeController : Controller
 
     [HttpGet("organizer/preview")]
     public IActionResult Organizer() => View();
+
+    [HttpGet("admin/preview")]
+    public IActionResult Admin() => View();
 }

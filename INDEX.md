@@ -57,7 +57,7 @@
 | src/Clutch.Web/Views/Shared/_Toast.cshtml | Toast container |
 | src/Clutch.Web/Views/Shared/_EmptyState.cshtml | Reusable empty state |
 | src/Clutch.Web/Views/Shared/_StatusSticker.cshtml | Status sticker badge |
-| src/Clutch.Web/Views/Home/*.cshtml | Mock pages: Index, Event, Leaderboard, Team, Judge, Organizer |
+| src/Clutch.Web/Views/Home/*.cshtml | Mock pages: Index, Event, Leaderboard, Team, Judge, Organizer, Admin |
 | src/Clutch.Web/wwwroot/css/theme.css | Design tokens + components |
 | src/Clutch.Web/wwwroot/css/site.css | Page-level layout |
 | src/Clutch.Web/wwwroot/js/site.js | Toast, leaderboard re-rank animation, judge total preview |
