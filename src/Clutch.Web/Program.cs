@@ -7,12 +7,37 @@ using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.RateLimiting;
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Database & Identity
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+// Database & Identity (supports Railway DATABASE_URL URI or standard Npgsql connection string)
+var rawConn = builder.Configuration["DATABASE_URL"]
+    ?? builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? string.Empty;
+var connectionString = NormalizePostgresConnectionString(rawConn);
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseNpgsql(connectionString));
+
+static string NormalizePostgresConnectionString(string input)
+{
+    if (string.IsNullOrWhiteSpace(input) ||
+        (!input.StartsWith("postgres://", StringComparison.OrdinalIgnoreCase) &&
+         !input.StartsWith("postgresql://", StringComparison.OrdinalIgnoreCase)))
+    {
+        return input;
+    }
+
+    var uri = new Uri(input);
+    var userInfo = uri.UserInfo.Split(':', 2);
+    var username = Uri.UnescapeDataString(userInfo[0]);
+    var password = userInfo.Length > 1 ? Uri.UnescapeDataString(userInfo[1]) : string.Empty;
+    var database = uri.AbsolutePath.TrimStart('/');
+    var port = uri.Port > 0 ? uri.Port : 5432;
+
+    return $"Host={uri.Host};Port={port};Database={database};Username={username};Password={password};SSL Mode=Prefer;Trust Server Certificate=true";
+}
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
@@ -76,7 +101,14 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Explicit CLI seeding commands (never executed automatically at startup)
+// Explicit CLI migration and seeding commands (never executed automatically at startup)
+if (args.Contains("--migrate", StringComparer.OrdinalIgnoreCase))
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    await db.Database.MigrateAsync();
+    return;
+}
 if (args.Contains("--seed-demo", StringComparer.OrdinalIgnoreCase))
 {
     await DbSeeder.SeedDemoDataAsync(app.Services, app.Configuration);
