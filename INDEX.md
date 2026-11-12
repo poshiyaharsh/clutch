@@ -13,7 +13,8 @@
 | README.md | Human-facing project intro and setup |
 | .env.example | Required environment variables (no secrets) |
 | .gitignore | Git ignore rules for build artifacts, secrets, and temp files |
-| Dockerfile / docker-compose.yml | Container build and local stack (app + SQL Server) |
+| .dockerignore | Excludes build artifacts, secrets, and local meta files from Docker build context |
+| Dockerfile / docker-compose.yml | Multi-stage production container (`final` + `migrator`) and Compose stack (app + SQL Server) |
 
 ## docs/
 | Path | Purpose |
@@ -26,6 +27,7 @@
 | docs/CONTRAST_REPORT.md | Automated WCAG 2.1 AA color contrast compliance report across light and dark tokens |
 | docs/TEST_PLAN.md | Test strategy, cases per feature |
 | docs/DEPLOYMENT.md | Deploy steps, env vars, rollback |
+| docs/screenshots/ | Live UI screenshots (`home-desktop.png`, `leaderboard-desktop.png`, `judge-desktop.png`, `organizer-desktop.png`) |
 | docs/PROMPTS.md | Ready-to-paste Antigravity prompts per phase |
 
 ## tools/
@@ -42,7 +44,8 @@
 ## .github/
 | Path | Purpose |
 |---|---|
-| .github/workflows/ci.yml | Build + test on every push and PR |
+| .github/workflows/ci.yml | Build, test, WCAG contrast check, and Docker verification on every push and PR |
+| .github/workflows/deploy.yml | Build and publish production web and migrator images to GHCR |
 
 ## src/
 | Path | Purpose |
@@ -112,3 +115,4 @@
 | tests/Clutch.Tests/JudgingTests.cs | Multi-judge rubric scoring, conflict-of-interest, and locking tests |
 | tests/Clutch.Tests/ExtrasTests.cs | SignalR live leaderboard, CSV export, email service, and audit log tests |
 | tests/Clutch.Tests/SecurityAndHardeningTests.cs | Security headers, rate limiting, and CSRF protection tests |
+| tests/Clutch.Tests/DeploymentTests.cs | Health endpoint, CLI role/admin seeding, and demo data idempotency tests |

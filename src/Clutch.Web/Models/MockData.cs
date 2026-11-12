@@ -20,7 +20,7 @@ public static class MockData
         new(2, "Byte Me", "Education", 88.1, false),
         new(3, "Git Happens", "Open track", 85.7, false),
         new(4, "Ctrl+Alt+Elite", "Health", 81.3, false),
-        new(5, "Segfault Squad", "Education", 77.9, false),
+        new(5, "Segfault Seven", "Education", 77.9, false),
         new(6, "Rubber Duckies", "Open track", 0, true),
     };
 

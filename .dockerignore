@@ -1,0 +1,36 @@
+# Build artifacts
+**/bin/
+**/obj/
+out/
+dist/
+publish/
+TestResults/
+*.log
+
+# Version control & IDE
+.git/
+.gitignore
+.github/
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+**/appsettings.Development.json
+**/appsettings.Production.json
+secrets.json
+
+# Project management & local tools
+.agent/
+AGENTS.md
+PROJECT_LOG.md
+ROADMAP.md
+scratch/
+tools/
+docs/screenshots/
+artifacts/

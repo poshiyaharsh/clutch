@@ -1,6 +1,7 @@
 using Clutch.Web.Data;
 using Clutch.Web.Domain;
 using Clutch.Web.Services;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
@@ -64,9 +65,30 @@ builder.Services.AddRateLimiter(options =>
     });
 });
 
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+// Explicit CLI seeding commands (never executed automatically at startup)
+if (args.Contains("--seed-demo", StringComparer.OrdinalIgnoreCase))
+{
+    await DbSeeder.SeedDemoDataAsync(app.Services, app.Configuration);
+    return;
+}
+if (args.Contains("--seed", StringComparer.OrdinalIgnoreCase))
+{
+    await DbSeeder.SeedRolesAndAdminAsync(app.Services, app.Configuration);
+    return;
+}
+
+app.UseForwardedHeaders();
 
 if (!app.Environment.IsDevelopment())
 {
@@ -92,6 +114,39 @@ app.UseRateLimiter();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapGet("/health", () => Results.Content(
+    System.Text.Json.JsonSerializer.Serialize(new
+    {
+        status = "healthy",
+        service = "clutch",
+        utc = DateTime.UtcNow
+    }),
+    "application/json",
+    statusCode: StatusCodes.Status200OK)).AllowAnonymous();
+
+app.MapGet("/health/ready", async (AppDbContext db, CancellationToken ct) =>
+{
+    try
+    {
+        var canConnect = await db.Database.CanConnectAsync(ct);
+        return canConnect
+            ? Results.Content(
+                System.Text.Json.JsonSerializer.Serialize(new
+                {
+                    status = "ready",
+                    database = "connected",
+                    utc = DateTime.UtcNow
+                }),
+                "application/json",
+                statusCode: StatusCodes.Status200OK)
+            : Results.StatusCode(StatusCodes.Status503ServiceUnavailable);
+    }
+    catch
+    {
+        return Results.StatusCode(StatusCodes.Status503ServiceUnavailable);
+    }
+}).AllowAnonymous();
 
 app.MapHub<Clutch.Web.Hubs.LeaderboardHub>("/hubs/leaderboard");
 

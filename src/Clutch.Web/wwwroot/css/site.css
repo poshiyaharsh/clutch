@@ -143,6 +143,7 @@
 /* Hero Section */
 .cl-hero {
   position: relative;
+  overflow: hidden;
   padding: var(--space-48) 0 var(--space-48);
   border-radius: var(--radius-lg);
   margin-bottom: var(--space-48);
@@ -150,7 +151,7 @@
 
 .cl-hero-bg {
   position: absolute;
-  inset: -16px;
+  inset: 0;
   background: radial-gradient(circle at 10% 20%, var(--accent-soft) 0%, transparent 60%);
   z-index: -1;
   opacity: 0.8;
@@ -160,8 +161,10 @@
 /* "Live Now" Bar */
 .cl-live-strip {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  gap: var(--space-12);
   padding: var(--space-12) var(--space-16);
   background: var(--surface);
   border: 1px solid var(--border);

@@ -52,6 +52,7 @@ Hackathon: Draft -> Published -> Closed (judging) -> Finalized. Cancelled from D
 | Organizer | `/organizer/events`, `/organizer/events/{id}/rubric`, `/judges`, `/announcements` |
 | Admin | `/admin/users`, `/admin/audit` |
 | Notifications | `/notifications`, POST `/notifications/read` |
+| Operations | `GET /health` (liveness), `GET /health/ready` (DB readiness) |
 
 _Antigravity keeps this table updated as routes are added._
 
