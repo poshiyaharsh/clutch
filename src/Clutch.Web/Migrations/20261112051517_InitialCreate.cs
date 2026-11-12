@@ -485,8 +485,7 @@ namespace Clutch.Web.Migrations
                         name: "FK_Submissions_Tracks_TrackId",
                         column: x => x.TrackId,
                         principalTable: "Tracks",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

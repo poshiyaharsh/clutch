@@ -814,7 +814,7 @@ namespace Clutch.Web.Migrations
                     b.HasOne("Clutch.Web.Domain.Track", "Track")
                         .WithMany("Submissions")
                         .HasForeignKey("TrackId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Team");
 

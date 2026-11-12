@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Clutch.Web.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20261111064328_InitialCreate")]
+    [Migration("20261112051517_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -817,7 +817,7 @@ namespace Clutch.Web.Migrations
                     b.HasOne("Clutch.Web.Domain.Track", "Track")
                         .WithMany("Submissions")
                         .HasForeignKey("TrackId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Team");
 

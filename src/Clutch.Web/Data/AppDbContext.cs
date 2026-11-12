@@ -93,7 +93,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
             b.HasOne(s => s.Track)
                 .WithMany(tr => tr.Submissions)
                 .HasForeignKey(s => s.TrackId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.NoAction);
         });
 
         // Criterion
